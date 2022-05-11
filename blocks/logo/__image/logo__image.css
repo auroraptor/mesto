@@ -1,0 +1,8 @@
+.logo__image {
+  display: flex;
+  background-image: url(../../../images/__logo_color_white.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,5 @@
+.page__header {
+  min-height: 84px;
+  max-height: 119px;
+  border-bottom: 1px solid #545454;
+}

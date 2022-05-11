@@ -1,0 +1,5 @@
+.content {
+  flex-shrink: 1;
+  display: grid;
+  grid-row-gap: 36px;
+}
