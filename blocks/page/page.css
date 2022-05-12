@@ -1,11 +1,12 @@
 .page {
   background-color: #000000;
   color: #ffffff;
-  font-weight: 400;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
   margin: 0;
 }
 
-/* * {
+* {
   outline-style: solid;
   outline-color: green;
-} */
+}

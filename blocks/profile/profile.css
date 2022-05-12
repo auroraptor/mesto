@@ -1,0 +1,139 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 880px) {
+  .form {
+    justify-content: space-around;
+    gap: 36px;
+  }
+}
+
+.profile {
+  min-height: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+@media screen and (max-width: 425px) {
+  .profile {
+   margin: 0 19px;
+   gap: 26px;
+  }
+}
+
+.profile__description {
+  display: grid;
+  grid-template-columns:1fr 24px;
+  grid-template-rows: repeat(2, 60px);
+  column-gap: 18px;
+  grid-template-areas:
+  '⭐️ 🖊'
+  '📝 .';
+}
+
+@media screen and (max-width: 425px) {
+  .profile__description {
+    margin-left: 28px;
+    grid-template-columns: 1fr 18px;
+    grid-template-rows: 26px 14px;
+    row-gap: 14px;
+    column-gap: 10px;
+  }
+}
+
+.name {
+  margin: 0;
+  grid-area: ⭐️;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  padding-top: 21px;
+}
+@media screen and (max-width: 425px) {
+  .name {
+    padding-top: 0;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .name {
+    font-size: calc(27px + ((100vw - 320px) / (1280 - 320)) * (42 - 27));
+    line-height: calc(33px + ((100vw - 320px) / (1280 - 320)) * (48 - 33));
+  }
+}
+
+.job {
+  margin: 0;
+  grid-area: 📝;
+  padding-top: 16px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+@media screen and (max-width: 425px) {
+  .job {
+    text-align: center;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .job {
+    font-size: calc(14px + ((100vw - 320px) / (1280 - 320)) * (18 - 14));
+    line-height: calc(17px + ((100vw - 320px) / (1280 - 320)) * (18 - 17));
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+
+}
+
+.add-button {
+  min-width: 150px;
+  height: 50px;
+  background: black;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  align-self: center;
+  background-image: url(../../images/__add-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 22px;
+}
+
+@media screen and (max-width: 1280px) {
+  .add-button {
+    width: calc(282px + ((100vw - 320px) / (1280 - 320)) * (150 - 282));
+    background-size: calc(16px + ((100vw - 320px) / (1280 - 320)) * (22 - 16));
+  }
+}
+
+.edit-button {
+  width: 24px;
+  height: 24px;
+  background: black;
+  border: 1px solid #FFFFFF;
+  background-image: url(../../images/__edit-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px;
+  /* align-self: baseline; */
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 425px) {
+  .edit-button {
+    align-self: flex-end;
+    background-size: 7.5px;
+    width: 18px;
+    height: 18px;
+  }
+}
