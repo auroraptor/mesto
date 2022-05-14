@@ -11,12 +11,12 @@ const saveButton = popup.querySelector(".save-button");
 function togglePopup() {
   popup.classList.toggle('popup__opened');
 }
-// открыть попап по клику кнопки редактировать и закрыть по клику на крестик в правом верхнем углу
+// открыть попап по клику кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
 editButton.addEventListener('click', togglePopup);
 closeIcon.addEventListener('click', togglePopup);
 
-// наука -- способ отточить разум для познания мира значит НАУКА -- ЭТО ПРОЦЕДУРА СОПРОВОЖДАЕМАЯ КОНКРЕТНЫМИ ДЕЙСТВИЯМИ. НАУКА -- ЭТО МЕТОД ПОЗНАНИЯ МИРА -- я пока оставлю это себе здесь как напоминание но перед сдачей проекта на ревью обязательно сотру тк это не относится напрямую к проектной работе;
+// наука -- способ отточить разум для познания мира значит НАУКА -- ЭТО ПРОЦЕДУРА СОПРОВОЖДАЕМАЯ КОНКРЕТНЫМИ ДЕЙСТВИЯМИ. НАУКА -- ЭТО МЕТОД ПОЗНАНИЯ МИРА -- я пока оставлю это себе здесь как напоминание, но перед сдачей проекта на ревью обязательно сотру тк это не относится напрямую к проектной работе;
 
 // Найти форму в DOM
 const formElement = document.querySelector('.form');
@@ -31,9 +31,10 @@ function openedForm() {
   nameInput.value = name.innerText;
   jobInput.value = job.innerText;
 }
-
+// вызвать функцию openedForm
 openedForm();
 
+// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function formSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получить значение полей jobInput и nameInput из свойства value
@@ -49,3 +50,19 @@ function formSubmitHandler (evt) {
 // Прикрепить обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
+
+// найти элемент кнопки лайка
+const likeButtons = document.querySelectorAll('.like-button');
+
+function toggleLike(array) {
+  // перебираем массив циклом
+  for (let i = 0; i < array.length; i++) {
+    // на каждый элемент массива вешаем обработчик клика
+    let like = array[i];
+    like.addEventListener('click', function() {
+      like.classList.toggle('like-button_active');
+    });
+  }
+}
+// вызываем функцию обработчика клика всех сердечек
+toggleLike(likeButtons);
