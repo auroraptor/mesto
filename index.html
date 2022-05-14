@@ -15,8 +15,8 @@
       </div>
     </header>
     <main class="content">
-      <section class="form section content__section content__profile" arial-label="Профиль">
-        <div class="profile">
+      <section class="profile section content__section content__profile" arial-label="Профиль">
+        <div class="profile__container">
           <img src="images/__avatar.jpg" alt="" class="avatar">
           <div class="profile__description">
             <h1 class="name">Жак-Ив Кусто</h1>
@@ -39,7 +39,22 @@
         <p class="copyright__text"></p>
       </div>
     </footer> -->
+    <section class="popup">
+
+      <div class="popup__container">
+        <img src="images/__close-icon.svg" alt="close-icon" class="close-icon">
+
+        <form class="form">
+          <div class="form__main-container">
+            <h2 class="form__heading">Редактировать профиль</h2>
+            <input type="text" class="form__item form__name-input">
+            <input type="text" class="form__item form__job-input">
+            <button type="submit" class="save-button form__save-button">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </section>
   </div>
-  <script src="scripts/script.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 </html>

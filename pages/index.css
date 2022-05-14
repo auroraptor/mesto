@@ -12,4 +12,6 @@
 @import url(../blocks/content/__section/content__section.css);
 @import url(../blocks/content/__profile/content__profile.css);
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/__container/profile__container.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__opened/popup__opened.css);
+@import url(../blocks/form/form.css);
