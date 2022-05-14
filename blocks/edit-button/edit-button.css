@@ -1,0 +1,25 @@
+.edit-button {
+  width: 24px;
+  height: 24px;
+  background: black;
+  border: 1px solid #FFFFFF;
+  background-image: url(../../images/__edit-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px;
+  align-self: flex-end;
+}
+
+.edit-button:hover {
+  opacity: 0.6;
+  transition: opacity .5s linear;
+}
+
+@media screen and (max-width: 425px) {
+  .edit-button {
+    align-self: flex-end;
+    background-size: 7.5px;
+    width: 18px;
+    height: 18px;
+  }
+}

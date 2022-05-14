@@ -1,0 +1,7 @@
+.element__container {
+  width: 246px;
+  min-height: 23px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
