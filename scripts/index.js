@@ -5,7 +5,7 @@ const profile = document.querySelector('.profile');
 const popup = document.querySelector('.popup');
 // найти кнопкпи в DOM
 const editButton = profile.querySelector('.profile__edit-button');
-const closeIcon = popup.querySelector(".form__close-icon");
+const closeIcon = popup.querySelector(".popup__close-icon");
 const saveButton = popup.querySelector(".save-button");
 // функция togglePopup манипулирует css-классом видимости попапа
 function togglePopup() {
