@@ -1,4 +1,4 @@
-.edit-button {
+.profile__edit-button {
   width: 24px;
   height: 24px;
   background: black;
@@ -10,13 +10,13 @@
   align-self: flex-end;
 }
 
-.edit-button:hover {
+.profile__edit-button:hover {
   opacity: 0.6;
   transition: opacity .5s linear;
 }
 
 @media screen and (max-width: 425px) {
-  .edit-button {
+  .profile__edit-button {
     align-self: flex-end;
     background-size: 7.5px;
     width: 18px;

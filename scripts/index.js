@@ -4,8 +4,8 @@
 const profile = document.querySelector('.profile');
 const popup = document.querySelector('.popup');
 // найти кнопкпи в DOM
-const editButton = profile.querySelector('.edit-button');
-const closeIcon = popup.querySelector(".close-icon");
+const editButton = profile.querySelector('.profile__edit-button');
+const closeIcon = popup.querySelector(".form__close-icon");
 const saveButton = popup.querySelector(".save-button");
 // функция togglePopup манипулирует css-классом видимости попапа
 function togglePopup() {
@@ -15,8 +15,6 @@ function togglePopup() {
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
 editButton.addEventListener('click', togglePopup);
 closeIcon.addEventListener('click', togglePopup);
-
-// наука -- способ отточить разум для познания мира значит НАУКА -- ЭТО ПРОЦЕДУРА СОПРОВОЖДАЕМАЯ КОНКРЕТНЫМИ ДЕЙСТВИЯМИ. НАУКА -- ЭТО МЕТОД ПОЗНАНИЯ МИРА -- я пока оставлю это себе здесь как напоминание, но перед сдачей проекта на ревью обязательно сотру тк это не относится напрямую к проектной работе;
 
 // Найти форму в DOM
 const formElement = document.querySelector('.form');
