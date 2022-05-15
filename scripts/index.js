@@ -7,30 +7,29 @@ const popup = document.querySelector('.popup');
 const editButton = profile.querySelector('.profile__edit-button');
 const closeIcon = popup.querySelector(".popup__close-icon");
 const saveButton = popup.querySelector(".save-button");
-// функция togglePopup манипулирует css-классом видимости попапа
-function togglePopup() {
-  popup.classList.toggle('popup__opened');
-}
-// открыть попап по клику кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
-// TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
-editButton.addEventListener('click', togglePopup);
-closeIcon.addEventListener('click', togglePopup);
-
 // Найти форму в DOM
 const formElement = document.querySelector('.form');
 // Найти поля формы в DOM
-const nameInput = formElement.querySelector('.form__name-input');
-const jobInput = formElement.querySelector('.form__job-input');
+const nameInput = formElement.querySelector('.popup__input_type_name');
+const jobInput = formElement.querySelector('.popup__input_type_job');
 // Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
 const name = profile.querySelector('.name');
 const job = profile.querySelector('.job');
+
+// функция togglePopup манипулирует css-классом видимости попапа
+function togglePopup() {
+  popup.classList.toggle('popup_opened');
+}
 // функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице
 function openedForm() {
-  nameInput.value = name.innerText;
-  jobInput.value = job.innerText;
+  nameInput.value = name.textContent;
+  jobInput.value = job.textContent;
+  //  внести вызов функции togglePopup
+  togglePopup();
 }
-// вызвать функцию openedForm
-openedForm();
+// openedForm();
+// Эту строку нужно удалить, данные должны заноситься только при открытии попапа. Можно, например, в эту функцию внести вызов функции togglePopup и ее передавать в слушатель событий editButton вместо функции переключения модификатора. Есть и другие способы это сделать, Вы можете найти его самостоятельно.
+//sometimes the simple move is right
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function formSubmitHandler (evt) {
@@ -45,22 +44,25 @@ function formSubmitHandler (evt) {
     togglePopup();
 }
 
+// Пока что нужно удалить или закомментировать весь функционал, связанный с лайками. Он будет рассмотрен подробно уже в следующем спринте
+// const likeButtons = document.querySelectorAll('.like-button'); // найти элементы кнопки лайка
+// function toggleLike(array) {
+//   // перебираем массив циклом
+//   for (let i = 0; i < array.length; i++) {
+//     // на каждый элемент массива вешаем обработчик клика
+//     let like = array[i];
+//     like.addEventListener('click', function() {
+//       like.classList.toggle('like-button_active');
+//     });
+//   }
+// }
+// // вызываем функцию обработчика клика всех сердечек
+// toggleLike(likeButtons);
+
+// слушатель клика кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
+// TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
+editButton.addEventListener('click', openedForm); // передавать в слушатель событий editButton вместо функции переключения модификатора
+closeIcon.addEventListener('click', togglePopup);
 // Прикрепить обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
-
-// найти элемент кнопки лайка
-const likeButtons = document.querySelectorAll('.like-button');
-
-function toggleLike(array) {
-  // перебираем массив циклом
-  for (let i = 0; i < array.length; i++) {
-    // на каждый элемент массива вешаем обработчик клика
-    let like = array[i];
-    like.addEventListener('click', function() {
-      like.classList.toggle('like-button_active');
-    });
-  }
-}
-// вызываем функцию обработчика клика всех сердечек
-toggleLike(likeButtons);

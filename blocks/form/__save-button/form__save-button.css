@@ -3,6 +3,7 @@
   height: 50px;
   background: #000000;
   border-radius: 2px;
+  border: none;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -12,12 +13,13 @@
 }
 
 .form__save-button:hover {
-  opacity: 0.6;
+  opacity: 0.8;
   transition: opacity .5s linear;
 }
 
 @media (max-width: 1280px) {
   .form__save-button {
+    height: calc(46px + ((100vw - 320px) / (1280 - 320)) * (50 - 46));
     width: calc(238px + ((100vw - 320px) / (1280 - 320)) * (358 - 238));
     font-size: calc(14px + ((100vw - 320px) / (1280 - 320)) * (18 - 14));
     line-height: calc(17px + ((100vw - 320px) / (1280 - 320)) * (22 - 17));

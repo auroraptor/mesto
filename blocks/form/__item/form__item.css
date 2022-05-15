@@ -1,5 +1,6 @@
 .form__item {
-  border-bottom: 1px solid #000000 .2;
+/* Чтобы задать прозрачность цвету, нужно перевести цвет в rgba и добавить прозрачность последним значением */
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
   border-top: none;
   border-left: none;
   border-right: none;
@@ -9,6 +10,7 @@
   line-height: 17px;
   margin-top: 17px;
   padding: 13px 0;
+  height: 14px;
 }
 
 @media (max-width: 1280px) {

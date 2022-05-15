@@ -1,13 +1,14 @@
 .profile__edit-button {
   width: 24px;
   height: 24px;
-  background: black;
+  background: rgba(0, 0 , 0, 0);
   border: 1px solid #FFFFFF;
   background-image: url(../../../images/__edit-button.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 10px;
   align-self: flex-end;
+  cursor: url(../../../images/__cursor.svg), pointer;
 }
 
 .profile__edit-button:hover {
@@ -17,7 +18,10 @@
 
 @media screen and (max-width: 425px) {
   .profile__edit-button {
-    align-self: flex-end;
+    /* Этот стиль является дублем, поскольку в правиле выше (это может быть медиазапрос или базовое правило) есть стиль с этим же значением.
+Если задать правило в медиа-запросе с (max-width: 1280), то оно будет действовать на любом разрешении от 0px до 1280px, если его не перепишет другой медиа-запрос (например, max-width: 1024), тогда на разрешении от 0 до 1024px будет действовать новое правило, но на разрешениях от 1024px до 1280px все еще будет действовать первое правило.
+Дубль по сути повторяет то же самое правило, поэтому дубль необходимо удалить - тогда правило будет браться из медиа-запроса выше. */
+    /* align-self: flex-end; */
     background-size: 7.5px;
     width: 18px;
     height: 18px;

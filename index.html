@@ -5,15 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="pages/index.css">
-  <title>Title</title>
+  <title>Место</title>
 </head>
 <body class="page">
   <div class="page__container">
     <!-- header -->
     <header class="header page__header section">
-      <div class="logo header__logo">
-        <a href="#" class="logo__image"></a>
-      </div>
+      <!-- <div class="logo header__logo"> -->
+         <!-- Этот див лишний - внутри всего один дочерний элемент, такой див нужно удалить, а класс logo использовать у ссылки со всеми необходимыми стилями -->
+        <a href="#" class="logo__image logo header__logo"></a>
+      <!-- </div> -->
     </header>
     <main class="content">
       <!-- profile -->
@@ -21,12 +22,13 @@
         <div class="profile__container">
           <img src="images/__avatar.jpg" alt="Аватар" class="profile__avatar">
           <div class="profile__description">
+            <!-- TODO добавить в свойство тайтла магические text-overflow и white-space и overflow: hidden; -->
             <h1 class="name profile__title">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button"></button>
+            <button class="profile__edit-button" type="button"></button>
             <p class="job profile__subtitle">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button section__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <section class="elements section content__section">
         <!-- elements -->
@@ -41,35 +43,35 @@
           <img src="images/__elbrus.jpg" alt="Закатный пейзаж на фоне гор" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="like-button"></button>
+            <button class="like-button" type="button"></button>
           </div>
         </article>
         <article class="element">
           <img src="images/__dombai.jpg" alt="Заснеженные вершины гор" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="like-button"></button>
+            <button class="like-button" type="button"></button>
           </div>
         </article>
         <article class="element">
           <img src="images/__elbrus.jpg" alt="Закатный пейзаж на фоне гор" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="like-button"></button>
+            <button class="like-button" type="button"></button>
           </div>
         </article>
         <article class="element">
           <img src="images/__dombai.jpg" alt="Заснеженные вершины гор" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="like-button"></button>
+            <button class="like-button" type="button"></button>
           </div>
         </article>
         <article class="element">
           <img src="images/__karachaevsk.jpg" alt="Древняя крепость в горах летом" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Карачаево-Черкесская республика</h2>
-            <button class="like-button"></button>
+            <button class="like-button" type="button"></button>
           </div>
         </article>
       </section>
@@ -81,12 +83,16 @@
     <!-- popup -->
     <section class="popup">
       <div class="popup__container">
-        <img src="images/__close-icon.svg" alt="Закрыть" class="popup__close-icon">
-        <form class="form">
+        <!-- Это кнопка - нужно использовать специальный тег с атрибутом type -->
+        <button type="button" class="popup__close-icon"></button>
+        <!-- <img src="images/__close-icon.svg" alt="Закрыть" class="popup__close-icon"> -->
+        <form class="form" name="form">
           <div class="form__main-container">
             <h2 class="form__heading">Редактировать профиль</h2>
-            <input type="text" class="form__item form__name-input">
-            <input type="text" class="form__item form__job-input">
+            <!-- Необходимо добавить инпутам атрибут name, он используется для отправки данных на сервер
+Инпуты внешне однаковые, поэтому должен быть один общий класс. Для выбора их в js каждому инпуту нужно задать свой класс-модификатор типа ключ-значение popup__input_тип_значение. Задать модификаторам папки и файлы в css не нужно, эти модификаторы используются только в js -->
+            <input type="text" class="form__item popup__input_type_name" name="name">
+            <input type="text" class="form__item popup__input_type_job" name="job">
             <button type="submit" class="save-button form__save-button">Сохранить</button>
           </div>
         </form>
