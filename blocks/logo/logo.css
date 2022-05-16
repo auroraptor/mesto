@@ -1,6 +1,12 @@
 .logo {
-  width: 142px;
-  height: 33px;
+  position: relative;
+  background-image: url(../../../images/__logo_color_white.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 142px;
+  height: calc(100vw * (33 / 142));
+  max-height: 33px;
 }
 
 @media screen and (max-width: 1280px) {
