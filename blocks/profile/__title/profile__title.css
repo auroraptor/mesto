@@ -2,9 +2,14 @@
   grid-area: ⭐️;
   margin: 0;
   padding-top: 21px;
+  /* align-self: flex-end; */
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* overflow-y: visible; */
+  overflow: hidden;
 }
 
 @media (max-width: 425px) {

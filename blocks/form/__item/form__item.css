@@ -1,5 +1,4 @@
 .form__item {
-/* Чтобы задать прозрачность цвету, нужно перевести цвет в rgba и добавить прозрачность последним значением */
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   border-top: none;
   border-left: none;
@@ -9,10 +8,13 @@
   font-size: 14px;
   line-height: 17px;
   margin-top: 17px;
-  padding: 13px 0;
-  height: 14px;
+  padding: 9px 0 10px;
 }
-
+@media (max-width: 425px) {
+  .form__item {
+    padding: 9px 0 13px;
+  }
+}
 @media (max-width: 1280px) {
   .form__item {
     width: calc(238px + ((100vw - 320px) / (1280 - 320)) * (358 - 238));

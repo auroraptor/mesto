@@ -1,5 +1,6 @@
 .profile__description {
   display: grid;
+  align-items: baseline;
   grid-template-columns:1fr 24px;
   grid-template-rows: repeat(2, 60px);
   column-gap: 18px;
