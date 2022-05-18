@@ -3,7 +3,7 @@
   align-items: baseline;
   /* grid-template-columns:1fr 24px; */
   grid-template-columns: repeat(2, max-content);
-  /* grid-template-rows: repeat(2, 60px); */
+  grid-template-rows: repeat(2, 60px);
   column-gap: 18px;
   grid-template-areas:
   '⭐️ 🖊'
