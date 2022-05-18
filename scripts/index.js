@@ -10,8 +10,8 @@ const saveButton = popup.querySelector(".save-button");
 // Найти форму в DOM
 const formElement = document.querySelector('.form');
 // Найти поля формы в DOM
-const nameInput = formElement.querySelector('.form__input_name_name');
-const jobInput = formElement.querySelector('.form__input_name_job');
+const nameInput = formElement.querySelector('.form__item_input_name');
+const jobInput = formElement.querySelector('.form__item_input_job');
 // Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
 const name = profile.querySelector('.name');
 const job = profile.querySelector('.job');

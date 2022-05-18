@@ -1,5 +1,6 @@
 .profile__description {
   display: grid;
+  /* align-items: baseline; */
   align-items: baseline;
   /* grid-template-columns:1fr 24px; */
   grid-template-columns: repeat(2, max-content);
