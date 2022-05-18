@@ -10,6 +10,7 @@
   text-align: center;
   color: #FFFFFF;
   margin-top: 48px;
+  cursor: url(../../../images/__cursor.svg), pointer;
 }
 
 .form__save-button:hover {

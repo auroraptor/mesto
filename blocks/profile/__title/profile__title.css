@@ -10,6 +10,7 @@
   white-space: nowrap;
   /* overflow-y: visible; */
   overflow: hidden;
+  max-width: 294px;
 }
 
 @media (max-width: 425px) {
