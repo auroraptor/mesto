@@ -39,9 +39,7 @@ const elements = document.querySelector('.elements');
 
 initialCards.forEach( item => {
   // клонировать содержимое тега template
-
   let cardElement = card.querySelector('.element').cloneNode(true);
-
   //наполнить содержимым
   cardElement.querySelector('.element__photo').src = item.link;
   cardElement.querySelector('.element__title').textContent = item.name;
