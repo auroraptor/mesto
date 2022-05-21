@@ -1,6 +1,56 @@
 // console.log('hello world');
 
-// найти профиль и поп-ап в DOM
+// При загрузке на странице должно быть 6 карточек, которые добавит JavaScript. Их названия и фотографии выберите сами или возьмите готовый массив:
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+// получить элемент template
+// достучаться до содержимого, обратившись к свойству content
+const card = document.querySelector('#card').content;
+console.log(card); //+
+const elements = document.querySelector('.elements');
+
+
+// а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
+
+initialCards.forEach( item => {
+  // клонировать содержимое тега template
+
+  let cardElement = card.querySelector('.element').cloneNode(true);
+
+  //наполнить содержимым
+  cardElement.querySelector('.element__photo').src = item.link;
+  cardElement.querySelector('.element__title').textContent = item.name;
+  // отобразить на странице
+  elements.append(cardElement);
+});
+
+
+// найти профиль секцию элементов поп-ап в DOM
 const profile = document.querySelector('.profile');
 const popup = document.querySelector('.popup');
 // найти кнопкпи в DOM
@@ -16,6 +66,7 @@ const jobInput = formElement.querySelector('.form__item_input_job');
 const name = profile.querySelector('.name');
 const job = profile.querySelector('.job');
 
+//ФУНКЦИИ
 // функция togglePopup манипулирует css-классом видимости попапа
 function togglePopup() {
   popup.classList.toggle('popup_opened');

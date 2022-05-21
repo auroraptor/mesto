@@ -15,7 +15,7 @@
     </header>
     <main class="content">
       <!-- profile -->
-      <section class="profile section content__section content__profile">
+       <section class="profile section content__section content__profile">
         <div class="profile__container">
           <img src="images/__avatar.jpg" alt="Аватар" class="profile__avatar">
           <div class="profile__description">
@@ -27,8 +27,9 @@
         <button class="profile__add-button" type="button" aria-label="Добавить"></button>
       </section>
       <section class="elements section content__section">
+        <!-- ниже код, который я использовала в предыдущей проектной работе -->
         <!-- elements -->
-        <article class="element">
+         <!-- <article class="element">
           <img src="images/__karachaevsk.jpg" alt=" в горах летом" class="element__photo">
           <div class="element__container">
             <h2 class="element__title">Карачаевск</h2>
@@ -70,7 +71,7 @@
             <button class="like-button" type="button"></button>
           </div>
         </article>
-      </section>
+      </section> -->
     </main>
     <!-- footer -->
     <footer class="footer section">
@@ -91,6 +92,17 @@
       </div>
     </section>
   </div>
+<!-- это заготовка верстки, содержимое не отобразиться -->
+  <template id="card">
+    <article class="element">
+          <img src="#" alt="Фото" class="element__photo">
+          <div class="element__container">
+            <h2 class="element__title"></h2>
+            <button class="like-button"></button>
+          </div>
+    </article>
+  </template>
+
   <script src="scripts/index.js"></script>
 </body>
 </html>
