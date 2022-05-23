@@ -31,7 +31,6 @@ const initialCards = [
 // получить элемент template
 // достучаться до содержимого, обратившись к свойству content
 const card = document.querySelector('#card').content;
-console.log(card); //+
 const elements = document.querySelector('.elements');
 
 
@@ -51,30 +50,62 @@ initialCards.forEach( item => {
 // найти профиль секцию элементов поп-ап в DOM
 const profile = document.querySelector('.profile');
 const popup = document.querySelector('.popup');
+const imposter = document.querySelector('.imposter');
 // найти кнопкпи в DOM
 const editButton = profile.querySelector('.profile__edit-button');
+// TODO переписать функцию так чтобы все кнопки с этим классом работали так
+// const closeIcon = popup.querySelector(".popup__close-icon");
+// TODO переписать функецию так чтобы она со всеми кнопками работала
+
+// const closeIcon = popup.querySelector(".popup__close-icon");
 const closeIcon = popup.querySelector(".popup__close-icon");
+// const closeIcons = document.querySelectorAll('.popup__close-icon');
+// closeIcons.forEach( item => {
+//   item.closest.classList.add('popup_opened');
+// });
+const closeIconNewItemForm = document.querySelector('.new-item-form__close-icon');
+console.log(closeIconNewItemForm);
+
 const saveButton = popup.querySelector(".save-button");
+const addButton = profile.querySelector('.add-button');
+console.log(addButton); //+
 // Найти форму в DOM
 const formElement = document.querySelector('.form');
+const newItemForm = document.querySelector('.new-item-form');
+console.log(newItemForm); //+
 // Найти поля формы в DOM
 const nameInput = formElement.querySelector('.form__item_input_name');
 const jobInput = formElement.querySelector('.form__item_input_job');
+const placeInput = newItemForm.querySelector('.form__item_input_place');
+const linkInput = newItemForm.querySelector('.form__item_input_link');
+console.log(placeInput, linkInput); //+
+
+
+// const placeInput =
 // Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
 const name = profile.querySelector('.name');
 const job = profile.querySelector('.job');
 
+// наполнить поля формы new-item значениями по умолчанию
+// placeInput.value = 'Название';
+
 //ФУНКЦИИ
-// функция togglePopup манипулирует css-классом видимости попапа
+// функция togglePopup манипулирует css-классом видимости попапа TODO переписать функцию DRY чтобы toggleElem все 3 попапа открывала
 function togglePopup() {
   popup.classList.toggle('popup_opened');
 }
+
+function toggleForm(element) {
+  element.classList.toggle('popup_opened');
+}
+
 // функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице
 function openedForm() {
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
   //  внести вызов функции togglePopup
-  togglePopup();
+  // togglePopup();
+  toggleForm(popup);
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
@@ -87,7 +118,8 @@ function formSubmitHandler (evt) {
     name.textContent = nameInputValue;
     job.textContent = jobInputValue;
 
-    togglePopup();
+    // togglePopup();
+    toggleForm(popup);
 }
 
 // Пока что нужно удалить или закомментировать весь функционал, связанный с лайками. Он будет рассмотрен подробно уже в следующем спринте
@@ -108,7 +140,25 @@ function formSubmitHandler (evt) {
 // слушатель клика кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
 editButton.addEventListener('click', openedForm); // передавать в слушатель событий editButton вместо функции переключения модификатора
-closeIcon.addEventListener('click', togglePopup);
+// closeIcon.addEventListener('click', togglePopup);
+closeIcon.addEventListener('click', () =>
+{
+  toggleForm(popup)
+});
+
 // Прикрепить обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
+
+// начинаю слушать кнопку add-button
+
+addButton.addEventListener('click', () => {
+  toggleForm(imposter);
+  // imposter.classList.toggle('popup_opened');
+});
+
+closeIconNewItemForm.addEventListener('click', () => {
+  toggleForm(imposter);
+  // imposter.classList.toggle('popup_opened');
+
+});

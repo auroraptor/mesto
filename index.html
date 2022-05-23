@@ -24,7 +24,7 @@
             <p class="job profile__subtitle">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button" type="button" aria-label="Добавить"></button>
+        <button class="profile__add-button add-button" type="button" aria-label="Добавить"></button>
       </section>
       <section class="elements section content__section">
         <!-- ниже код, который я использовала в предыдущей проектной работе -->
@@ -90,7 +90,22 @@
           </div>
         </form>
       </div>
+
     </section>
+
+    <div class="imposter">
+      <div class="popup__container">
+        <button type="button" class="popup__close-icon new-item-form__close-icon" aria-label="Закрыть"></button>
+        <form class="form form_new-item new-item-form" name="new-item">
+          <!-- <div class="form__main-container"> -->
+            <label for="" class="form__heading">Новое место</label>
+            <input type="text" class="form__item form__item_input_place" value="Название">
+            <input type="text" class="form__item form__item_input_link" value="Ссылка на картинку">
+            <button type="submit" class="form__submit-button">Создать</button>
+          <!-- </div> -->
+        </form>
+      </div>
+    </div>
   </div>
 <!-- это заготовка верстки, содержимое не отобразиться -->
   <template id="card">
