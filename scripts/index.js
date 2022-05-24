@@ -1,6 +1,41 @@
 // console.log('hello world');
 
-// При загрузке на странице должно быть 6 карточек, которые добавит JavaScript. Их названия и фотографии выберите сами или возьмите готовый массив:
+const profile = document.querySelector('.profile'); // профиль
+const popup = document.querySelector('.popup'); // секция поп-ап которую надо из секции превратить в div;
+const imposter = document.querySelector('.imposter'); // а эт второй div в котором форма добавления карточк;
+// найти кнопкпи в DOM
+const editButton = profile.querySelector('.profile__edit-button');
+// TODO переписать функцию так чтобы все кнопки с этим классом работали так
+// const closeIcon = popup.querySelector(".popup__close-icon");
+
+// const closeIcon = popup.querySelector(".popup__close-icon");
+const closeIcon = popup.querySelector(".popup__close-icon");
+
+const card = document.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
+const elements = document.querySelector('.elements');
+
+const closeIconNewItemForm = document.querySelector('.new-item-form__close-icon');
+console.log(closeIconNewItemForm);
+
+const saveButton = popup.querySelector(".save-button");
+const addButton = profile.querySelector('.add-button');
+console.log(addButton); //+
+// Найти форму в DOM
+const formElement = document.querySelector('.form');
+const newItemForm = document.querySelector('.new-item-form');
+console.log(newItemForm); //+
+// Найти поля формы в DOM
+const nameInput = formElement.querySelector('.form__item_input_name');
+const jobInput = formElement.querySelector('.form__item_input_job');
+const placeInput = newItemForm.querySelector('.form__item_input_place');
+const linkInput = newItemForm.querySelector('.form__item_input_link');
+console.log(placeInput, linkInput); //+
+// наполнить поля формы new-item значениями по умолчанию
+// placeInput.value = 'Название';
+// Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
+const name = profile.querySelector('.name');
+const job = profile.querySelector('.job');
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -28,13 +63,6 @@ const initialCards = [
   }
 ];
 
-// получить элемент template
-// достучаться до содержимого, обратившись к свойству content
-const card = document.querySelector('#card').content;
-const elements = document.querySelector('.elements');
-
-
-// а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
 
 initialCards.forEach( item => {
   // клонировать содержимое тега template
@@ -44,50 +72,7 @@ initialCards.forEach( item => {
   cardElement.querySelector('.element__title').textContent = item.name;
   // отобразить на странице
   elements.append(cardElement);
-});
-
-
-// найти профиль секцию элементов поп-ап в DOM
-const profile = document.querySelector('.profile');
-const popup = document.querySelector('.popup');
-const imposter = document.querySelector('.imposter');
-// найти кнопкпи в DOM
-const editButton = profile.querySelector('.profile__edit-button');
-// TODO переписать функцию так чтобы все кнопки с этим классом работали так
-// const closeIcon = popup.querySelector(".popup__close-icon");
-// TODO переписать функецию так чтобы она со всеми кнопками работала
-
-// const closeIcon = popup.querySelector(".popup__close-icon");
-const closeIcon = popup.querySelector(".popup__close-icon");
-// const closeIcons = document.querySelectorAll('.popup__close-icon');
-// closeIcons.forEach( item => {
-//   item.closest.classList.add('popup_opened');
-// });
-const closeIconNewItemForm = document.querySelector('.new-item-form__close-icon');
-console.log(closeIconNewItemForm);
-
-const saveButton = popup.querySelector(".save-button");
-const addButton = profile.querySelector('.add-button');
-console.log(addButton); //+
-// Найти форму в DOM
-const formElement = document.querySelector('.form');
-const newItemForm = document.querySelector('.new-item-form');
-console.log(newItemForm); //+
-// Найти поля формы в DOM
-const nameInput = formElement.querySelector('.form__item_input_name');
-const jobInput = formElement.querySelector('.form__item_input_job');
-const placeInput = newItemForm.querySelector('.form__item_input_place');
-const linkInput = newItemForm.querySelector('.form__item_input_link');
-console.log(placeInput, linkInput); //+
-
-
-// const placeInput =
-// Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
-const name = profile.querySelector('.name');
-const job = profile.querySelector('.job');
-
-// наполнить поля формы new-item значениями по умолчанию
-// placeInput.value = 'Название';
+}); // а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
 
 //ФУНКЦИИ
 // функция togglePopup манипулирует css-классом видимости попапа TODO переписать функцию DRY чтобы toggleElem все 3 попапа открывала
@@ -97,7 +82,7 @@ function togglePopup() {
 
 function toggleForm(element) {
   element.classList.toggle('popup_opened');
-}
+} // функция toggleForm делает все то же что и togglePopup только не привязана к конкретному попапу
 
 // функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице
 function openedForm() {
@@ -138,27 +123,29 @@ function formSubmitHandler (evt) {
 // toggleLike(likeButtons);
 
 // слушатель клика кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
+
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
+
 editButton.addEventListener('click', openedForm); // передавать в слушатель событий editButton вместо функции переключения модификатора
-// closeIcon.addEventListener('click', togglePopup);
-closeIcon.addEventListener('click', () =>
-{
-  toggleForm(popup)
-});
 
 // Прикрепить обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
 
 // начинаю слушать кнопку add-button
-
 addButton.addEventListener('click', () => {
   toggleForm(imposter);
   // imposter.classList.toggle('popup_opened');
 });
 
+// TODO переписать функецию так чтобы она со всеми кнопками работала
+// Смотри, когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
+closeIcon.addEventListener('click', () =>
+{
+  toggleForm(popup)
+});
+
 closeIconNewItemForm.addEventListener('click', () => {
   toggleForm(imposter);
   // imposter.classList.toggle('popup_opened');
-
 });
