@@ -77,8 +77,8 @@
     <footer class="footer section">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <!-- popup -->
-    <section class="popup">
+    <!-- popup исправлен section на div-->
+    <div class="popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
         <form class="form" name="form">
@@ -90,19 +90,18 @@
           </div>
         </form>
       </div>
-
-    </section>
-
-    <div class="imposter">
+    </div>
+<!-- окей, я пришла сюда и теперь пытаюсь понять что здесь написано и что мне делать дальше а теперь мне надо все классы которые я черт знает где написала принести в отдельную папку imposter -->
+    <div class="imposter popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon new-item-form__close-icon" aria-label="Закрыть"></button>
-        <form class="form form_new-item new-item-form" name="new-item">
-          <!-- <div class="form__main-container"> -->
+        <form class="form form_new-item" name="new-item">
+          <div class="form__main-container">
             <label for="" class="form__heading">Новое место</label>
-            <input type="text" class="form__item form__item_input_place" value="Название">
-            <input type="text" class="form__item form__item_input_link" value="Ссылка на картинку">
+            <input type="text" class="form__item form__item_input_place" placeholder="Название" name="place">
+            <input type="text" class="form__item form__item_input_link" placeholder="Ссылка на картинку" name="link">
             <button type="submit" class="form__submit-button">Создать</button>
-          <!-- </div> -->
+          </div>
         </form>
       </div>
     </div>

@@ -20,3 +20,7 @@
     width: calc(238px + ((100vw - 320px) / (1280 - 320)) * (358 - 238));
   }
 }
+
+::placeholder {
+  color: #c4c4c4;
+}

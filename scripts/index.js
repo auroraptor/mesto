@@ -1,38 +1,26 @@
 // console.log('hello world');
 
-const profile = document.querySelector('.profile'); // профиль
-const popup = document.querySelector('.popup'); // секция поп-ап которую надо из секции превратить в div;
-const imposter = document.querySelector('.imposter'); // а эт второй div в котором форма добавления карточк;
-// найти кнопкпи в DOM
+const page = document.querySelector('.page');
+const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
+const popup = page.querySelector('.popup'); // секция поп-ап которую надо из секции превратить в div;
+const imposter = page.querySelector('.imposter'); // а эт второй div в котором форма добавления карточк;
 const editButton = profile.querySelector('.profile__edit-button');
-// TODO переписать функцию так чтобы все кнопки с этим классом работали так
 // const closeIcon = popup.querySelector(".popup__close-icon");
-
-// const closeIcon = popup.querySelector(".popup__close-icon");
-const closeIcon = popup.querySelector(".popup__close-icon");
-
-const card = document.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
-const elements = document.querySelector('.elements');
-
-const closeIconNewItemForm = document.querySelector('.new-item-form__close-icon');
-console.log(closeIconNewItemForm);
-
 const saveButton = popup.querySelector(".save-button");
 const addButton = profile.querySelector('.add-button');
-console.log(addButton); //+
-// Найти форму в DOM
-const formElement = document.querySelector('.form');
-const newItemForm = document.querySelector('.new-item-form');
-console.log(newItemForm); //+
-// Найти поля формы в DOM
+const elements = page.querySelector('.elements');
+const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
+
+// const closeIconNewItemForm = page.querySelector('.new-item-form__close-icon'); // а нужна ли она нам?
+
+const formElement = page.querySelector('.form'); // Найти форму в DOM
+const newItemForm = page.querySelector('.form_new-item');
+
 const nameInput = formElement.querySelector('.form__item_input_name');
 const jobInput = formElement.querySelector('.form__item_input_job');
 const placeInput = newItemForm.querySelector('.form__item_input_place');
 const linkInput = newItemForm.querySelector('.form__item_input_link');
-console.log(placeInput, linkInput); //+
-// наполнить поля формы new-item значениями по умолчанию
-// placeInput.value = 'Название';
-// Выбрать элементы профиля, куда должны быть вставлены input значения полей формы
+
 const name = profile.querySelector('.name');
 const job = profile.querySelector('.job');
 
@@ -65,13 +53,10 @@ const initialCards = [
 
 
 initialCards.forEach( item => {
-  // клонировать содержимое тега template
-  let cardElement = card.querySelector('.element').cloneNode(true);
-  //наполнить содержимым
-  cardElement.querySelector('.element__photo').src = item.link;
+  let cardElement = card.querySelector('.element').cloneNode(true); // клонировать содержимое тега template
+  cardElement.querySelector('.element__photo').src = item.link; //наполнить содержимым
   cardElement.querySelector('.element__title').textContent = item.name;
-  // отобразить на странице
-  elements.append(cardElement);
+  elements.append(cardElement); // отобразить на странице
 }); // а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
 
 //ФУНКЦИИ
@@ -96,15 +81,12 @@ function openedForm() {
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function formSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Получить значение полей jobInput и nameInput из свойства value
-    let nameInputValue = nameInput.value;
+    let nameInputValue = nameInput.value; // Получить значение полей jobInput и nameInput из свойства value
     let jobInputValue = jobInput.value;
-    // Вставить новые значения с помощью textContent
-    name.textContent = nameInputValue;
+    name.textContent = nameInputValue; // Вставить новые значения с помощью textContent
     job.textContent = jobInputValue;
 
-    // togglePopup();
-    toggleForm(popup);
+    toggleForm(popup); // togglePopup();
 }
 
 // Пока что нужно удалить или закомментировать весь функционал, связанный с лайками. Он будет рассмотрен подробно уже в следующем спринте
@@ -138,14 +120,27 @@ addButton.addEventListener('click', () => {
   // imposter.classList.toggle('popup_opened');
 });
 
-// TODO переписать функецию так чтобы она со всеми кнопками работала
 // Смотри, когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
-closeIcon.addEventListener('click', () =>
-{
-  toggleForm(popup)
-});
+let closeIcons = page.querySelectorAll('.popup__close-icon');
+console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach
+closeIcons.forEach( item => {
+  console.log(item);
+  item.addEventListener('click', (evt) => {
+    const eventTarget = evt.target;
+    const grandpa = eventTarget.parentElement.parentElement;
+    toggleForm(grandpa);
+  });
+}); // урааааа работает значит можно удалять лишнее обращения к отдельным крестикам!
 
-closeIconNewItemForm.addEventListener('click', () => {
-  toggleForm(imposter);
-  // imposter.classList.toggle('popup_opened');
-});
+// closeIcon.addEventListener('click', (evt) =>
+// {
+//   const eventTarget = evt.target;
+//   const grandpa = eventTarget.parentElement.parentElement;
+//   toggleForm(grandpa);
+// });
+
+// closeIconNewItemForm.addEventListener('click', () => {
+//   toggleForm(imposter);
+//   // imposter.classList.toggle('popup_opened');
+// });
+
