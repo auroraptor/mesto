@@ -15,6 +15,8 @@ const card = page.querySelector('#card').content; // получить элеме
 
 const formElement = page.querySelector('.form'); // Найти форму в DOM
 const newItemForm = page.querySelector('.form_new-item');
+let closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики
+
 
 const nameInput = formElement.querySelector('.form__item_input_name');
 const jobInput = formElement.querySelector('.form__item_input_job');
@@ -121,7 +123,6 @@ addButton.addEventListener('click', () => {
 });
 
 // Смотри, когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
-let closeIcons = page.querySelectorAll('.popup__close-icon');
 console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach
 closeIcons.forEach( item => {
   console.log(item);
