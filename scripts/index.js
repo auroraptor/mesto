@@ -53,21 +53,55 @@ const initialCards = [
   }
 ];
 
+// пора уже создавать функцию renderCard
+function renderCard(name, link) {
+  let cardElement = card.querySelector('.element').cloneNode(true);
+  let photo = cardElement.querySelector('.element__photo');
+  let title = cardElement.querySelector('.element__title');
+  photo.src = link;
+  photo.alt = name;
+  title.textContent = name;
 
-initialCards.forEach( item => {
-  let cardElement = card.querySelector('.element').cloneNode(true); // клонировать содержимое тега template
-  cardElement.querySelector('.element__photo').src = item.link; //наполнить содержимым
-  cardElement.querySelector('.element__photo').alt = item.name;
-  cardElement.querySelector('.element__title').textContent = item.name;
+  let like = cardElement.querySelector('.like-button');
+  like.addEventListener('click', () => {
+    like.classList.toggle('like-button_active');
+  })
 
-  // повесить лайк и сюда?
-  let likeButton = cardElement.querySelector('.like-button');
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('like-button_active');
+  let move = cardElement.querySelector('.element__delete-button');
+  move.addEventListener('click', () => {
+    let item = move.closest('.element');
+    item.remove();
   });
 
-  elements.append(cardElement); // отобразить на странице
-}); // а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
+  elements.prepend(cardElement);
+}
+// renderCard('Холмогорский район', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'); //+
+
+initialCards.reverse().forEach( item => {
+  let name = item.name;
+  let link = item.link;
+  renderCard(name, link);
+});
+// initialCards.forEach( item => {
+//   let cardElement = card.querySelector('.element').cloneNode(true); // клонировать содержимое тега template
+//   cardElement.querySelector('.element__photo').src = item.link; //наполнить содержимым
+//   cardElement.querySelector('.element__photo').alt = item.name;
+//   cardElement.querySelector('.element__title').textContent = item.name;
+
+//   // повесить лайк и сюда?
+//   let likeButton = cardElement.querySelector('.like-button');
+//   likeButton.addEventListener('click', () => {
+//     likeButton.classList.toggle('like-button_active');
+//   });
+//   // ну и удалим заодно
+//   const deleteButton = cardElement.querySelector('.element__delete-button');
+//   deleteButton.addEventListener('click', () => {
+//     let item = deleteButton.closest('.element'); //метод closest возвращает ближайший родительский элемент с переданным селектором.
+//     item.remove();
+//   });
+
+//   elements.append(cardElement); // отобразить на странице
+// }); // а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
 
 //ФУНКЦИИ
 // функция togglePopup манипулирует css-классом видимости попапа TODO переписать функцию DRY чтобы toggleElem все 3 попапа открывала
@@ -126,23 +160,30 @@ function newItemSubmitHandler(evt) {
 
   let newLocationValue = newLocation.value; // получила значения полей
   let newLinkValue = newLink.value;
+  renderCard(newLocationValue, newLinkValue);
   // клонирую template
-  let cardElement = card.querySelector('.element').cloneNode(true);
-  // наполняю сожержимым
-  cardElement.querySelector('.element__title').textContent = newLocationValue;
-  cardElement.querySelector('.element__photo').src = newLinkValue;
-  cardElement.querySelector('.element__photo').alt = newLocationValue;
-  // а может здесь повесить обработчик клика?
-  let likeButton = cardElement.querySelector('.like-button');
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('like-button_active');
-  });
+  // let cardElement = card.querySelector('.element').cloneNode(true);
+  // // наполняю сожержимым
+  // cardElement.querySelector('.element__title').textContent = newLocationValue;
+  // cardElement.querySelector('.element__photo').src = newLinkValue;
+  // cardElement.querySelector('.element__photo').alt = newLocationValue;
+  // // а может здесь повесить обработчик клика?
+  // let likeButton = cardElement.querySelector('.like-button');
+  // likeButton.addEventListener('click', () => {
+  //   likeButton.classList.toggle('like-button_active');
+  // });
+  // // и тут надо удалять еще
+  // const deleteButton = cardElement.querySelector('.element__delete-button');
+  // deleteButton.addEventListener('click', () => {
+  //   let item = deleteButton.closest('.element'); //метод closest возвращает ближайший родительский элемент с переданным селектором.
+  //   item.remove();
+  // }); // все это надо не дублировать а вынести в отдельную функцию renderCard
 
-  elements.prepend(cardElement);
+  // elements.prepend(cardElement);
 
   toggleForm(imposter);
 
-  console.log(elements);
+  // console.log(elements);
 }
 
 newItemButtonSubmit.addEventListener('click', newItemSubmitHandler);
@@ -153,7 +194,7 @@ closeIcons.forEach( item => {
   console.log(item);
   item.addEventListener('click', (evt) => {
     const eventTarget = evt.target;
-    const grandpa = eventTarget.parentElement.parentElement;
+    const grandpa = eventTarget.parentElement.parentElement; //метод closest возвращает ближайший родительский элемент с переданным селектором. попробовать его здесь
     toggleForm(grandpa);
   });
 }); // урааааа работает значит можно удалять лишнее обращения к отдельным крестикам!
