@@ -7,14 +7,14 @@ const imposter = page.querySelector('.imposter'); // а эт второй div в
 const editButton = profile.querySelector('.profile__edit-button');
 // const closeIcon = popup.querySelector(".popup__close-icon");
 const saveButton = popup.querySelector(".save-button");
-const addButton = profile.querySelector('.add-button');
+const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
 const elements = page.querySelector('.elements');
 const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
 
 // const closeIconNewItemForm = page.querySelector('.new-item-form__close-icon'); // а нужна ли она нам?
 
 const formElement = page.querySelector('.form'); // Найти форму в DOM
-const newItemForm = page.querySelector('.form_new-item');
+const newItemForm = imposter.querySelector('.form_new-item'); // а вот вторая форма imposter
 let closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики
 
 
@@ -57,21 +57,29 @@ const initialCards = [
 initialCards.forEach( item => {
   let cardElement = card.querySelector('.element').cloneNode(true); // клонировать содержимое тега template
   cardElement.querySelector('.element__photo').src = item.link; //наполнить содержимым
+  cardElement.querySelector('.element__photo').alt = item.name;
   cardElement.querySelector('.element__title').textContent = item.name;
+
+  // повесить лайк и сюда?
+  let likeButton = cardElement.querySelector('.like-button');
+  likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('like-button_active');
+  });
+
   elements.append(cardElement); // отобразить на странице
 }); // а вот отсюда можно методом forEach пройти по массиву initialCard и создать 6 элемнтов карт на страницу при помощи template
 
 //ФУНКЦИИ
 // функция togglePopup манипулирует css-классом видимости попапа TODO переписать функцию DRY чтобы toggleElem все 3 попапа открывала
-function togglePopup() {
-  popup.classList.toggle('popup_opened');
-}
+// function togglePopup() {
+//   popup.classList.toggle('popup_opened');
+// }
 
 function toggleForm(element) {
   element.classList.toggle('popup_opened');
 } // функция toggleForm делает все то же что и togglePopup только не привязана к конкретному попапу
 
-// функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице
+// функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
 function openedForm() {
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
@@ -81,7 +89,7 @@ function openedForm() {
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-function formSubmitHandler (evt) {
+function formSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     let nameInputValue = nameInput.value; // Получить значение полей jobInput и nameInput из свойства value
     let jobInputValue = jobInput.value;
@@ -90,23 +98,6 @@ function formSubmitHandler (evt) {
 
     toggleForm(popup); // togglePopup();
 }
-
-// Пока что нужно удалить или закомментировать весь функционал, связанный с лайками. Он будет рассмотрен подробно уже в следующем спринте
-// const likeButtons = document.querySelectorAll('.like-button'); // найти элементы кнопки лайка
-// function toggleLike(array) {
-//   // перебираем массив циклом
-//   for (let i = 0; i < array.length; i++) {
-//     // на каждый элемент массива вешаем обработчик клика
-//     let like = array[i];
-//     like.addEventListener('click', function() {
-//       like.classList.toggle('like-button_active');
-//     });
-//   }
-// }
-// // вызываем функцию обработчика клика всех сердечек
-// toggleLike(likeButtons);
-
-// слушатель клика кнопки редактировать, закрыть по клику на крестик в правом верхнем углу
 
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
 
@@ -122,8 +113,42 @@ addButton.addEventListener('click', () => {
   // imposter.classList.toggle('popup_opened');
 });
 
+console.log(imposter); //хочу посмотреть что у меня вообще лежит в самозванце
+console.log(newItemForm); // и в новой форме тоже интересн что есть
+// найти поля новой формы и кнопку submit и записать их в переменные
+const newLocation = newItemForm.querySelector('.form__item_input_place');
+const newLink = newItemForm.querySelector('.form__item_input_link');
+const newItemButtonSubmit = newItemForm.querySelector('.form__submit-button');
+console.log(newLocation, newLink, newItemButtonSubmit);// +
+// функция обработчика отправки формы для создания новой карточки
+function newItemSubmitHandler(evt) {
+  evt.preventDefault();
+
+  let newLocationValue = newLocation.value; // получила значения полей
+  let newLinkValue = newLink.value;
+  // клонирую template
+  let cardElement = card.querySelector('.element').cloneNode(true);
+  // наполняю сожержимым
+  cardElement.querySelector('.element__title').textContent = newLocationValue;
+  cardElement.querySelector('.element__photo').src = newLinkValue;
+  cardElement.querySelector('.element__photo').alt = newLocationValue;
+  // а может здесь повесить обработчик клика?
+  let likeButton = cardElement.querySelector('.like-button');
+  likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('like-button_active');
+  });
+
+  elements.prepend(cardElement);
+
+  toggleForm(imposter);
+
+  console.log(elements);
+}
+
+newItemButtonSubmit.addEventListener('click', newItemSubmitHandler);
+
 // Смотри, когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
-console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach
+// console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach
 closeIcons.forEach( item => {
   console.log(item);
   item.addEventListener('click', (evt) => {
@@ -132,16 +157,3 @@ closeIcons.forEach( item => {
     toggleForm(grandpa);
   });
 }); // урааааа работает значит можно удалять лишнее обращения к отдельным крестикам!
-
-// closeIcon.addEventListener('click', (evt) =>
-// {
-//   const eventTarget = evt.target;
-//   const grandpa = eventTarget.parentElement.parentElement;
-//   toggleForm(grandpa);
-// });
-
-// closeIconNewItemForm.addEventListener('click', () => {
-//   toggleForm(imposter);
-//   // imposter.classList.toggle('popup_opened');
-// });
-
