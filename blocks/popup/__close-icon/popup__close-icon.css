@@ -36,19 +36,21 @@
   '. close'
   'image .'
 } */
-
-.popup__figure {
-  grid-area: image;
-  /* position: relative; */
+.popup__yet-another-container {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 
 }
-.popup__grid {
-  /* position: relative; */
-}
+
 .popup__close-button {
   /* grid-area: close; */
-  /* position: absolute; */
-  position: relative;
+  position: static;
+  align-self: flex-end;
+  top: none;
+  left: none;
+  /* position: relative; */
   /* right: -8px; */
   /* top: -8px; */
 }
