@@ -4,6 +4,8 @@ const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
 const popup = page.querySelector('.popup'); // секция поп-ап которую надо из секции превратить в div;
 const imposter = page.querySelector('.imposter'); // а эт второй div в котором форма добавления карточк;
+const figure = page.querySelector('.imagine-imposter');
+console.log(figure); // а это третий div в котоором открытие картинки будет
 const editButton = profile.querySelector('.profile__edit-button');
 // const closeIcon = popup.querySelector(".popup__close-icon");
 const saveButton = popup.querySelector(".save-button");
@@ -73,9 +75,18 @@ function renderCard(name, link) {
     item.remove();
   });
 
+  photo.addEventListener('click', () => {
+    figure.classList.toggle('popup_opened'); //+ тут все работает идем дальше
+    let photoIsOpened = figure.querySelector('.popup__image');
+    let photoIsOpenedCaption = figure.querySelector('.popup__caption');
+    photoIsOpened.src = link;
+    photoIsOpened.alt = name;
+    photoIsOpenedCaption.textContent = name;
+  });
+
   elements.prepend(cardElement);
 }
-// renderCard('Холмогорский район', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'); //+
+// renderCard('Холмогорская корова моя любимая корова', 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'); //+
 
 initialCards.reverse().forEach( item => {
   let name = item.name;
@@ -198,3 +209,10 @@ closeIcons.forEach( item => {
     toggleForm(grandpa);
   });
 }); // урааааа работает значит можно удалять лишнее обращения к отдельным крестикам!
+
+
+// открытие попапа с картинкой будет здесь
+
+// const figure = page.querySelector('.imagine-imposter');
+// console.log(figure);
+

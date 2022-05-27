@@ -26,3 +26,36 @@
     left: calc(262px + ((100vw - 320px) / (1280 - 320)) * (438 - 262));
   }
 }
+
+/* Как вариант гридом, размеры ячейки с картинкой - min-content (по вертикали и горизонтали). gap не задаем, а крестику и подписи назначаем соответствующие отступы. */
+/* .popup_grid {
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  grid-template-rows: 1fr min-content;
+  grid-template-areas:
+  '. close'
+  'image .'
+} */
+
+.popup__figure {
+  grid-area: image;
+  /* position: relative; */
+
+}
+.popup__grid {
+  /* position: relative; */
+}
+.popup__close-button {
+  /* grid-area: close; */
+  /* position: absolute; */
+  position: relative;
+  /* right: -8px; */
+  /* top: -8px; */
+}
+
+.popup__image {
+  max-width: 75vw;
+  max-height: 75vh;
+
+}
+
