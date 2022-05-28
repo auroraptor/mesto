@@ -1,0 +1,6 @@
+.popup__close-button {
+  position: static;
+  align-self: flex-end;
+  top: none;
+  left: none;
+}
