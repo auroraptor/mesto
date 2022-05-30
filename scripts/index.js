@@ -2,17 +2,22 @@
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
-const popup = page.querySelector('.popup'); // секция поп-ап которую надо из секции превратить в div;
-const imposter = page.querySelector('.imposter'); // а эт второй div в котором форма добавления карточк будет лучше если он станет popup_type_;
-const figure = page.querySelector('.imagine-imposter'); // третий div
+const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
+const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
+const imageZoomedPopup = page.querySelector('.image-zoomed-popup'); // третий div
 const editButton = profile.querySelector('.profile__edit-button');
-const saveButton = popup.querySelector(".save-button");
+const saveButton = profilePopup.querySelector('.save-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
 const elements = page.querySelector('.elements'); // вот тут тоже не по бэм название но я не понимаю нейминг есть идея назвать эту переменную section
 const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
+// Желательно все константы (элементы DOM, которые никогда не меняются) были найдены 1 раз вверху файла. Элементы DOM, к которым идет обращение внутри JS-файла необходимо заранее вынести в переменную. Это хорошая практика, влияющая на производительность. Если сначала объявить переменную, внутри которой происходит поиск по DOM через querySelector. А после - обращаться к ней внутри, например, функции, то JavaScript не будет дважды выполнять поиск по DOM - элемент уже найден и находится в константе.
+const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
+const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
 const formElement = page.querySelector('.form'); // Найти форму в DOM
-const newItemForm = imposter.querySelector('.form_new-item'); // а вот вторая форма imposter
+const formNewItem = page.querySelector('.form_new-item');
+const newItemForm = newItemPopup.querySelector('.form_new-item'); // а вот вторая форма imposter
 const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики
+const popups = page.querySelectorAll('.popup'); // выбрали все разом как можно объединить обработчики крестиков 122-129 строки
 const nameInput = formElement.querySelector('.form__item_input_name');  // поля формы
 const jobInput = formElement.querySelector('.form__item_input_job');
 const newLocation = newItemForm.querySelector('.form__item_input_place'); // поля формы добавления новой карточки
@@ -48,85 +53,115 @@ const initialCards = [
   }
 ];
 
-// пора уже создавать функцию renderCard
-function renderCard(name, link) {
-  let cardElement = card.querySelector('.element').cloneNode(true);
-  let photo = cardElement.querySelector('.element__photo');
-  let title = cardElement.querySelector('.element__title');
+function createCard(name, link) { // создает новую карточку (а вот как один аргумент под именем item ей передавать я не поняла )
+  const cardElement = card.querySelector('.element').cloneNode(true);
+  const photo = cardElement.querySelector('.element__photo');
+  const title = cardElement.querySelector('.element__title');
   photo.src = link;
   photo.alt = name;
   title.textContent = name;
 
-  let like = cardElement.querySelector('.like-button'); // лайк
+  const like = cardElement.querySelector('.like-button'); // лайк
   like.addEventListener('click', () => {
     like.classList.toggle('like-button_active');
   })
 
-  let move = cardElement.querySelector('.element__delete-button'); // урна
+  const move = cardElement.querySelector('.element__delete-button'); // урна
   move.addEventListener('click', () => {
-    let item = move.closest('.element');
+    const item = move.closest('.element');
     item.remove();
   });
 
   photo.addEventListener('click', () => { // картинка
-    figure.classList.toggle('popup_opened'); //+ тут все работает идем дальше и это 7 строка;
-    let photoIsOpened = figure.querySelector('.popup__image'); // 7 строка 3 попап
-    let photoIsOpenedCaption = figure.querySelector('.popup__caption'); // 7 строка 3 попап
+    // imageZoomedPopup.classList.toggle('popup_opened'); //+ тут все работает идем дальше и это 7 строка;
+    openPopup(imageZoomedPopup);
     photoIsOpened.src = link;
     photoIsOpened.alt = name;
     photoIsOpenedCaption.textContent = name;
   });
-
-  elements.prepend(cardElement);
+  return cardElement;
 }
 
+// console.log(createCard());
+
+function renderCard(name, link) {
+  elements.prepend(createCard(name, link));
+}
+
+
+// Для создания новой карточки нужно сделать отдельную функцию createCard: она будет возвращать готовую карточку с уже установленными обработчиками через return, а вставлять в DOM там не нужно. Это нужно для того, чтобы можно было разделить логику вставки. Можно же вставлять карточку в начало с prepend, в конец с append, вообще не вставлять, а сделать массив готовых карточек, а потом уже вставить всё разом в DOM. И такой пункт есть в чек-листе. Скрин из него http://joxi.ru/xAeobK0cb8D1Gm На всякий случай повторюсь: в функции createCard вставлять карточку в DOM  не нужно.
+
+// .classList.add("popup_opened");  - вот эта операция происходит со всеми попапами, которые нужно открыть. Это значит, что нужно вынести эту логику в отдельную функцию openPopup
+function openPopup(popup) { // Она будет принимать в вызов любой попап
+  popup.classList.add('popup_opened'); //и добавлять ему класс popup_opened, открывая его. Это нужно исправить во всем коде проекта.
+}
+// Вот эта операция происходит со всеми попапами, которые нужно закрыть. Это значит, что нужно вынести эту логику в отдельную функцию closePopup:
+function closePopup(popup) { // Она будет принимать в вызов любой попап
+  popup.classList.remove('popup_opened'); // и удалять у него класс popup_opened, закрывая его. Это нужно исправить во всем коде проекта.
+}
+
+
 initialCards.reverse().forEach( item => {
-  let name = item.name;
-  let link = item.link;
+  const name = item.name;
+  const link = item.link;
   renderCard(name, link);
 });
 
 // когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
 // console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach
-closeIcons.forEach( item => {
-  console.log(item);
-  item.addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    const grandpa = eventTarget.parentElement.parentElement; //метод closest возвращает ближайший родительский элемент с переданным селектором. попробовать его здесь и так будет даже лучше
-    toggleForm(grandpa);
+// closeIcons.forEach( item => {
+//   // console.log(item);
+//   item.addEventListener('click', (evt) => {
+//     // const eventTarget = evt.target;
+//     // console.log(eventTarget.closest('.popup'));
+//     // const grandpa = eventTarget.parentElement.parentElement; //метод closest возвращает ближайший родительский элемент с переданным селектором. попробовать его здесь и так будет даже лучше Избегайте использования таких конструкций как .parentElement.parentElement - разметка может в любой момент измениться. Более гибким решением является метод .closest()
+//     // toggleForm(grandpa);
+//     closePopup(evt.target.closest('.popup'));
+//   });
+// }); // урааааа работает но можно и лучше всегда можно лучше
+// спасибо!
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+     if (evt.target.classList.contains('popup__close-icon')) {
+        closePopup(popup);
+      }
   });
-}); // урааааа работает но можно и лучше всегда можно лучше
-
-function toggleForm(element) {
-  element.classList.toggle('popup_opened');
-} // функция toggleForm манипулирует css-классом видимости попапа
+});
+// function toggleForm(element) {
+//   element.classList.toggle('popup_opened');
+// } // функция toggleForm манипулирует css-классом видимости попапа
 
 // функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
 function openedForm() {
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
-  toggleForm(popup); // 5 строка
+  openPopup(profilePopup);
+  // toggleForm(profilePopup); // 5 строка
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-function formSubmitHandler(evt) {
+// Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает. handleProfileFormSubmit
+function handleProfileFormSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    let nameInputValue = nameInput.value; // Получить значение полей jobInput и nameInput из свойства value
-    let jobInputValue = jobInput.value;
+    const nameInputValue = nameInput.value; // Получить значение полей jobInput и nameInput из свойства value
+    const jobInputValue = jobInput.value;
     name.textContent = nameInputValue; // Вставить новые значения с помощью textContent
     job.textContent = jobInputValue;
 
-    toggleForm(popup); // 5 строка
+    // toggleForm(profilePopup); // 5 строка
+    closePopup(profilePopup);
 }
 
 // функция обработчика отправки формы для создания новой карточки addNewItemSubmitHander
-function newItemSubmitHandler(evt) {
+// Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает addNewItemFormSubmit
+function addNewItemFormSubmit(evt) {
   evt.preventDefault();
 
-  let newLocationValue = newLocation.value; // получила значения полей
-  let newLinkValue = newLink.value;
+  const newLocationValue = newLocation.value; // получила значения полей
+  const newLinkValue = newLink.value;
   renderCard(newLocationValue, newLinkValue);
-  toggleForm(imposter); // 6 строка
+  // toggleForm(imposter); // 6 строка
+  closePopup(newItemPopup);
 }
 
 // TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
@@ -135,11 +170,13 @@ editButton.addEventListener('click', openedForm); // передавать в с�
 
 // Прикрепить обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', handleProfileFormSubmit);
 
 // начинаю слушать кнопку add-button
 addButton.addEventListener('click', () => {
-  toggleForm(imposter); // 6 строка
+  openPopup(newItemPopup);
+  // toggleForm(imposter); // 6 строка
 });
-// и слушаю кнопку создания нового айтема
-newItemButtonSubmit.addEventListener('click', newItemSubmitHandler);
+// и слушаю кнопку создания нового айтема Обработчик сабмита нужно навешивать только на тег form с событием submit, а не на кнопку сабмита с событием click, так как сабмит формы происходит ещё при нажатии Enter, и он не будет работать, если навесить обработчик клика на кнопку только. Это нужно исправить везде, где есть инпуты и форма
+// newItemButtonSubmit.addEventListener('click', addNewItemFormSubmit);
+formNewItem.addEventListener('submit', addNewItemFormSubmit);
