@@ -85,7 +85,7 @@
         <form class="form edit-profile-form" name="profile-form">
           <div class="form__main-container">
             <!-- а вот что нужно атрибуту формы я пока не поняла  -->
-            <label for="" class="form__heading">Редактировать профиль</label>
+            <label class="form__heading">Редактировать профиль</label>
             <input type="text" class="form__item form__item_input_name" name="name">
             <input type="text" class="form__item form__item_input_job" name="job">
             <!-- вот тут тоже единообразные названия кнопок нужны form__submit-button edit-profile-form__button и form__submit-button классы думаю по бэм тк по бэм из конспектов: кнопка «Отправить» — это часть веб-формы, вне формы она не используется. Элемент не может использоваться вне своего блока-родителя-->
@@ -96,16 +96,11 @@
     </div>
     <div class="popup new-item-popup">
       <div class="popup__container">
-<<<<<<< HEAD
-        <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-        <form class="form form_new-item" name="new-item">
-=======
         <button type="button" class="popup__close-icon new-item-form__close-icon" aria-label="Закрыть"></button>
         <!-- а не лучше ли назвать эту форму form_name_new-item хммм -->
         <form class="form new-item-form" name="new-item">
->>>>>>> develop
           <div class="form__main-container">
-            <label for="" class="form__heading ">Новое место</label>
+            <label class="form__heading ">Новое место</label>
             <input type="text" class="form__item form__item_input_place" placeholder="Название" name="place">
             <input type="text" class="form__item form__item_input_link" placeholder="Ссылка на картинку" name="link">
             <button type="submit" class="form__submit-button new-item-form__button">Создать</button>
@@ -127,10 +122,6 @@
 <!-- это заготовка верстки, содержимое не отобразится -->
   <template id="card">
     <article class="element">
-<<<<<<< HEAD
-=======
-      <!-- ах какая жалость что изменения кнопки потерялись 52e98b8 и пришлось повториться TODO узнать что делать когда заблудилась в двух ~~соснах~~ ветках принцип DRY присмотреться поближе -->
->>>>>>> develop
       <button class="element__delete-button"></button>
           <img src="#" alt="#" class="element__photo">
           <div class="element__container">
