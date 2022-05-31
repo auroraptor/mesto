@@ -77,37 +77,45 @@
     <footer class="footer section">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <!-- popup исправлен section на div-->
-    <div class="popup">
+    <!-- В каждом попапе должен быть класс popup,  а рядом с ним через пробел можно указать еще один класс для точного поиска его в DOM: popup profile-popup Вся идея того, что у похожих элементов должны быть одинаковые css-классы, заключается в том, что можно задавать одинаковые css-стили, создавать универсальные функции, осуществлять поиск похожих элементов и тд. Так же у попапов одинаковые селекторы должны быть для крестика, формы, инпутов, кнопки сабмита. -->
+    <!-- а правильно ли это дивами держать мб лучше сделать это тоже template элементами которые будут генериться только по нажатию на кнопки/картинку и не висеть на разметке тут хмммм TODO посмотреть почитать спросить про всплывающие окна -->
+    <div class="popup profile-popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-        <form class="form" name="form">
+        <form class="form edit-profile-form" name="profile-form">
           <div class="form__main-container">
-            <h2 class="form__heading">Редактировать профиль</h2>
+            <!-- а вот что нужно атрибуту формы я пока не поняла  -->
+            <label for="" class="form__heading">Редактировать профиль</label>
             <input type="text" class="form__item form__item_input_name" name="name">
             <input type="text" class="form__item form__item_input_job" name="job">
-            <button type="submit" class="save-button form__save-button">Сохранить</button>
+            <!-- вот тут тоже единообразные названия кнопок нужны form__submit-button edit-profile-form__button и form__submit-button классы думаю по бэм тк по бэм из конспектов: кнопка «Отправить» — это часть веб-формы, вне формы она не используется. Элемент не может использоваться вне своего блока-родителя-->
+            <button type="submit" class="form__submit-button edit-profile-form__button">Сохранить</button>
           </div>
         </form>
       </div>
     </div>
-<!-- окей, я пришла сюда и теперь пытаюсь понять что здесь написано и что мне делать дальше а теперь мне надо все классы которые я черт знает где написала принести в отдельную папку imposter -->
-    <div class="imposter popup">
+    <div class="popup new-item-popup">
       <div class="popup__container">
+<<<<<<< HEAD
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
         <form class="form form_new-item" name="new-item">
+=======
+        <button type="button" class="popup__close-icon new-item-form__close-icon" aria-label="Закрыть"></button>
+        <!-- а не лучше ли назвать эту форму form_name_new-item хммм -->
+        <form class="form new-item-form" name="new-item">
+>>>>>>> develop
           <div class="form__main-container">
-            <label for="" class="form__heading">Новое место</label>
+            <label for="" class="form__heading ">Новое место</label>
             <input type="text" class="form__item form__item_input_place" placeholder="Название" name="place">
             <input type="text" class="form__item form__item_input_link" placeholder="Ссылка на картинку" name="link">
-            <button type="submit" class="form__submit-button">Создать</button>
+            <button type="submit" class="form__submit-button new-item-form__button">Создать</button>
           </div>
         </form>
       </div>
     </div>
   </div>
   <!-- а вот здесь будет 3 окно которое открытие картинки и в нем лучше использовать тег figure -->
-  <div class="popup imagine-imposter">
+  <div class="popup image-zoomed-popup">
     <div class="popup__yet-another-container">
     <button class="popup__close-icon popup__close-button"></button>
     <figure class="popup__figure">
@@ -119,6 +127,10 @@
 <!-- это заготовка верстки, содержимое не отобразится -->
   <template id="card">
     <article class="element">
+<<<<<<< HEAD
+=======
+      <!-- ах какая жалость что изменения кнопки потерялись 52e98b8 и пришлось повториться TODO узнать что делать когда заблудилась в двух ~~соснах~~ ветках принцип DRY присмотреться поближе -->
+>>>>>>> develop
       <button class="element__delete-button"></button>
           <img src="#" alt="#" class="element__photo">
           <div class="element__container">
@@ -127,7 +139,6 @@
           </div>
     </article>
   </template>
-
   <script src="scripts/index.js"></script>
 </body>
 </html>
