@@ -7,6 +7,7 @@
   padding: 0;
   display: flex;
   background: rgba(0, 0, 0, 0);
+  background-image: url(../../../images/__move.svg);
   border: none;
   cursor: url(../../../images/__cursor.svg), pointer;
 }
