@@ -86,8 +86,8 @@
           <div class="form__main-container">
             <!-- а вот что нужно атрибуту формы я пока не поняла  -->
             <label for="" class="form__heading">Редактировать профиль</label>
-            <input type="text" class="form__item form__item_input_name" name="name">
-            <input type="text" class="form__item form__item_input_job" name="job">
+            <input type="text" class="form__item form__item_input_name" name="name" minlength="2" maxlength="40" required autocomplete="off">
+            <input type="text" class="form__item form__item_input_job" name="job" minlength="2" maxlength="200" required autocomplete="off">
             <!-- вот тут тоже единообразные названия кнопок нужны form__submit-button edit-profile-form__button и form__submit-button классы думаю по бэм тк по бэм из конспектов: кнопка «Отправить» — это часть веб-формы, вне формы она не используется. Элемент не может использоваться вне своего блока-родителя-->
             <button type="submit" class="form__submit-button edit-profile-form__button">Сохранить</button>
           </div>
@@ -101,8 +101,8 @@
         <form class="form new-item-form" name="new-item">
           <div class="form__main-container">
             <label for="" class="form__heading ">Новое место</label>
-            <input type="text" class="form__item form__item_input_place" placeholder="Название" name="place">
-            <input type="text" class="form__item form__item_input_link" placeholder="Ссылка на картинку" name="link">
+            <input type="text" class="form__item form__item_input_place" placeholder="Название" name="place" autocomplete="off">
+            <input type="text" class="form__item form__item_input_link" placeholder="Ссылка на картинку" name="link" autocomplete="off">
             <button type="submit" class="form__submit-button new-item-form__button">Создать</button>
           </div>
         </form>
