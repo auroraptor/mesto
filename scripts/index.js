@@ -1,5 +1,7 @@
 // console.log('hello world');
 
+// вспомнить всё или что я тут писала 10 дней спустя
+// ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера можно лучше -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
 const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
@@ -180,3 +182,4 @@ addButton.addEventListener('click', () => {
 // и слушаю кнопку создания нового айтема Обработчик сабмита нужно навешивать только на тег form с событием submit, а не на кнопку сабмита с событием click, так как сабмит формы происходит ещё при нажатии Enter, и он не будет работать, если навесить обработчик клика на кнопку только. Это нужно исправить везде, где есть инпуты и форма
 // newItemButtonSubmit.addEventListener('click', addNewItemFormSubmit);
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
+
