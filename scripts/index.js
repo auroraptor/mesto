@@ -55,7 +55,7 @@ const initialCards = [
   }
 ];
 
-function createCard(name, link) { // создает новую карточку (а вот как один аргумент под именем item ей передавать я не поняла )
+function createCard(name, link) { // создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
   const cardElement = card.querySelector('.element').cloneNode(true);
   const photo = cardElement.querySelector('.element__photo');
   const title = cardElement.querySelector('.element__title');
@@ -75,7 +75,6 @@ function createCard(name, link) { // создает новую карточку 
   });
 
   photo.addEventListener('click', () => { // картинка
-    // imageZoomedPopup.classList.toggle('popup_opened'); //+ тут все работает идем дальше и это 7 строка;
     openPopup(imageZoomedPopup);
     photoIsOpened.src = link;
     photoIsOpened.alt = name;
@@ -84,22 +83,54 @@ function createCard(name, link) { // создает новую карточку 
   return cardElement;
 }
 
-// console.log(createCard());
-
 function renderCard(name, link) {
   elements.prepend(createCard(name, link));
 }
 
-
-// Для создания новой карточки нужно сделать отдельную функцию createCard: она будет возвращать готовую карточку с уже установленными обработчиками через return, а вставлять в DOM там не нужно. Это нужно для того, чтобы можно было разделить логику вставки. Можно же вставлять карточку в начало с prepend, в конец с append, вообще не вставлять, а сделать массив готовых карточек, а потом уже вставить всё разом в DOM. И такой пункт есть в чек-листе. Скрин из него http://joxi.ru/xAeobK0cb8D1Gm На всякий случай повторюсь: в функции createCard вставлять карточку в DOM  не нужно.
-
-// .classList.add("popup_opened");  - вот эта операция происходит со всеми попапами, которые нужно открыть. Это значит, что нужно вынести эту логику в отдельную функцию openPopup
 function openPopup(popup) { // Она будет принимать в вызов любой попап
   popup.classList.add('popup_opened'); //и добавлять ему класс popup_opened, открывая его. Это нужно исправить во всем коде проекта.
+ // enableValidation(); // проверка
+
+  // вот эти строчки 95-99 нужны только чтобы 2 форма которая почему-то валидна (почему-то) имела неактивную кнопку в моменте первого открытия (если убрать этот код, то в момент первого открытия попапа форма валидна, а в след раз уже нет);
+  if (popup.classList.contains('new-item-popup')) {
+    const buttonElement = popup.querySelector('.popup__button');
+    buttonElement.setAttribute('disabled', 'disabled');
+    buttonElement.classList.add('popup__button_disabled');
+  }
+
+  document.addEventListener('keydown', escapeFromPopup);
+  document.addEventListener('click', missClick);
 }
-// Вот эта операция происходит со всеми попапами, которые нужно закрыть. Это значит, что нужно вынести эту логику в отдельную функцию closePopup:
+
+const escapeFromPopup = (evt) => {
+    if (evt.key === 'Escape') {
+      const popup = document.querySelector('.popup_opened');
+      closePopup(popup);
+    }
+};
+
+const missClick = (evt) => {
+  const popup = document.querySelector('.popup_opened');
+  if (evt.target === popup) {
+    closePopup(popup);
+  }
+}
+
 function closePopup(popup) { // Она будет принимать в вызов любой попап
-  popup.classList.remove('popup_opened'); // и удалять у него класс popup_opened, закрывая его. Это нужно исправить во всем коде проекта.
+  popup.classList.remove('popup_opened');
+
+  if (!popup.classList.contains('image-zoomed-popup')) {
+    const formElement = popup.querySelector('.popup__form');
+    const inputList = popup.querySelectorAll('.popup__input');
+    inputList.forEach( (inputElement) => {
+      hideInputError(formElement, inputElement);
+    });
+    formElement.reset(); // вот здесь еще скрывать сообщения об ошибках?
+  }
+
+  document.removeEventListener('keydown', escapeFromPopup);
+  document.removeEventListener('click', missClick);
+
 }
 
 
@@ -109,19 +140,6 @@ initialCards.reverse().forEach( item => {
   renderCard(name, link);
 });
 
-// когда идёт клик, в аргументы обработчику влетает браузерное событие - Event. У этого event есть поле target - элемент, по которому кликнули. В нашем случае - это будет кнопка с крестиком. Можно найти ближайший попап - это будет 100% именно сейчас открытый, и убрать класс именно у него.
-// console.log(closeIcons); // В NodeList элементы упорядочены, можно обратиться к свойству length и воспользоваться методом forEach -- вот так у меня было раньше! Комментарий МОЖНО ЛУЧШЕ делает лучше на строчках 123-129
-// closeIcons.forEach( item => {
-//   // console.log(item);
-//   item.addEventListener('click', (evt) => {
-//     // const eventTarget = evt.target;
-//     // console.log(eventTarget.closest('.popup'));
-//     // const grandpa = eventTarget.parentElement.parentElement; //метод closest возвращает ближайший родительский элемент с переданным селектором. попробовать его здесь и так будет даже лучше Избегайте использования таких конструкций как .parentElement.parentElement - разметка может в любой момент измениться. Более гибким решением является метод .closest()
-//     // toggleForm(grandpa);
-//     closePopup(evt.target.closest('.popup'));
-//   });
-// }); // урааааа работает но можно и лучше всегда можно лучше
-// спасибо!
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
      if (evt.target.classList.contains('popup__close-icon')) {
@@ -138,7 +156,6 @@ function openedForm() {
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
   openPopup(profilePopup);
-  // toggleForm(profilePopup); // 5 строка
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
@@ -177,7 +194,6 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 // начинаю слушать кнопку add-button
 addButton.addEventListener('click', () => {
   openPopup(newItemPopup);
-  // toggleForm(imposter); // 6 строка
 });
 // и слушаю кнопку создания нового айтема Обработчик сабмита нужно навешивать только на тег form с событием submit, а не на кнопку сабмита с событием click, так как сабмит формы происходит ещё при нажатии Enter, и он не будет работать, если навесить обработчик клика на кнопку только. Это нужно исправить везде, где есть инпуты и форма
 // newItemButtonSubmit.addEventListener('click', addNewItemFormSubmit);

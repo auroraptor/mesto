@@ -91,9 +91,7 @@
             <span class="popup__error name-error"></span>
             <input type="text" class="form__item form__item_input_job popup__input" name="job" minlength="2" maxlength="200" required autocomplete="off" id="job">
             <span class="popup__error job-error"></span>
-
-            <!-- вот тут тоже единообразные названия кнопок нужны form__submit-button edit-profile-form__button и form__submit-button классы думаю по бэм тк по бэм из конспектов: кнопка «Отправить» — это часть веб-формы, вне формы она не используется. Элемент не может использоваться вне своего блока-родителя-->
-            <button type="submit" class="form__submit-button edit-profile-form__button popup__button">Сохранить</button>
+            <button type="submit" class="form__submit-button edit-profile-form__button popup__button" value="disable" disabled>Сохранить</button>
           </div>
         </form>
       </div>
@@ -109,7 +107,7 @@
             <span class="popup__error place-error"></span>
             <input type="url" class="form__item form__item_input_link popup__input" placeholder="Ссылка на картинку" name="link" autocomplete="off" id="link">
             <span class="popup__error link-error"></span>
-            <button type="submit" class="form__submit-button new-item-form__button popup__button">Создать</button>
+            <button type="submit" class="form__submit-button new-item-form__button popup__button" value="disable" disabled>Создать</button>
           </div>
         </form>
       </div>
