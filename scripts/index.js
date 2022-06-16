@@ -1,7 +1,7 @@
 // console.log('hello world');
 
 // вспомнить всё или что я тут писала 10 дней спустя
-// ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера можно лучше -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
+// ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
 const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
@@ -54,7 +54,7 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
+// вот здесь был комментарий про деструктуризацию МОЖНО ЛУЧШЕ
 function createCard(name, link) { // создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
   const cardElement = card.querySelector('.element').cloneNode(true);
   const photo = cardElement.querySelector('.element__photo');
@@ -89,14 +89,13 @@ function renderCard(name, link) {
 
 function openPopup(popup) { // Она будет принимать в вызов любой попап
   popup.classList.add('popup_opened'); //и добавлять ему класс popup_opened, открывая его. Это нужно исправить во всем коде проекта.
- // enableValidation(); // проверка
 
-  // вот эти строчки 95-99 нужны только чтобы 2 форма которая почему-то валидна (почему-то) имела неактивную кнопку в моменте первого открытия (если убрать этот код, то в момент первого открытия попапа форма валидна, а в след раз уже нет);
-  if (popup.classList.contains('new-item-popup')) {
-    const buttonElement = popup.querySelector('.popup__button');
-    buttonElement.setAttribute('disabled', 'disabled');
-    buttonElement.classList.add('popup__button_disabled');
-  }
+  // вот эти строчки 95-99 нужны только чтобы 2 форма которая почему-то валидна (почему-то) имела неактивную кнопку в моменте первого открытия (если убрать этот код, то в момент первого открытия попапа форма валидна, а в след раз уже нет); уже не нужны, форма была и пустой валидна потому что в index.html я забыла указать requered CHICKEN GAME
+  // if (popup.classList.contains('new-item-popup')) {
+  //   const buttonElement = popup.querySelector('.popup__button');
+  //   buttonElement.setAttribute('disabled', 'disabled');
+  //   buttonElement.classList.add('popup__button_disabled');
+  // }
 
   document.addEventListener('keydown', escapeFromPopup);
   document.addEventListener('click', missClick);
@@ -104,7 +103,7 @@ function openPopup(popup) { // Она будет принимать в вызо�
 
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
-      const popup = document.querySelector('.popup_opened');
+      const popup = document.querySelector('.popup_opened'); // TODO вместо document найти ближайшего соседа события с заданным классом
       closePopup(popup);
     }
 };
@@ -119,20 +118,22 @@ const missClick = (evt) => {
 function closePopup(popup) { // Она будет принимать в вызов любой попап
   popup.classList.remove('popup_opened');
 
-  if (!popup.classList.contains('image-zoomed-popup')) {
-    const formElement = popup.querySelector('.popup__form');
-    const inputList = popup.querySelectorAll('.popup__input');
-    inputList.forEach( (inputElement) => {
-      hideInputError(formElement, inputElement);
-    });
-    formElement.reset(); // вот здесь еще скрывать сообщения об ошибках?
-  }
-
   document.removeEventListener('keydown', escapeFromPopup);
   document.removeEventListener('click', missClick);
-
 }
 
+const resetForm = (formElement) => {
+  const inputList = formElement.querySelectorAll('.popup__input');
+  inputList.forEach( (inputElement) => {
+    hideInputError(formElement, inputElement, {formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'});
+  });
+  formElement.reset();
+}
 
 initialCards.reverse().forEach( item => {
   const name = item.name;
@@ -147,12 +148,10 @@ popups.forEach((popup) => {
       }
   });
 });
-// function toggleForm(element) {
-//   element.classList.toggle('popup_opened');
-// } // функция toggleForm манипулирует css-классом видимости попапа
 
 // функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
 function openedForm() {
+  resetForm(formEditProfile);
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
   openPopup(profilePopup);
@@ -178,24 +177,17 @@ function addNewItemFormSubmit(evt) {
 
   const newLocationValue = newLocationInput.value; // получила значения полей
   const newLinkValue = newLinkInput.value;
+
   renderCard(newLocationValue, newLinkValue);
-  // toggleForm(imposter); // 6 строка
   closePopup(newItemPopup);
 }
 
-// TODO можно реализовать закрытие попапа по клику на любую область вокруг, см Livecooding "Работа с DOM" вторая часть после 80 минут
-
 editButton.addEventListener('click', openedForm); // передавать в слушатель событий editButton вместо функции переключения модификатора
-
-// Прикрепить обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-// начинаю слушать кнопку add-button
-addButton.addEventListener('click', () => {
-  openPopup(newItemPopup);
+addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
+  resetForm(formNewItem);
+  openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });
-// и слушаю кнопку создания нового айтема Обработчик сабмита нужно навешивать только на тег form с событием submit, а не на кнопку сабмита с событием click, так как сабмит формы происходит ещё при нажатии Enter, и он не будет работать, если навесить обработчик клика на кнопку только. Это нужно исправить везде, где есть инпуты и форма
-// newItemButtonSubmit.addEventListener('click', addNewItemFormSubmit);
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
 

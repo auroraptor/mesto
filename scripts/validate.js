@@ -5,42 +5,39 @@
 
 // начнём же -- нам нужны три функции isValid проверить валидность инпута, показать или скрыть ошибку
 
-const isValid = (formElement, inputElement) => {
+const isValid = (formElement, inputElement, object) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, object);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, object);
   }
 };
 
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, object) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
-  inputElement.classList.add('popup__input_type_error');
+  inputElement.classList.add(`${object['inputErrorClass']}`);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__error_visible');
+  errorElement.classList.add(`${object['errorClass']}`);
 }
 
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, object) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.classList.remove('popup__error_visible');
+  inputElement.classList.remove(`${object['inputErrorClass']}`);
+  errorElement.classList.remove(`${object['errorClass']}`);
   errorElement.textContent = '';
 };
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+const setEventListeners = (formElement, object) => {
+  const inputList = Array.from(formElement.querySelectorAll(`${object['inputSelector']}`));
+  const buttonElement = formElement.querySelector(`${object['submitButtonSelector']}`);
 
-  const buttonElement = formElement.querySelector('.popup__button');
-
-  toggleButtonState(formElement, buttonElement);
+  toggleButtonState(inputList, buttonElement, object);
 
   inputList.forEach( (inputElement) => {
     inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(formElement, buttonElement);
-
-      // isValid(formElement, inputElement);
+      isValid(formElement, inputElement, object);
+      toggleButtonState(inputList, buttonElement, object);
     });
   });
 }
@@ -48,44 +45,46 @@ const setEventListeners = (formElement) => {
 // допиши функции которых не хватает -- управление другими элементами DOM переключиение стилизации кнопки в зависимости от валидности инпутов
 // проверим валидность формы и вызовем функцию toggleButtonState
 
-function hasInvalidInput(inputList) { // вот здесь полом почему вторая форма всегда валидна?
+const hasInvalidInput = (inputList) => { // вот здесь полом -- почему вторая форма всегда валидна?
   return inputList.some( (inputElement) => {
-    return !inputElement.validity.valid; // что это значит
+     return !inputElement.validity.valid;
   });
-}
+};
 
-function toggleButtonState(formElement, buttonElement) {
-  if (!formElement.checkValidity()) {
-    buttonElement.classList.add('popup__button_disabled');
-    buttonElement.setAttribute('disabled', '');
+const toggleButtonState = (inputList, buttonElement, object) => {
+  if (hasInvalidInput(inputList)) {
+    // console.log('has invalid input:', hasInvalidInput(inputList));
+    // console.log('means: button disabled');
+    buttonElement.classList.add(`${object['inactiveButtonClass']}`);
+    buttonElement.getAttribute('disabled', '');
   } else {
-    buttonElement.classList.remove('popup__button_disabled');
+    // console.log('but')
+    buttonElement.classList.remove(`${object['inactiveButtonClass']}`);
     buttonElement.removeAttribute('disabled');
+    // console.log('chicken game');
   }
-}
+};
 
-// toggleButtonState(inputs2, button2);
 
 // объяви enableValidation, внутри собери все формы, перебери, передай каждую аргументом функции setEventListeners, которая найдет все поля ввода, переберёт и к каждому добавит слушателя; тут понять что такое деструктурирование объекта и как не попасть в лапы мутирования аргумента
+const enableValidation = (object) => {
 
-const enableValidation = () => {
-  const formList = document.querySelectorAll('.popup__form');
+  const formList = Array.from(document.querySelectorAll(`${object['formSelector']}`));
+
   formList.forEach( (formElement) => {
     formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
+      evt.preventDefault(); // а надо ли эту строчку писать у меня отмена отправки формы есть и в index.js
     });
-
-    setEventListeners(formElement);
+    setEventListeners(formElement, object);
   });
 }
-// про деструктуризацию и SPREAD OPERATOR я все еще не понимаю
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
-//   inactiveButtonClass: 'popup__button_disabled',
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// });
 
-enableValidation();
+// про деструктуризацию и SPREAD OPERATOR я все еще не понимаю
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});
