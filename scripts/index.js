@@ -149,14 +149,16 @@ popups.forEach((popup) => {
 
 function openEditProfilePopup() {
   resetForm(formEditProfile);
-  nameInput.value = name.textContent;
-  jobInput.value = job.textContent;
+
   enableValidation({formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'});
+
+  nameInput.value = name.textContent;
+  jobInput.value = job.textContent;
   openPopup(profilePopup);
 }
 
