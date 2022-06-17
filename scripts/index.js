@@ -114,13 +114,12 @@ function closePopup(popup) { // Она будет принимать в вызо
   document.removeEventListener('click', missClick);
 }
 
+// Следует либо передавать третьим аргументом объект селекторов только тех, что внутри себя использует hideInputError, либо вынести конфигурационный объект целиком в отдельную переменную в файл констант и использовать его и здесь и в файле validate.js
+
 const resetForm = (formElement) => {
   const inputList = formElement.querySelectorAll('.popup__input');
   inputList.forEach( (inputElement) => {
-    hideInputError(formElement, inputElement, {formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
+    hideInputError(formElement, inputElement, {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible'});
   });
