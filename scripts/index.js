@@ -171,6 +171,7 @@ function handleProfileFormSubmit(evt) {
 
 // функция обработчика отправки формы для создания новой карточки addNewItemSubmitHander
 // Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает addNewItemFormSubmit
+
 function addNewItemFormSubmit(evt) {
   evt.preventDefault();
 
@@ -186,13 +187,18 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
   resetForm(formNewItem);
+
+  // При открытии формы добавления карточки также необходимо деактивировать кнопку сабмита, иначе после добавления карточки и последующего повторного открытия формы - кнопка активна - в результате чего есть возможность сделать сабмит с пустыми невалидными полями
+
   enableValidation({formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'});
+
   openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });
+
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
 
