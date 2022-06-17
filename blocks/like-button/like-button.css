@@ -7,7 +7,7 @@
   background-color: #FFFFFF;
   align-self: center;
   margin-right: 5px;
-  cursor: url(../../images/__cursor.svg), pointer;
+  cursor: pointer;
 }
 
 .like-button:hover {

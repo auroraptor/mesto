@@ -8,7 +8,12 @@
   background-position: center;
   background-size: 10px;
   align-self: flex-end;
-  cursor: url(../../../images/__cursor.svg), pointer;
+
+  /* Для всех кликабельных элементов достаточно устанавливать значение свойству cursor просто pointer. Устанавливать увеличенную иконку не нужно, так как это смещает фактическую точку клика курсора.
+  Следует исправить для всех таких курсоров во всем проекте */
+  /* cursor: url(../../../images/__cursor.svg), pointer; */
+
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {

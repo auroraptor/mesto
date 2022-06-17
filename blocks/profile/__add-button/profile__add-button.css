@@ -9,7 +9,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px;
-  cursor: url(../../../images/__cursor.svg), pointer;
+  cursor: pointer;
 }
 
 .profile__add-button:hover {

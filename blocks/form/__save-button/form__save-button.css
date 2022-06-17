@@ -10,7 +10,7 @@
   text-align: center;
   color: #FFFFFF;
   margin-top: calc(48px - 33px);
-  cursor: url(../../../images/__cursor.svg), pointer;
+  cursor: pointer;
 }
 
 .form__save-button:hover {
@@ -40,7 +40,7 @@
   text-align: center;
   color: #FFFFFF;
   margin-top: calc(48px - 33px);
-  cursor: url(../../../images/__cursor.svg), pointer;
+  cursor: pointer;
 }
 
 .form__submit-button:hover {

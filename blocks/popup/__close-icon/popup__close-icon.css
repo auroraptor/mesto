@@ -10,7 +10,7 @@
   background-position: center;
   background-size: contain;
   border: none;
-  cursor: url(../../../images/__cursor.svg), pointer;
+  cursor: pointer;
 }
 
 .popup__close-icon:hover {
