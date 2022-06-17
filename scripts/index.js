@@ -26,6 +26,8 @@ const newLinkInput = formNewItem.querySelector('.form__item_input_link'); // а 
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
+// Данные лучше вынести в отдельный файл МОЖНО ЛУЧШЕ
+
 // const initialCards = [
 //   {
 //     name: 'Архыз',
@@ -87,11 +89,13 @@ function renderCard(name, link) {
   elements.prepend(createCard(name, link));
 }
 
+// Лучше устанавливать на событие mousedown
+
 function openPopup(popup) { // Она будет принимать в вызов любой попап
   popup.classList.add('popup_opened');
 
   document.addEventListener('keydown', escapeFromPopup);
-  document.addEventListener('click', missClick);
+  document.addEventListener('mousedown', missClick);
 }
 
 const escapeFromPopup = (evt) => {
@@ -107,11 +111,11 @@ const missClick = (evt) => {
   }
 }
 
-function closePopup(popup) { // Она будет принимать в вызов любой попап
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 
   document.removeEventListener('keydown', escapeFromPopup);
-  document.removeEventListener('click', missClick);
+  document.removeEventListener('mousedown', missClick);
 }
 
 // Следует либо передавать третьим аргументом объект селекторов только тех, что внутри себя использует hideInputError, либо вынести конфигурационный объект целиком в отдельную переменную в файл констант и использовать его и здесь и в файле validate.js
@@ -126,11 +130,11 @@ const resetForm = (formElement) => {
   formElement.reset();
 }
 
-initialCards.reverse().forEach( item => {
-  const name = item.name;
-  const link = item.link;
-  renderCard(name, link);
-});
+// initialCards.reverse().forEach( item => {
+//   const name = item.name;
+//   const link = item.link;
+//   renderCard(name, link);
+// });
 
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -160,10 +164,10 @@ function openEditProfilePopup() {
 // Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает. handleProfileFormSubmit
 
 function handleProfileFormSubmit(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    const nameInputValue = nameInput.value; // Получить значение полей jobInput и nameInput из свойства value
+    evt.preventDefault();
+    const nameInputValue = nameInput.value;
     const jobInputValue = jobInput.value;
-    name.textContent = nameInputValue; // Вставить новые значения с помощью textContent
+    name.textContent = nameInputValue;
     job.textContent = jobInputValue;
 
     closePopup(profilePopup);
