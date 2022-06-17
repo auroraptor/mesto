@@ -140,8 +140,10 @@ popups.forEach((popup) => {
   });
 });
 
-// функция openedForm заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
-function openedForm() {
+// функция openEditProfilePopup заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
+// Функции следует называть с глагола и более конкретно. Например, для данной функции подойдет название openEditProfilePopup
+
+function openEditProfilePopup() {
   resetForm(formEditProfile);
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
@@ -173,7 +175,7 @@ function addNewItemFormSubmit(evt) {
   closePopup(newItemPopup);
 }
 
-editButton.addEventListener('click', openedForm); // передавать в слушатель событий editButton вместо функции переключения модификатора
+editButton.addEventListener('click', openEditProfilePopup); // передавать в слушатель событий editButton вместо функции переключения модификатора
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
