@@ -2,6 +2,7 @@
 
 // вспомнить всё или что я тут писала 10 дней спустя
 // ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
+
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
 const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
@@ -12,19 +13,16 @@ const saveButton = profilePopup.querySelector('.save-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
 const elements = page.querySelector('.elements'); // вот тут тоже не по бэм название но я не понимаю нейминг есть идея назвать эту переменную section
 const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
-// Желательно все константы (элементы DOM, которые никогда не меняются) были найдены 1 раз вверху файла. Элементы DOM, к которым идет обращение внутри JS-файла необходимо заранее вынести в переменную. Это хорошая практика, влияющая на производительность. Если сначала объявить переменную, внутри которой происходит поиск по DOM через querySelector. А после - обращаться к ней внутри, например, функции, то JavaScript не будет дважды выполнять поиск по DOM - элемент уже найден и находится в константе.
 const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
 const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
 const formEditProfile = page.querySelector('.edit-profile-form'); // Найти форму в DOM и лучше ее назвать наверное formProfile
 const formNewItem = page.querySelector('.new-item-form'); // 17 и 18 строчки одно и то же выбрать 17
-// const formNewItem = newItemPopup.querySelector('.form_new-item'); // а вот вторая форма imposter
 const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики разом
 const popups = page.querySelectorAll('.popup'); // выбрали все разом как можно объединить обработчики крестиков 122-129 строки
 const nameInput = formEditProfile.querySelector('.form__item_input_name');  // поля формы
 const jobInput = formEditProfile.querySelector('.form__item_input_job');
 const newLocationInput = formNewItem.querySelector('.form__item_input_place'); // поля формы добавления новой карточки
 const newLinkInput = formNewItem.querySelector('.form__item_input_link'); // а мб лучше будет в названии дописать еще Input newLocationInput и newLinkInput
-// const newItemButtonSubmit = formNewItem.querySelector('.form__submit-button'); // кажется эта строчка не нужна и правда не нужна
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
@@ -54,7 +52,9 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
 // вот здесь был комментарий про деструктуризацию МОЖНО ЛУЧШЕ
+
 function createCard(name, link) { // создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
   const cardElement = card.querySelector('.element').cloneNode(true);
   const photo = cardElement.querySelector('.element__photo');
@@ -88,14 +88,7 @@ function renderCard(name, link) {
 }
 
 function openPopup(popup) { // Она будет принимать в вызов любой попап
-  popup.classList.add('popup_opened'); //и добавлять ему класс popup_opened, открывая его. Это нужно исправить во всем коде проекта.
-
-  // вот эти строчки 95-99 нужны только чтобы 2 форма которая почему-то валидна (почему-то) имела неактивную кнопку в моменте первого открытия (если убрать этот код, то в момент первого открытия попапа форма валидна, а в след раз уже нет); уже не нужны, форма была и пустой валидна потому что в index.html я забыла указать requered CHICKEN GAME
-  // if (popup.classList.contains('new-item-popup')) {
-  //   const buttonElement = popup.querySelector('.popup__button');
-  //   buttonElement.setAttribute('disabled', 'disabled');
-  //   buttonElement.classList.add('popup__button_disabled');
-  // }
+  popup.classList.add('popup_opened');
 
   document.addEventListener('keydown', escapeFromPopup);
   document.addEventListener('click', missClick);
@@ -103,15 +96,14 @@ function openPopup(popup) { // Она будет принимать в вызо�
 
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
-      const popup = document.querySelector('.popup_opened'); // TODO вместо document найти ближайшего соседа события с заданным классом
+      const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом
       closePopup(popup);
     }
 };
 
 const missClick = (evt) => {
-  const popup = document.querySelector('.popup_opened');
-  if (evt.target === popup) {
-    closePopup(popup);
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
   }
 }
 
