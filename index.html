@@ -33,7 +33,6 @@
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
     <!-- В каждом попапе должен быть класс popup,  а рядом с ним через пробел можно указать еще один класс для точного поиска его в DOM: popup profile-popup Вся идея того, что у похожих элементов должны быть одинаковые css-классы, заключается в том, что можно задавать одинаковые css-стили, создавать универсальные функции, осуществлять поиск похожих элементов и тд. Так же у попапов одинаковые селекторы должны быть для крестика, формы, инпутов, кнопки сабмита. -->
-    <!-- а правильно ли это дивами держать мб лучше сделать это тоже template элементами которые будут генериться только по нажатию на кнопки/картинку и не висеть на разметке тут хмммм TODO посмотреть почитать спросить про всплывающие окна -->
     <div class="popup profile-popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
@@ -42,9 +41,10 @@
           <div class="form__main-container">
             <!-- а вот что нужно атрибуту формы я пока не поняла  -->
             <label class="form__heading">Редактировать профиль</label>
-            <input type="text" class="form__item form__item_input_name popup__input" name="name" minlength="2" maxlength="40" required autocomplete="off" id="name">
+            <!-- Для полей формы редактирования профиля также необходимо добавить атрибуты placeholder -->
+            <input type="text" class="form__item form__item_input_name popup__input" name="name" placeholder="Имя" minlength="2" maxlength="40" required autocomplete="off" id="name">
             <span class="popup__error name-error"></span>
-            <input type="text" class="form__item form__item_input_job popup__input" name="job" minlength="2" maxlength="200" required autocomplete="off" id="job">
+            <input type="text" class="form__item form__item_input_job popup__input" name="job" placeholder="О себе" minlength="2" maxlength="200" required autocomplete="off" id="job">
             <span class="popup__error job-error"></span>
             <button type="submit" class="form__submit-button edit-profile-form__button popup__button" value="disable" disabled>Сохранить</button>
           </div>
