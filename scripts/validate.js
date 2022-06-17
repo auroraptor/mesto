@@ -56,7 +56,7 @@ const toggleButtonState = (inputList, buttonElement, object) => {
     // console.log('has invalid input:', hasInvalidInput(inputList));
     // console.log('means: button disabled');
     buttonElement.classList.add(`${object['inactiveButtonClass']}`);
-    buttonElement.getAttribute('disabled', '');
+    buttonElement.setAttribute('disabled', 'disabled');
   } else {
     // console.log('but')
     buttonElement.classList.remove(`${object['inactiveButtonClass']}`);
@@ -72,19 +72,22 @@ const enableValidation = (object) => {
   const formList = Array.from(document.querySelectorAll(`${object['formSelector']}`));
 
   formList.forEach( (formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault(); // а надо ли эту строчку писать у меня отмена отправки формы есть и в index.js
-    });
+    // formElement.addEventListener('submit', (evt) => {
+    //   evt.preventDefault(); // а надо ли эту строчку писать у меня отмена отправки формы есть и в index.js
+    // });
+
     setEventListeners(formElement, object);
   });
 }
 
 // про деструктуризацию и SPREAD OPERATOR я все еще не понимаю
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__button',
+//   inactiveButtonClass: 'popup__button_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__error_visible'
+// });
+
+// аааа как же тяжко было найти ДА ПОЧЕМУ ТАК РАБОТАЕТ ошибку со 189 строки index.js -- я не могу сказать что до конца поняла

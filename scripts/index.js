@@ -147,6 +147,12 @@ function openEditProfilePopup() {
   resetForm(formEditProfile);
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
+  enableValidation({formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'});
   openPopup(profilePopup);
 }
 
@@ -180,6 +186,12 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
   resetForm(formNewItem);
+  enableValidation({formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'});
   openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
