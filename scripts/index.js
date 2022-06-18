@@ -26,38 +26,9 @@ const newLinkInput = formNewItem.querySelector('.form__item_input_link'); // а 
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
-// Данные лучше вынести в отдельный файл МОЖНО ЛУЧШЕ
+// создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
 
-// const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
-
-// // вот здесь был комментарий про деструктуризацию МОЖНО ЛУЧШЕ
-
-function createCard(name, link) { // создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
+function createCard(name, link) {
   const cardElement = card.querySelector('.element').cloneNode(true);
   const photo = cardElement.querySelector('.element__photo');
   const title = cardElement.querySelector('.element__title');
@@ -82,6 +53,7 @@ function createCard(name, link) { // создает новую карточку 
     photoIsOpened.alt = name;
     photoIsOpenedCaption.textContent = name;
   });
+
   return cardElement;
 }
 
@@ -89,7 +61,7 @@ function renderCard(name, link) {
   elements.prepend(createCard(name, link));
 }
 
-// Лучше устанавливать на событие mousedown
+// Лучше устанавливать на событие mousedown - а теперь я знаю что click = mousedown + mouseup;
 
 function openPopup(popup) { // Она будет принимать в вызов любой попап
   popup.classList.add('popup_opened');
