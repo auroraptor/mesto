@@ -9,7 +9,6 @@ const profilePopup = page.querySelector('.profile-popup'); // + секция п�
 const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
 const imageZoomedPopup = page.querySelector('.image-zoomed-popup'); // третий div
 const editButton = profile.querySelector('.profile__edit-button');
-// const saveButton = profilePopup.querySelector('.save-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
 const editProfileButtonSubmit = profilePopup.querySelector('.edit-profile-form__button');
 const newItemButtonSubmit = newItemPopup.querySelector('.new-item-form__button');
