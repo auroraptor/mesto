@@ -9,8 +9,10 @@ const profilePopup = page.querySelector('.profile-popup'); // + секция п�
 const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
 const imageZoomedPopup = page.querySelector('.image-zoomed-popup'); // третий div
 const editButton = profile.querySelector('.profile__edit-button');
-const saveButton = profilePopup.querySelector('.save-button');
+// const saveButton = profilePopup.querySelector('.save-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
+const editProfileButtonSubmit = profilePopup.querySelector('.edit-profile-form__button');
+const newItemButtonSubmit = newItemPopup.querySelector('.new-item-form__button');
 const elements = page.querySelector('.elements'); // вот тут тоже не по бэм название но я не понимаю нейминг есть идея назвать эту переменную section
 const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
 const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
@@ -83,6 +85,11 @@ const missClick = (evt) => {
   }
 }
 
+const muteButton = (button) => {
+  button.setAttribute('disabled', 'disabled');
+  button.classList.add('popup__button_disabled');
+}
+
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 
@@ -118,7 +125,7 @@ function openEditProfilePopup() {
   resetForm(formEditProfile);
 
   // здесь была валидация, но! -- Активация валидации должна выполняться единоразово для всех форм сразу в global scope файла. Активировать ее каждый раз при открытии попапа некорректно
-
+  muteButton(editProfileButtonSubmit);
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
   openPopup(profilePopup);
@@ -150,21 +157,17 @@ function addNewItemFormSubmit(evt) {
   closePopup(newItemPopup);
 }
 
-editButton.addEventListener('click', openEditProfilePopup); // передавать в слушатель событий editButton вместо функции переключения модификатора
+editButton.addEventListener('click', openEditProfilePopup);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
   resetForm(formNewItem);
-
+  // muteButton()
   // При открытии формы добавления карточки также необходимо деактивировать кнопку сабмита, иначе после добавления карточки и последующего повторного открытия формы - кнопка активна - в результате чего есть возможность сделать сабмит с пустыми невалидными полями
 
-  // enableValidation({formSelector: '.popup__form',
-  // inputSelector: '.popup__input',
-  // submitButtonSelector: '.popup__button',
-  // inactiveButtonClass: 'popup__button_disabled',
-  // inputErrorClass: 'popup__input_type_error',
-  // errorClass: 'popup__error_visible'});
+  // Чтобы корректно деактивировать кнопку сабмита следует создать отдельную функцию в духе toggleButtonState либо деактивировать ее напрямую - создать переменную для кнопки и добавить здесь ей класс неактивности и атрибут disabled
 
+  muteButton(newItemButtonSubmit);
   openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });
 
