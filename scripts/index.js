@@ -99,14 +99,9 @@ const resetForm = (formElement) => {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible'});
   });
+
   formElement.reset();
 }
-
-// initialCards.reverse().forEach( item => {
-//   const name = item.name;
-//   const link = item.link;
-//   renderCard(name, link);
-// });
 
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -122,12 +117,7 @@ popups.forEach((popup) => {
 function openEditProfilePopup() {
   resetForm(formEditProfile);
 
-  enableValidation({formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'});
+  // здесь была валидация, но! -- Активация валидации должна выполняться единоразово для всех форм сразу в global scope файла. Активировать ее каждый раз при открытии попапа некорректно
 
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
@@ -168,12 +158,12 @@ addButton.addEventListener('click', () => { // начинаю слушать к�
 
   // При открытии формы добавления карточки также необходимо деактивировать кнопку сабмита, иначе после добавления карточки и последующего повторного открытия формы - кнопка активна - в результате чего есть возможность сделать сабмит с пустыми невалидными полями
 
-  enableValidation({formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'});
+  // enableValidation({formSelector: '.popup__form',
+  // inputSelector: '.popup__input',
+  // submitButtonSelector: '.popup__button',
+  // inactiveButtonClass: 'popup__button_disabled',
+  // inputErrorClass: 'popup__input_type_error',
+  // errorClass: 'popup__error_visible'});
 
   openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });

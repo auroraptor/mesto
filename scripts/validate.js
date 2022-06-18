@@ -81,13 +81,14 @@ const enableValidation = (object) => {
 }
 
 // про деструктуризацию и SPREAD OPERATOR я все еще не понимаю
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
-//   inactiveButtonClass: 'popup__button_disabled',
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// });
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});
 
 // аааа как же тяжко было найти ДА ПОЧЕМУ ТАК РАБОТАЕТ ошибку со 189 строки index.js -- я не могу сказать что до конца поняла почему надо проверку формы проводить внутри обработчиков клика кнопок открытия модальных окон, но мне понравилось (точнее сначала мне долго не нравилось, я расстраивалась, переживала но продолжала расставлять ловушки console.log('button disabled:', button.disabled) по всем своим функциям, и найдя момент полома (состояние ловушки с true на false магическим образом менялось на отслеживании события submit на кнопке, во время которого кнопка ПОЛЮБОМУ становилась активной (хотя я приказывала ей сменить состояние)) со мной случился AHAAA-момент и я перенесла вызов функции проверки валидации отсюда в колбек клика по кнопке добавления новой карточки и в колбек клика кнопки редактирования профиля. Довольная!
