@@ -25,8 +25,8 @@ const initialCards = [
   }
 ];
 
-initialCards.reverse().forEach( item => {
-  const name = item.name;
-  const link = item.link;
-  renderCard(name, link);
-});
+// initialCards.reverse().forEach( item => {
+//   const name = item.name;
+//   const link = item.link;
+//   renderCard(name, link);
+// });

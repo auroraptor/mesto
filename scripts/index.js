@@ -1,5 +1,7 @@
 // console.log('hello world');
 
+// начинать лучше с испортов
+import { Card } from "./card.js";
 // вспомнить всё или что я тут писала 10 дней спустя
 // ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
 
@@ -18,7 +20,7 @@ const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 ст
 const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
 const formEditProfile = page.querySelector('.edit-profile-form'); // Найти форму в DOM и лучше ее назвать наверное formProfile
 const formNewItem = page.querySelector('.new-item-form'); // 17 и 18 строчки одно и то же выбрать 17
-const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики разом
+// const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики разом
 const popups = page.querySelectorAll('.popup'); // выбрали все разом как можно объединить обработчики крестиков 122-129 строки
 const nameInput = formEditProfile.querySelector('.form__item_input_name');  // поля формы
 const jobInput = formEditProfile.querySelector('.form__item_input_job');
@@ -28,6 +30,8 @@ const name = profile.querySelector('.name'); // поле имени в проф�
 const job = profile.querySelector('.job'); // второе поле в профиле
 
 // создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
+
+
 
 function createCard(name, link) {
   const cardElement = card.querySelector('.element').cloneNode(true);
@@ -73,6 +77,7 @@ function openPopup(popup) { // Она будет принимать в вызо�
 
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
+      // const popup = Array.find( item => ) TODO
       const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом
       closePopup(popup);
     }
@@ -172,3 +177,15 @@ addButton.addEventListener('click', () => { // начинаю слушать к�
 
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
 
+console.log(Card);
+
+const cardaurs = new Card( {
+  name: 'Архыз',
+  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+}, '#card', openPopup);
+
+console.log(cardaurs);
+
+const cardaursElement = cardaurs.generateCard();
+console.log(cardaursElement);
+elements.prepend(cardaursElement);
