@@ -1,8 +1,36 @@
 // console.log('hello world');
 
 // начинать лучше с испортов
-import { Card } from "./card.js";
+
+import { Card } from './card.js';
+import { FormValidator } from './FormValidator.js';
+
+const editFormValidation = new FormValidator({
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}, '.edit-profile-form');
+
+// console.log(editFormValidation);
+
+editFormValidation.enableValidation();
+
+const addFormValidation = new FormValidator({
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}, '.new-item-form');
+
+// console.log(addFormValidation);
+
+addFormValidation.enableValidation();
+
 // вспомнить всё или что я тут писала 10 дней спустя
+
 // ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
 
 const page = document.querySelector('.page');
@@ -103,16 +131,19 @@ function closePopup(popup) {
 
 // Следует либо передавать третьим аргументом объект селекторов только тех, что внутри себя использует hideInputError, либо вынести конфигурационный объект целиком в отдельную переменную в файл констант и использовать его и здесь и в файле validate.js
 
-const resetForm = (formElement) => {
-  const inputList = formElement.querySelectorAll('.popup__input');
-  inputList.forEach( (inputElement) => {
-    hideInputError(formElement, inputElement, {
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'});
-  });
 
-  formElement.reset();
-}
+// >>>> вот тут я проверки ради заблокировала
+
+// const resetForm = (formElement) => {
+//   const inputList = formElement.querySelectorAll('.popup__input');
+//   inputList.forEach( (inputElement) => {
+//     hideInputError(formElement, inputElement, {
+//     inputErrorClass: 'popup__input_type_error',
+//     errorClass: 'popup__error_visible'});
+//   });
+
+//   formElement.reset();
+// }
 
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -126,7 +157,9 @@ popups.forEach((popup) => {
 // Функции следует называть с глагола и более конкретно. Например, для данной функции подойдет название openEditProfilePopup
 
 function openEditProfilePopup() {
-  resetForm(formEditProfile);
+  // >>> и вот тут тоже
+  // resetForm(formEditProfile);
+  editFormValidation.goToReset();
 
   // здесь была валидация, но! -- Активация валидации должна выполняться единоразово для всех форм сразу в global scope файла. Активировать ее каждый раз при открытии попапа некорректно
   muteButton(editProfileButtonSubmit);
@@ -165,7 +198,8 @@ editButton.addEventListener('click', openEditProfilePopup);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
-  resetForm(formNewItem);
+  // resetForm(formNewItem);
+  addFormValidation.goToReset();
   // muteButton()
   // При открытии формы добавления карточки также необходимо деактивировать кнопку сабмита, иначе после добавления карточки и последующего повторного открытия формы - кнопка активна - в результате чего есть возможность сделать сабмит с пустыми невалидными полями
 
@@ -189,3 +223,5 @@ console.log(cardaurs);
 const cardaursElement = cardaurs.generateCard();
 console.log(cardaursElement);
 elements.prepend(cardaursElement);
+
+// написать отдельную функцию которая открывает попап, наполняет его содержимым? Ну окккк

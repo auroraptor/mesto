@@ -11,10 +11,10 @@ _getTemplate() {
   const cardElement = document
   .querySelector(this._template)
   .content
-  .children[0]
+  .querySelector('.element')
   .cloneNode(true);
 
-  // это все еще очень красиво
+  // это все еще очень красиво но надо исправить да
   return cardElement;
 }
 
@@ -24,6 +24,7 @@ _like() {
   .querySelector('.like-button')
   .classList
   .toggle('like-button_active');
+  // ну лан, сегодня уже не такая злая и мб даже перепишу это завтра но конечно мне все нравится
 }
 
 _zoomIn() {
@@ -56,7 +57,7 @@ generateCard() {
   this._photo.alt = this._name;
   this._element.querySelector('.element__title').textContent = this._name;
 
-  console.log(this._element);
+  //console.log(this._element);
   return this._element;
   }
 }
