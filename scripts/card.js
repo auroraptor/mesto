@@ -7,7 +7,6 @@ constructor(data, selector) {
   this._template = document.querySelector(selector).content.children[0];
 }
 
-
 _getTemplate() {
   const cardElement = this._template.cloneNode(true);
   return cardElement;
@@ -59,3 +58,4 @@ generateCard() {
   }
 }
 
+// здесь все кажется ок
