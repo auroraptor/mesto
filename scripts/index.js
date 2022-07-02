@@ -1,37 +1,30 @@
 // console.log('hello world');
 
-// начинать лучше с испортов
-
 import { Card } from './card.js';
 import { FormValidator } from './FormValidator.js';
+import { initialCards } from './pictures.js';
 
-const editFormValidation = new FormValidator({
+const data = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
-}, '.edit-profile-form');
+}
 
-// console.log(editFormValidation);
+// сразу создам экземпляры валидации для каждой формы и включу ее вызовом публичного метода
+
+const editFormValidation = new FormValidator(data, '.edit-profile-form');
 
 editFormValidation.enableValidation();
 
-const addFormValidation = new FormValidator({
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}, '.new-item-form');
-
-// console.log(addFormValidation);
+const addFormValidation = new FormValidator(data, '.new-item-form');
 
 addFormValidation.enableValidation();
 
-// вспомнить всё или что я тут писала 10 дней спустя
-
 // ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
+
+// тут будет красиво, но не сразу
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
@@ -40,12 +33,14 @@ const newItemPopup = page.querySelector('.new-item-popup'); // форма доб
 const imageZoomedPopup = page.querySelector('.image-zoomed-popup'); // третий div
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
-const editProfileButtonSubmit = profilePopup.querySelector('.edit-profile-form__button');
-const newItemButtonSubmit = newItemPopup.querySelector('.new-item-form__button');
+
+// const editProfileButtonSubmit = profilePopup.querySelector('.edit-profile-form__button');
+// const newItemButtonSubmit = newItemPopup.querySelector('.new-item-form__button');
+
 const elements = page.querySelector('.elements'); // вот тут тоже не по бэм название но я не понимаю нейминг есть идея назвать эту переменную section
-const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
-const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
-const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
+// const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
+// const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
+// const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
 const formEditProfile = page.querySelector('.edit-profile-form'); // Найти форму в DOM и лучше ее назвать наверное formProfile
 const formNewItem = page.querySelector('.new-item-form'); // 17 и 18 строчки одно и то же выбрать 17
 // const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики разом
@@ -57,55 +52,27 @@ const newLinkInput = formNewItem.querySelector('.form__item_input_link'); // а 
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
-// создает новую карточку деструктуризация мне все еще непонятна, поэтому продолжаю передавать по отдельности
+// дальше получше TODO удалить лишнее
 
-
-
-function createCard(name, link) {
-  const cardElement = card.querySelector('.element').cloneNode(true);
-  const photo = cardElement.querySelector('.element__photo');
-  const title = cardElement.querySelector('.element__title');
-  photo.src = link;
-  photo.alt = name;
-  title.textContent = name;
-
-  const like = cardElement.querySelector('.like-button'); // лайк
-  like.addEventListener('click', () => {
-    like.classList.toggle('like-button_active');
-  })
-
-  const move = cardElement.querySelector('.element__delete-button'); // урна
-  move.addEventListener('click', () => {
-    const item = move.closest('.element');
-    item.remove();
-  });
-
-  photo.addEventListener('click', () => { // картинка
-    openPopup(imageZoomedPopup);
-    photoIsOpened.src = link;
-    photoIsOpened.alt = name;
-    photoIsOpenedCaption.textContent = name;
-  });
-
-  return cardElement;
-}
-
-function renderCard(name, link) {
-  elements.prepend(createCard(name, link));
-}
-
-// Лучше устанавливать на событие mousedown - а теперь я знаю что click = mousedown + mouseup;
-
-function openPopup(popup) { // Она будет принимать в вызов любой попап
+export function openPopup(popup) { // Она будет принимать в вызов любой попап как передать ее в виде третего аргумента в конструктор класса я не поняла поэтому тупо экспортирую и там использую
   popup.classList.add('popup_opened');
 
   document.addEventListener('keydown', escapeFromPopup);
   document.addEventListener('mousedown', missClick);
 }
 
+const generateCard = (data) => {
+  const newCard = new Card(data, '#card', openPopup);
+
+  elements.prepend(newCard.generateCard()); // ооо какая я молодец нашла место это! тут была ошибочка потому что я забыла ВЫЗВАТЬ метот generateCard()
+}
+
+initialCards.reverse().forEach( data => {
+  generateCard(data);
+});
+
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
-      // const popup = Array.find( item => ) TODO
       const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом
       closePopup(popup);
     }
@@ -117,33 +84,12 @@ const missClick = (evt) => {
   }
 }
 
-const muteButton = (button) => {
-  button.setAttribute('disabled', 'disabled');
-  button.classList.add('popup__button_disabled');
-}
-
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 
   document.removeEventListener('keydown', escapeFromPopup);
   document.removeEventListener('mousedown', missClick);
 }
-
-// Следует либо передавать третьим аргументом объект селекторов только тех, что внутри себя использует hideInputError, либо вынести конфигурационный объект целиком в отдельную переменную в файл констант и использовать его и здесь и в файле validate.js
-
-
-// >>>> вот тут я проверки ради заблокировала
-
-// const resetForm = (formElement) => {
-//   const inputList = formElement.querySelectorAll('.popup__input');
-//   inputList.forEach( (inputElement) => {
-//     hideInputError(formElement, inputElement, {
-//     inputErrorClass: 'popup__input_type_error',
-//     errorClass: 'popup__error_visible'});
-//   });
-
-//   formElement.reset();
-// }
 
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -153,23 +99,14 @@ popups.forEach((popup) => {
   });
 });
 
-// функция openEditProfilePopup заполняет поля «Имя» и «О себе» теми значениями, которые отображаются на странице и лучше ей другое название придумать но какое
-// Функции следует называть с глагола и более конкретно. Например, для данной функции подойдет название openEditProfilePopup
-
 function openEditProfilePopup() {
-  // >>> и вот тут тоже
-  // resetForm(formEditProfile);
   editFormValidation.goToReset();
 
-  // здесь была валидация, но! -- Активация валидации должна выполняться единоразово для всех форм сразу в global scope файла. Активировать ее каждый раз при открытии попапа некорректно
-  muteButton(editProfileButtonSubmit);
   nameInput.value = name.textContent;
   jobInput.value = job.textContent;
+
   openPopup(profilePopup);
 }
-
-// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-// Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает. handleProfileFormSubmit
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
@@ -181,47 +118,27 @@ function handleProfileFormSubmit(evt) {
     closePopup(profilePopup);
 }
 
-// функция обработчика отправки формы для создания новой карточки addNewItemSubmitHander
-// Названия методов и функций нужно начинать с глагола в начальной форме (такой пункт есть в чек-листе). Это обычная международная практика, чтобы функция говорила, что она делает addNewItemFormSubmit
-
 function addNewItemFormSubmit(evt) {
   evt.preventDefault();
 
-  const newLocationValue = newLocationInput.value; // получила значения полей
-  const newLinkValue = newLinkInput.value;
+  const data = {
+    name: newLocationInput.value,
+    link: newLinkInput.value
+  }
 
-  renderCard(newLocationValue, newLinkValue);
+  generateCard(data);
   closePopup(newItemPopup);
 }
 
 editButton.addEventListener('click', openEditProfilePopup);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-addButton.addEventListener('click', () => { // начинаю слушать кнопку add-button
-  // resetForm(formNewItem);
+addButton.addEventListener('click', (evt) => { // начинаю слушать кнопку add-button
   addFormValidation.goToReset();
-  // muteButton()
-  // При открытии формы добавления карточки также необходимо деактивировать кнопку сабмита, иначе после добавления карточки и последующего повторного открытия формы - кнопка активна - в результате чего есть возможность сделать сабмит с пустыми невалидными полями
 
-  // Чтобы корректно деактивировать кнопку сабмита следует создать отдельную функцию в духе toggleButtonState либо деактивировать ее напрямую - создать переменную для кнопки и добавить здесь ей класс неактивности и атрибут disabled
-
-  muteButton(newItemButtonSubmit);
   openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
 });
 
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
 
-console.log(Card);
 
-const cardaurs = new Card( {
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-}, '#card', openPopup);
-
-console.log(cardaurs);
-
-const cardaursElement = cardaurs.generateCard();
-console.log(cardaursElement);
-elements.prepend(cardaursElement);
-
-// написать отдельную функцию которая открывает попап, наполняет его содержимым? Ну окккк

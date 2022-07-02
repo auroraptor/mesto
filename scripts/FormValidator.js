@@ -10,8 +10,9 @@ export class FormValidator {
 
   enableValidation() {
     this._toggleButtonState();
-
-    this._inputList.forEach( () => {
+    // что надо делать? Надо писать!
+    this._inputList.forEach( (input) => { // спрашивай себя: а нет ли здесь бессмыслицы?
+     this._input = input; // почему эта строчка нужная странно непонятно но что-то с контекстом интересно почему оно так работает, но работает и ладно ^^
       this._setEventListener();
     });
   }
@@ -68,8 +69,8 @@ export class FormValidator {
     this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
     this._input.classList.remove(this._inputErrorClass);
     this._errorElement.classList.remove(this._errorVisible);
-   // this._errorElement.textContent = ''; // а нужна ли эта строчка вообще если видимости нет, а когда ошибка в следующий раз будет показана, у нее будет уже другой textContent
+    this._errorElement.textContent = ''; // а нужна ли эта строчка вообще если видимости нет, а когда ошибка в следующий раз будет показана, у нее будет уже другой textContent -- а строчка оказалась нужной now i learned it hard way а может дело вообще в другом а так еще есть такие строчки можно будет спросить почему себя по-разному ведет но строчка точно нужна!
   }
-
 }
 
+// получилось как мне кажется все красиво и здорово но это конечно мне ПОКА так кажется
