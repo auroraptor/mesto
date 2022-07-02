@@ -30,7 +30,7 @@ _zoomIn() {
   dinosaur(popup); // как без экспорта через 3 параметр передавать эту функцию я не поняла поэтому здесь НУ ТАКОЕ >>> the enter <<<
 }
 
-_remove() {ч
+_remove() {
   this._element.remove();
 }
 
