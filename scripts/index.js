@@ -134,8 +134,6 @@ function addNewItemFormSubmit(evt) {
     link: newLinkInput.value
   }
 
-  // const card = generateCard(data);
-
   addCard(data);
   closePopup(newItemPopup);
 }
