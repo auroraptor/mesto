@@ -54,7 +54,7 @@ const job = profile.querySelector('.job'); // второе поле в проф�
 
 // дальше получше TODO удалить лишнее
 
-export function openPopup(popup) { // Она будет принимать в вызов любой попап как передать ее в виде третего аргумента в конструктор класса я не поняла поэтому тупо экспортирую и там использую
+function openPopup(popup) { // Она будет принимать в вызов любой попап как передать ее в виде третего аргумента в конструктор класса я не поняла поэтому тупо экспортирую и там использую
   popup.classList.add('popup_opened');
 
   document.addEventListener('keydown', escapeFromPopup);
@@ -64,11 +64,19 @@ export function openPopup(popup) { // Она будет принимать в в
 const generateCard = (data) => {
   const newCard = new Card(data, '#card', openPopup);
 
-  elements.prepend(newCard.generateCard()); // ооо какая я молодец нашла место это! тут была ошибочка потому что я забыла ВЫЗВАТЬ метот generateCard()
+  return newCard.generateCard();
+
+  // elements.prepend(newCard.generateCard()); // ооо какая я молодец нашла место это! тут была ошибочка потому что я забыла ВЫЗВАТЬ метот generateCard()
+
+    // Создайте функцию, которая будет вставлять карточку в контейнер. Вызывать ее будете в функции-сабмите формы добавления карточки и при рендере базовых 6 карточек
+}
+
+const addCard = (data) => {
+  elements.prepend(generateCard(data));
 }
 
 initialCards.reverse().forEach( data => {
-  generateCard(data);
+  addCard(data);
 });
 
 const escapeFromPopup = (evt) => {
@@ -126,7 +134,9 @@ function addNewItemFormSubmit(evt) {
     link: newLinkInput.value
   }
 
-  generateCard(data);
+  // const card = generateCard(data);
+
+  addCard(data);
   closePopup(newItemPopup);
 }
 
