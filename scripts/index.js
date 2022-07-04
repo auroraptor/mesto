@@ -22,8 +22,6 @@ const addFormValidation = new FormValidator(data, '.new-item-form');
 
 addFormValidation.enableValidation();
 
-// ну вот ниже у меня объявлен миллион переменных, которые я нахожу в dom + есть еще комментарий от ревьюера МОЖНО -- передавать в функцию создания карточки вместо двух аргументов один который содержит в себе сразу два параметра и тоже объявить его через const input
-
 // тут будет красиво, но не сразу
 
 const page = document.querySelector('.page');
@@ -32,9 +30,9 @@ const profilePopup = page.querySelector('.profile-popup'); // + секция п�
 const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
 
 const editButton = profile.querySelector('.profile__edit-button');
-const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
+const addButton = profile.querySelector('.add-button');
 
-const elements = page.querySelector('.elements'); //
+const elements = page.querySelector('.elements');
 
 const formEditProfile = page.querySelector('.edit-profile-form');
 const formNewItem = page.querySelector('.new-item-form');
@@ -49,9 +47,7 @@ const newLinkInput = formNewItem.querySelector('.form__item_input_link');
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
-// дальше получше TODO удалить лишнее
-
-function openPopup(popup) { // Она будет принимать в вызов любой попап как передать ее в виде третего аргумента в конструктор класса я не поняла поэтому тупо экспортирую и там использую
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 
   document.addEventListener('keydown', escapeFromPopup);
@@ -78,7 +74,7 @@ initialCards.reverse().forEach( data => {
 
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
-      const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом
+      const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом когда-нибудь я с этим разберусь
       closePopup(popup);
     }
 };
@@ -138,10 +134,10 @@ function addNewItemFormSubmit(evt) {
 editButton.addEventListener('click', openEditProfilePopup);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-addButton.addEventListener('click', (evt) => { // начинаю слушать кнопку add-button
+addButton.addEventListener('click', (evt) => {
   addFormValidation.goToReset();
 
-  openPopup(newItemPopup); // вот здесь можно через таргет и ближайшего соседа с заданным классом сделать
+  openPopup(newItemPopup);
 });
 
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
