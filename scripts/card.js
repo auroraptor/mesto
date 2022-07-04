@@ -1,10 +1,11 @@
-import { openPopup as dinosaur} from "./index.js"; // хоть здесь я могу применить эту прекрасную as  и придумать какое-то имя для функции, которое просто мне нравится >>> the enter артист эс <<<
+// import { openPopup as dinosaur} from "./index.js"; // хоть здесь я могу применить эту прекрасную as  и придумать какое-то имя для функции, которое просто мне нравится >>> the enter артист эс <<< TODO удалить
 
 export class Card {
-constructor(data, selector) {
+constructor(data, selector, openPopup) {
   this._name = data.name;
   this._link = data.link;
   this._template = document.querySelector(selector).content.children[0];
+  this._openPopup = openPopup;
 }
 
 _getTemplate() {
@@ -23,10 +24,27 @@ _like() {
 
 _zoomIn() {
   const popup = document.querySelector('.image-zoomed-popup');
+  const image = popup.querySelector('.popup__image');
 
-  popup.querySelector('.popup__image').src = this._photo.src;
-  popup.querySelector('.popup__caption').textContent = this._photo.alt;
-  dinosaur(popup); // как без экспорта через 3 параметр передавать эту функцию я не поняла поэтому здесь НУ ТАКОЕ >>> the enter <<<
+  image.src = this._photo.src;
+  image.alt = this._photo.alt;
+  image.nextElementSibling.textContent = this._photo.alt;
+
+  //popup.querySelector('.popup__caption').textContent = this._photo.alt; // я на 30 строке сделала поиск через следующего соседа потому что я внутри тега <figure> а у него кроме картинки может быть только figurecaption поэтому так тут лучше будет по моему мнению
+
+
+    // dinosaur(popup); // как без экспорта через 3 параметр передавать эту функцию я не поняла поэтому здесь НУ ТАКОЕ >>> the enter <<< это мой старый код TODO удалить
+
+      // Чтобы прокинуть функцию открытия в конструктор класса, вам нужно ее здесь принять так:
+      // constructor(data, selector, openPopup)
+      // Затем записать в this уже в теле конструктора:
+      // this._openPopup = openPopup;
+      // Готово, теперь можно ее использовать
+
+       // как круто, получилось, спасибо! ^^
+
+
+  this._openPopup(popup);
 }
 
 _remove() {
