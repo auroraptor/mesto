@@ -8,14 +8,24 @@ export class FormValidator {
     this._errorVisible = data['errorClass'];
   }
 
+  // изменить валидацию перенести обход по инпутам в _setEventLisnerer!s а самой enableValidation его и вызывать
+
   enableValidation() {
     this._toggleButtonState();
-    // что надо делать? Надо писать!
-    this._inputList.forEach( (input) => { // спрашивай себя: а нет ли здесь бессмыслицы?
-     this._input = input; // почему эта строчка нужная странно непонятно но что-то с контекстом интересно почему оно так работает, но работает и ладно ^^
-      this._setEventListener();
-    });
+
+    this._setEventListeners();
   }
+
+  // это тож мой бэкап-код >>> TODO удалить
+
+  // enableValidation() {
+  //   this._toggleButtonState();
+  //   // что надо делать? Надо писать!
+  //   this._inputList.forEach( (input) => { // спрашивай себя: а нет ли здесь бессмыслицы?
+  //    this._input = input; // почему эта строчка нужная странно непонятно но что-то с контекстом интересно почему оно так работает, но работает и ладно ^^
+  //     this._setEventListener();
+  //   });
+  // }
 
   goToReset() {
     this._inputList.forEach( (input) => {
@@ -26,12 +36,25 @@ export class FormValidator {
     });
   }
 
-  _setEventListener() {
-    this._input.addEventListener('input', () => {
-      this._isValid();
-      this._toggleButtonState();
+  _setEventListeners() {
+    this._inputList.forEach( input => {
+      this._input = input;
+
+      this._input.addEventListener('input', () => {
+        this._isValid(); // должен принимать в себя параметрами инпут + тоглить
+        this._toggleButtonState();
+      });
     });
   }
+
+    // а это мой бэкап код >>> TODO удалить
+
+  // _setEventListener() {
+  //   this._input.addEventListener('input', () => {
+  //     this._isValid();
+  //     this._toggleButtonState();
+  //   });
+  // }
 
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
@@ -53,8 +76,10 @@ export class FormValidator {
   _isValid() {
     if (!this._input.validity.valid) {
       this._showInputError();
+      this._toggleButtonState(); // +
     } else {
       this._hideInputError();
+      this._toggleButtonState(); // +
     }
   }
 
@@ -69,7 +94,7 @@ export class FormValidator {
     this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
     this._input.classList.remove(this._inputErrorClass);
     this._errorElement.classList.remove(this._errorVisible);
-    this._errorElement.textContent = ''; // а нужна ли эта строчка вообще если видимости нет, а когда ошибка в следующий раз будет показана, у нее будет уже другой textContent -- а строчка оказалась нужной now i learned it hard way а может дело вообще в другом а так еще есть такие строчки можно будет спросить почему себя по-разному ведет но строчка точно нужна!
+    this._errorElement.textContent = '';
   }
 }
 
