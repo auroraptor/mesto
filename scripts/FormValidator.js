@@ -10,51 +10,40 @@ export class FormValidator {
 
   // изменить валидацию перенести обход по инпутам в _setEventLisnerer!s а самой enableValidation его и вызывать
 
+  //  В методе enableValidation вызывайте метод setEventListener, в котором вы пройдетесь по массиву с инпутами и вызовите на каждом элементе массива метод   this._isValid() <- он должен принимать в себя параметром инпут, и метод this._toggleButtonState(). Методы _showInputError и _hideInputError так же должны принимать параметром инпут, с которым им предстоит работать. Это нужно исправить таким способом, что не запутаться, какой конкретно инпут вы помещаете в this._input, так наглядно код будет более читабельнее и понятнее.
+
   enableValidation() {
     this._toggleButtonState();
 
+    // В методе enableValidation вызывайте метод setEventListener
+
     this._setEventListeners();
+
   }
 
-  // это тож мой бэкап-код >>> TODO удалить
+  // в котором вы пройдетесь по массиву с инпутами и вызовите на каждом элементе массива метод   this._isValid() <- он должен принимать в себя параметром инпут, и метод this._toggleButtonState() -- а как передать вторым параметром это?
 
-  // enableValidation() {
-  //   this._toggleButtonState();
-  //   // что надо делать? Надо писать!
-  //   this._inputList.forEach( (input) => { // спрашивай себя: а нет ли здесь бессмыслицы?
-  //    this._input = input; // почему эта строчка нужная странно непонятно но что-то с контекстом интересно почему оно так работает, но работает и ладно ^^
-  //     this._setEventListener();
-  //   });
-  // }
+  _setEventListeners() {
+    this._inputList.forEach( (input) => {
+
+      input.addEventListener('input', () => {
+        this._input = input; // вот то что я так пишу это и облегчает чтение или нет надеюсь что да
+
+        this._isValid(this._input);
+        this._toggleButtonState(); // или вот эта строчка и есть второй параметр я не знаю но на всякий случай пока оставлю это здесь когда я вставляю это вторым параметром в _isValid(this._input, this._toggleButtonState()) ваще хтонь какая-то творится
+      });
+    });
+  }
 
   goToReset() {
     this._inputList.forEach( (input) => {
-      input.value = '';
+      this._input = input;
+      this._input.value = '';
 
       this._hideInputError();
       this._toggleButtonState();
     });
   }
-
-  _setEventListeners() {
-    this._inputList.forEach( input => {
-      this._input = input;
-
-      this._input.addEventListener('input', () => {
-        this._isValid(); // должен принимать в себя параметрами инпут + тоглить
-        this._toggleButtonState();
-      });
-    });
-  }
-
-    // а это мой бэкап код >>> TODO удалить
-
-  // _setEventListener() {
-  //   this._input.addEventListener('input', () => {
-  //     this._isValid();
-  //     this._toggleButtonState();
-  //   });
-  // }
 
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
@@ -68,34 +57,35 @@ export class FormValidator {
 
   _hasInvalidInput() {
     return this._inputList.some( input => {
-      this._input = input;
+      this._input = input; // и вот снова она наверн это можно передать через параметр сюда как-то, но очевидно я испытываю трудности с этими передачами через параметр (я вообще до сих пор путаюсь в словах аргумент и параметр, но наставник сказал что это одно и то же, я стараюсь это помнить)
       return !this._input.validity.valid;
     });
   }
 
-  _isValid() {
-    if (!this._input.validity.valid) {
+  _isValid(input) {
+    if (!input.validity.valid) {
       this._showInputError();
-      this._toggleButtonState(); // +
     } else {
       this._hideInputError();
-      this._toggleButtonState(); // +
     }
   }
 
   _showInputError() {
     this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
+
     this._input.classList.add(this._inputErrorClass);
+
     this._errorElement.textContent = this._input.validationMessage;
     this._errorElement.classList.add(this._errorVisible);
   }
 
   _hideInputError() {
     this._errorElement = this._form.querySelector(`.${this._input.id}-error`);
+
     this._input.classList.remove(this._inputErrorClass);
+
     this._errorElement.classList.remove(this._errorVisible);
     this._errorElement.textContent = '';
   }
 }
 
-// получилось как мне кажется все красиво и здорово но это конечно мне ПОКА так кажется
