@@ -30,25 +30,22 @@ const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
 const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
 const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
-const imageZoomedPopup = page.querySelector('.image-zoomed-popup'); // третий div
+
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button'); // вот моя кнопка добавления карточки, которая открывает imposter
 
-// const editProfileButtonSubmit = profilePopup.querySelector('.edit-profile-form__button');
-// const newItemButtonSubmit = newItemPopup.querySelector('.new-item-form__button');
+const elements = page.querySelector('.elements'); //
 
-const elements = page.querySelector('.elements'); // вот тут тоже не по бэм название но я не понимаю нейминг есть идея назвать эту переменную section
-// const card = page.querySelector('#card').content; // получить элемент template достучаться до содержимого, обратившись к свойству content
-// const photoIsOpened = imageZoomedPopup.querySelector('.popup__image'); // 7 строка 3 попап
-// const photoIsOpenedCaption = imageZoomedPopup.querySelector('.popup__caption'); // 7 строка 3 попап
-const formEditProfile = page.querySelector('.edit-profile-form'); // Найти форму в DOM и лучше ее назвать наверное formProfile
-const formNewItem = page.querySelector('.new-item-form'); // 17 и 18 строчки одно и то же выбрать 17
-// const closeIcons = page.querySelectorAll('.popup__close-icon'); // все крестики разом
-const popups = page.querySelectorAll('.popup'); // выбрали все разом как можно объединить обработчики крестиков 122-129 строки
+const formEditProfile = page.querySelector('.edit-profile-form');
+const formNewItem = page.querySelector('.new-item-form');
+
+const popups = page.querySelectorAll('.popup');
+
 const nameInput = formEditProfile.querySelector('.form__item_input_name');  // поля формы
 const jobInput = formEditProfile.querySelector('.form__item_input_job');
-const newLocationInput = formNewItem.querySelector('.form__item_input_place'); // поля формы добавления новой карточки
-const newLinkInput = formNewItem.querySelector('.form__item_input_link'); // а мб лучше будет в названии дописать еще Input newLocationInput и newLinkInput
+const newLocationInput = formNewItem.querySelector('.form__item_input_place');
+const newLinkInput = formNewItem.querySelector('.form__item_input_link');
+
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
