@@ -10,7 +10,7 @@ const data = {
   errorClass: 'popup__error_visible'
 }
 
-// сразу создам экземпляры валидации для каждой формы и включу ее вызовом публичного метода
+// сразу создам экземпляры валидации для каждой формы и включу ее вызовом публичного метода >>> the enter
 
 const editFormValidation = new FormValidator(data, '.edit-profile-form');
 
@@ -20,11 +20,11 @@ const addFormValidation = new FormValidator(data, '.new-item-form');
 
 addFormValidation.enableValidation();
 
-// тут будет красиво, но не сразу
+// тут будет красиво, но не сразу >>> the enter
 
 const page = document.querySelector('.page');
-const profile = page.querySelector('.profile'); // профиль лучше один раз к документу обратиться так-то
-const profilePopup = page.querySelector('.profile-popup'); // + секция поп-ап которую надо из секции превратить в div;
+const profile = page.querySelector('.profile'); // профиль
+const profilePopup = page.querySelector('.profile-popup'); //  секция поп-ап
 const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
 
 const editButton = profile.querySelector('.profile__edit-button');
@@ -56,11 +56,9 @@ const generateCard = (data) => {
   const newCard = new Card(data, '#card', openPopup);
 
   return newCard.generateCard();
-
-  // elements.prepend(newCard.generateCard()); // ооо какая я молодец нашла место это! тут была ошибочка потому что я забыла ВЫЗВАТЬ метот generateCard()
-
-    // Создайте функцию, которая будет вставлять карточку в контейнер. Вызывать ее будете в функции-сабмите формы добавления карточки и при рендере базовых 6 карточек
 }
+
+  // Создайте функцию, которая будет вставлять карточку в контейнер. Вызывать ее будете в функции-сабмите формы добавления карточки и при рендере базовых 6 карточек
 
 const addCard = (data) => {
   elements.prepend(generateCard(data));
@@ -132,7 +130,7 @@ function addNewItemFormSubmit(evt) {
 editButton.addEventListener('click', openEditProfilePopup);
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-addButton.addEventListener('click', (evt) => {
+addButton.addEventListener('click', () => {
   addFormValidation.goToReset();
 
   openPopup(newItemPopup);
@@ -141,3 +139,4 @@ addButton.addEventListener('click', (evt) => {
 formNewItem.addEventListener('submit', addNewItemFormSubmit);
 
 
+// ну вроде тут тоже все ок >>> the enter
