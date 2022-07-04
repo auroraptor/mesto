@@ -1,5 +1,3 @@
-// console.log('hello world');
-
 import { Card } from './card.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards } from './pictures.js';
