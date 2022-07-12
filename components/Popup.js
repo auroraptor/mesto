@@ -2,7 +2,7 @@ export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._close = this._popup.querySelector('.popup__close-icon'); // насчет вот такого не уверена с другой стороны как это еще найти
-    this._handle = this._handleEscClose;
+    this._handle = this._handleEscClose; // непонятно где это вызывать пока непонятно потом будет понятно мб вот здесь начинает быть нужен bind()
     this._set = this.setEvenetListeners;
   }
 

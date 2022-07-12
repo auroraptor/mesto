@@ -1,3 +1,5 @@
+import { Popup } from "./Popup";
+
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector); // вот здесь я вызвала конструктор родителя а ниже обращаюсь через super к  this._popup а если мне к кнопке надо обратиться то как это сделать?
