@@ -18,13 +18,13 @@ export class Popup {
   }
 
   _handleEscClose(evt) {
-    if (evt.which === 27) {
+    if (evt.which === 27) { // магическое значение!!! TODO вынести в константу и передать или использовать .key
       this.close();
     }
   }
 
   setEvenetListeners(evt) {
-    if (evt.target === this._close || evt.target === this._popup) { // evt.target === this._popup а если я добавляю этого слушателя на попап, мб просто писать this хотя не прокатит наверн дааа evt.target === this я про такое
+    if (evt.target === this._close || evt.target === this._popup) { // evt.target === this._popup а если я добавляю этого слушателя на попап, мб просто писать this хотя не прокатит наверн дааа evt.target === this я про такое проверить можно посмотрев this в консоли
       this.close();
     }
   }
