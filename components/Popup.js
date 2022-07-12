@@ -6,7 +6,7 @@ export class Popup {
 
   open() {
     this._popup.classList.add('popup_opened'); // TODO исправить index.html popup_opened.css index.css index.js на popup_is-opened >>> i <3 bem >>> the enter
-    documemnt.addEventListener('keydown', this._handleEscClose);
+    document.addEventListener('keydown', this._handleEscClose);
     this._popup.addEventListener('click', this.setEvenetListeners);
 
   }
@@ -14,6 +14,7 @@ export class Popup {
   close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener(this._handleEscClose);
+    this._popup.removeEventListener(this.setEvenetListeners);
   }
 
   _handleEscClose(evt) {
@@ -23,7 +24,7 @@ export class Popup {
   }
 
   setEvenetListeners(evt) {
-    if (evt.target === this._close || evt.target === this._popup) { // а если я добавляю этого слушателя на попап, мб просто писать this хотя не прокатит наверн дааа
+    if (evt.target === this._close || evt.target === this._popup) { // evt.target === this._popup а если я добавляю этого слушателя на попап, мб просто писать this хотя не прокатит наверн дааа evt.target === this я про такое
       this.close();
     }
   }
