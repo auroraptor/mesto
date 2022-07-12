@@ -1,5 +1,7 @@
 export class Card {
-constructor(data, selector, openPopup) {
+// constructor(data, selector, openPopup) {
+  constructor(data, selector, handleCardClick) { // а вот это будет что-то про колбэк да?
+
   this._name = data.name;
   this._link = data.link;
 
@@ -9,7 +11,8 @@ constructor(data, selector, openPopup) {
     // гибкость -- это правило, а разметка ненадежно изменчива! Вот этой строки не было среди ошибок, но поняв, что такое гибкость в написании кода, я решила, что и её надо изменить >>> the enter
 
   this._template = document.querySelector(selector).content.querySelector('.element');
-  this._openPopup = openPopup;
+  // this._openPopup = openPopup;
+  this._handleCardClick = handleCardClick;
   this._popup = document.querySelector('.image-zoomed-popup');
   this._image = this._popup.querySelector('.popup__image');
   this._caption = this._popup.querySelector('.popup__caption');
