@@ -3,7 +3,7 @@ export class PopupWithImage extends Popup {
     super(popupSelector); // вот здесь я вызвала конструктор родителя а ниже обращаюсь через super к  this._popup а если мне к кнопке надо обратиться то как это сделать?
     this._image = super.querySelector('.popup__image');
     this._caption = super.querySelector('.popup__caption');
-  } // ошибка слепого кода TODO this._popup можно обратиться
+  } // ошибка слепого кода -- а существует ли она? TODO this._popup можно обратиться
 
   open({ name, link }) {
    super.open(); // это перегрузка метода -- расширение функциональности родительского класса в наследнике
