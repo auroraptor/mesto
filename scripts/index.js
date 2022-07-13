@@ -3,6 +3,7 @@ import { FormValidator } from '../components/FormValidator.js';
 
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
 
 import { initialCards } from './pictures.js';
 
@@ -78,6 +79,18 @@ const cardList = new Section({
 
 cardList.renderItems();
 
+const popupEditProfile = new PopupWithForm(
+  '.profile-popup',
+   () => {} // вот здесь будет описано как форму закрывать
+);
+
+console.log(popupEditProfile);
+
+const popupAddNewItem = new PopupWithForm(
+  '.new-item-popup',
+  () => {} // и вот тут
+)
+
 // function openPopup(popup) {
 //   popup.classList.add('popup_opened');
 
@@ -106,25 +119,25 @@ cardList.renderItems();
 //   addCard(data);
 // });
 
-const escapeFromPopup = (evt) => {
-    if (evt.key === 'Escape') {
-      const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом когда-нибудь я с этим разберусь
-      closePopup(popup);
-    }
-};
+// const escapeFromPopup = (evt) => {
+//     if (evt.key === 'Escape') {
+//       const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом когда-нибудь я с этим разберусь
+//       closePopup(popup);
+//     }
+// };
 
-const missClick = (evt) => {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-}
+// const missClick = (evt) => {
+//   if (evt.target.classList.contains('popup')) {
+//     closePopup(evt.target);
+//   }
+// }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+// function closePopup(popup) {
+//   popup.classList.remove('popup_opened');
 
-  document.removeEventListener('keydown', escapeFromPopup);
-  document.removeEventListener('mousedown', missClick);
-}
+//   document.removeEventListener('keydown', escapeFromPopup);
+//   document.removeEventListener('mousedown', missClick);
+// }
 
 // popups.forEach((popup) => {
 //   popup.addEventListener('click', (evt) => {
@@ -134,14 +147,14 @@ function closePopup(popup) {
 //   });
 // });
 
-function openEditProfilePopup() {
-  editFormValidation.goToReset();
+// function openEditProfilePopup() {
+//   editFormValidation.goToReset();
 
-  nameInput.value = name.textContent;
-  jobInput.value = job.textContent;
+//   nameInput.value = name.textContent;
+//   jobInput.value = job.textContent;
 
-  openPopup(profilePopup);
-}
+//   openPopup(profilePopup);
+// }
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
@@ -150,7 +163,7 @@ function handleProfileFormSubmit(evt) {
     name.textContent = nameInputValue;
     job.textContent = jobInputValue;
 
-    closePopup(profilePopup);
+    // closePopup(profilePopup);
 }
 
 function addNewItemFormSubmit(evt) {
@@ -165,13 +178,18 @@ function addNewItemFormSubmit(evt) {
   closePopup(newItemPopup);
 }
 
-editButton.addEventListener('click', openEditProfilePopup);
+// editButton.addEventListener('click', openEditProfilePopup);
+editButton.addEventListener('click', () => {
+  // editFormValidation.goToReset()
+  popupEditProfile.open();
+});
+
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => {
   addFormValidation.goToReset();
-
-  openPopup(newItemPopup);
+  popupAddNewItem.open();
+  // openPopup(newItemPopup);
 });
 
 formNewItem.addEventListener('submit', addNewItemFormSubmit);

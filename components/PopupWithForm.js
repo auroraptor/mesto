@@ -1,4 +1,4 @@
-import { Popup } from "./Popup";
+import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
   constructor(selector, callback) {
@@ -25,7 +25,8 @@ export class PopupWithForm extends Popup {
   close() {
     super.close(); // и снова перегрузили
 
-    this.reset(); // а мб и так сработает но маловероятно тут надо форму получить
+    // this.reset(); // а мб и так сработает но маловероятно тут надо форму получить
+
   }
 }
 
