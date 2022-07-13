@@ -1,7 +1,12 @@
-import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import { FormValidator } from '../components/FormValidator.js';
+
+import { Card } from '../components/Card.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+
 import { initialCards } from './pictures.js';
+
+
 
 const data = {
   inputSelector: '.popup__input',
@@ -46,19 +51,25 @@ const newLinkInput = formNewItem.querySelector('.form__item_input_link');
 const name = profile.querySelector('.name'); // поле имени в профиле
 const job = profile.querySelector('.job'); // второе поле в профиле
 
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
 
-  document.addEventListener('keydown', escapeFromPopup);
-  document.addEventListener('mousedown', missClick);
-}
+//   document.addEventListener('keydown', escapeFromPopup);
+//   document.addEventListener('mousedown', missClick);
+// }
+
+const handleCardClick = (name, link) => {
+  const popupWithImage = new PopupWithImage('.image-zoomed-popup');
+  console.log(popupWithImage);
+  popupWithImage.open(name, link);
+} //
 
 // карточки из коробки заработали, и я довольна этим! TODO пока не открывается попап переделать
 
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => { // отвечает за создание и отрисовку данных на странице
-    const newCard = new Card(item, '#card', openPopup); // создание
+    const newCard = new Card(item, '#card', handleCardClick); // создание вот тут менять
     const element = newCard.generateCard();
 
     cardList.addItem(element);
@@ -66,6 +77,16 @@ const cardList = new Section({
 }, '.elements');
 
 cardList.renderItems();
+
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
+
+//   document.addEventListener('keydown', escapeFromPopup);
+//   document.addEventListener('mousedown', missClick);
+// }
+
+
+// нужен экземпляр класса попапа с картинкой внутри Card
 
 //меняю вот эту функцию создания карточек из коробки на экземпляр секции
 
@@ -105,13 +126,13 @@ function closePopup(popup) {
   document.removeEventListener('mousedown', missClick);
 }
 
-popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-     if (evt.target.classList.contains('popup__close-icon')) {
-        closePopup(popup);
-      }
-  });
-});
+// popups.forEach((popup) => {
+//   popup.addEventListener('click', (evt) => {
+//      if (evt.target.classList.contains('popup__close-icon')) {
+//         closePopup(popup);
+//       }
+//   });
+// });
 
 function openEditProfilePopup() {
   editFormValidation.goToReset();

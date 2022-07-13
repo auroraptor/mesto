@@ -1,8 +1,8 @@
 export class Card {
 // constructor(data, selector, openPopup) {
-  constructor(data, selector, handleCardClick) { // а вот это будет что-то про колбэк да?
+  constructor(data, selector, handleCardClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
 
-  this._name = data.name;
+  this._name = data.name; // а вот тут можно попробовать деструктуризацию
   this._link = data.link;
 
   // разметка может измениться в любой момент, а одно из правил, которого нужно придерживаться при написании кода - это его гибкость
@@ -13,9 +13,9 @@ export class Card {
   this._template = document.querySelector(selector).content.querySelector('.element');
   // this._openPopup = openPopup;
   this._handleCardClick = handleCardClick;
-  this._popup = document.querySelector('.image-zoomed-popup');
-  this._image = this._popup.querySelector('.popup__image');
-  this._caption = this._popup.querySelector('.popup__caption');
+  //this._popup = document.querySelector('.image-zoomed-popup');
+  //this._image = this._popup.querySelector('.popup__image');
+  //this._caption = this._popup.querySelector('.popup__caption');
 }
 
 _getTemplate() {
@@ -35,24 +35,24 @@ _like() { // <3
 
     // мне нравится, здорово >>> the enter
 
-_zoomIn() {
-  this._image.src = this._link;
-  this._image.alt = this._name;
+// _zoomIn() {
+//   this._image.src = this._link;
+//   this._image.alt = this._name;
 
-  // Найдите второй элемент так же в конструкторе класса и обращайтесь к нему напрямую
+//   // Найдите второй элемент так же в конструкторе класса и обращайтесь к нему напрямую
 
-  this._caption.textContent = this._name;
+//   this._caption.textContent = this._name;
 
-      // Чтобы прокинуть функцию открытия в конструктор класса, вам нужно ее здесь принять так:
-      // constructor(data, selector, openPopup)
-      // Затем записать в this уже в теле конструктора:
-      // this._openPopup = openPopup;
-      // Готово, теперь можно ее использовать
+//       // Чтобы прокинуть функцию открытия в конструктор класса, вам нужно ее здесь принять так:
+//       // constructor(data, selector, openPopup)
+//       // Затем записать в this уже в теле конструктора:
+//       // this._openPopup = openPopup;
+//       // Готово, теперь можно ее использовать
 
-       // как круто, получилось, спасибо! ^^ >>> the enter
+//        // как круто, получилось, спасибо! ^^ >>> the enter
 
-  this._handleCardClick(this._popup);
-}
+//   this._handleCardClick(); // сюда смотри
+// }
 
 _remove() {
   this._element.remove();
@@ -77,7 +77,8 @@ _setListeners() {
     this._remove();
   });
   this._photo.addEventListener('click', () => {
-    this._zoomIn();
+    // this._zoomIn();
+    this._handleCardClick(this._name, this._link);
   });
 }
 
@@ -89,6 +90,7 @@ generateCard() {
   this._photo = this._element.querySelector('.element__photo');
 
   this._setListeners();
+  // а вот мб тут надо функцию открытия попапа вставлять
 
   this._photo.src = this._link;
   this._photo.alt = this._name;
