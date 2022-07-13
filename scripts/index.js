@@ -1,4 +1,5 @@
 import { Card } from '../components/Card.js';
+import { Section } from '../components/Section.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { initialCards } from './pictures.js';
 
@@ -52,21 +53,37 @@ function openPopup(popup) {
   document.addEventListener('mousedown', missClick);
 }
 
-const generateCard = (data) => {
-  const newCard = new Card(data, '#card', openPopup);
+// карточки из коробки заработали, и я довольна этим! TODO пока не открывается попап переделать
 
-  return newCard.generateCard();
-}
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => { // отвечает за создание и отрисовку данных на странице
+    const newCard = new Card(item, '#card', openPopup); // создание
+    const element = newCard.generateCard();
+
+    cardList.addItem(element);
+  },
+}, '.elements');
+
+cardList.renderItems();
+
+//меняю вот эту функцию создания карточек из коробки на экземпляр секции
+
+// const generateCard = (data) => {
+//   const newCard = new Card(data, '#card', openPopup);
+
+//   return newCard.generateCard();
+// }
 
   // Создайте функцию, которая будет вставлять карточку в контейнер. Вызывать ее будете в функции-сабмите формы добавления карточки и при рендере базовых 6 карточек
 
-const addCard = (data) => {
-  elements.prepend(generateCard(data));
-}
+// const addCard = (data) => {
+//   elements.prepend(generateCard(data));
+// }
 
-initialCards.reverse().forEach( data => {
-  addCard(data);
-});
+// initialCards.reverse().forEach( data => {
+//   addCard(data);
+// });
 
 const escapeFromPopup = (evt) => {
     if (evt.key === 'Escape') {
@@ -140,3 +157,5 @@ formNewItem.addEventListener('submit', addNewItemFormSubmit);
 
 
 // ну вроде тут тоже все ок >>> the enter
+
+

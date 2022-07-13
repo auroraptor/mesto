@@ -51,7 +51,7 @@ _zoomIn() {
 
        // как круто, получилось, спасибо! ^^ >>> the enter
 
-  this._openPopup(this._popup);
+  this._handleCardClick(this._popup);
 }
 
 _remove() {
