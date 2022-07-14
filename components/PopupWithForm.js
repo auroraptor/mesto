@@ -1,33 +1,41 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(selector, callback) {
+  constructor(selector, {handleFormSubmit} ) {
     super(selector);
-    this._callback = callback;
-    this._inputValueList = {}; // ну вот так не надо очевидно
+    this._handleFormSubmit = handleFormSubmit; // а это колбэк сабмита формы
+    this._inputList = Array.from(this._popup.querySelectorAll('.popup__input'));
+    this._form = this._popup.querySelector('.form');
   }
 
-  _getInputValues(inputList) { // откуда оно здесь появляется пока загадка
-    inputList.forEach( (input) => {
-      //this._inputValueList.push(item.textContent) // а можно сделать из этого объект и по уникальному айди инпута присваивать ключ а значение записывать как item.textContent
-      this._inputValueList[`input.id`] = input.textContent;
-
-      return this._inputValueList;
+  _getInputValues() {
+    this._formValues = {}; // у меня это было в конструкторе и я перенесла это в метод как в коде урока показано но не знаю как лучше >>> the enter
+    this._inputList.forEach( (input) => {
+      this._formValues[input.name] = input.value;
     });
+
+    return this._formValues;
   }
 
-  setEvenetListeners() {
-    super.setEvenetListeners();
+  setEventListeners() {
+    super.setEventListeners();
 
-    this.addEventListener('submit', this._callback);
+    this._callback = (evt) => {
+      evt.preventDefault();
+      this._values = this._getInputValues();
+      console.log(this._values);
+      this._handleFormSubmit(this._values);
+      this.close();
+    }
+
+    this._form.addEventListener('submit', this._callback);
   }
 
   close() {
     super.close(); // и снова перегрузили
-
-    // this.reset(); // а мб и так сработает но маловероятно тут надо форму получить
-
+    this._form.removeEventListener('submit', this._callback); // а вот тут еще кажется должна быть очистка формы по заданию но она у меня пока в валидации форме лежит
+    // Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
   }
 }
 
-// ладно, это пока мой код который в разработке понятно что пока ничего работать не будет и надо все переделывать, но давай смотреть на это как на черновик? Критику оставим на потом, продолжай писать код других классов, сейчас твоя задача -- позаботиться о количестве, а не о качестве >>> the enter
+// сбрасывать форму? >>> the enter

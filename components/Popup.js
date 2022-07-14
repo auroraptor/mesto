@@ -8,8 +8,6 @@ export class Popup {
 
   open() {
     this._popup.classList.add('popup_opened'); // TODO исправить index.html popup_opened.css index.css index.js на popup_is-opened >>> i <3 bem >>> the enter
-
-    this._set();
   }
 
   close() {
@@ -19,19 +17,16 @@ export class Popup {
   }
 
   _handleEscClose() {
-    console.log('keydown');
-    console.log(event.key);
     if (event.key === 'Escape') {
+      console.log('escape from popup');
       this.close.bind(this); // TODO потеря контекста разобраться
     }
   }
 
-  setEventListeners() { // добавляет слушатель клика иконке закрытия попапа. Модальное окно также закрывается при клике на затемнённую область вокруг формы. а почему мы его сделали публичным пока непонятно но думаю
-
+  setEventListeners() {
     document.addEventListener('keydown', this._handle);
 
     this._popup.addEventListener('click', () => {
-      console.log('click');
        if (event.target === this._popup || event.target === this._close) {
         this.close();
        }
@@ -39,3 +34,4 @@ export class Popup {
   }
 }
 
+// TODO пересать терять контекcт у esc >>> the enter

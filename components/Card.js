@@ -1,21 +1,10 @@
 export class Card {
-// constructor(data, selector, openPopup) {
-  constructor(data, selector, handleCardClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
-
-  this._name = data.name; // а вот тут можно попробовать деструктуризацию
-  this._link = data.link;
-
-  // разметка может измениться в любой момент, а одно из правил, которого нужно придерживаться при написании кода - это его гибкость
-
-    // this._template = document.querySelector(selector).content.children[0];
-    // гибкость -- это правило, а разметка ненадежно изменчива! Вот этой строки не было среди ошибок, но поняв, что такое гибкость в написании кода, я решила, что и её надо изменить >>> the enter
-
+  constructor({place, link}, selector, handleCardClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
+  this._name = place;
+  this._link = link;
   this._template = document.querySelector(selector).content.querySelector('.element');
-  // this._openPopup = openPopup;
   this._handleCardClick = handleCardClick;
-  //this._popup = document.querySelector('.image-zoomed-popup');
-  //this._image = this._popup.querySelector('.popup__image');
-  //this._caption = this._popup.querySelector('.popup__caption');
+
 }
 
 _getTemplate() {
@@ -30,41 +19,8 @@ _like() { // <3
   .toggle('like-button_active');
 }
 
-  // Данные для открытия модального окна лучше взять из конструктора класса, это будут this._name и this._link
-  // А элементы с классами image-zoomed-popup, popup__image, popup__caption лучше найти в конструкторе класса один раз, так как сейчас данные элементы ищутся при каждом клике на картинку в карточке, это лишняя нагрузка.
-
-    // мне нравится, здорово >>> the enter
-
-// _zoomIn() {
-//   this._image.src = this._link;
-//   this._image.alt = this._name;
-
-//   // Найдите второй элемент так же в конструкторе класса и обращайтесь к нему напрямую
-
-//   this._caption.textContent = this._name;
-
-//       // Чтобы прокинуть функцию открытия в конструктор класса, вам нужно ее здесь принять так:
-//       // constructor(data, selector, openPopup)
-//       // Затем записать в this уже в теле конструктора:
-//       // this._openPopup = openPopup;
-//       // Готово, теперь можно ее использовать
-
-//        // как круто, получилось, спасибо! ^^ >>> the enter
-
-//   this._handleCardClick(); // сюда смотри
-// }
-
 _remove() {
   this._element.remove();
-
-  // Лучше всего после удаления карточки очистить ссылку на DOM-элемент: this._element = null;
-    // -- а мне больше нравится не прародитель всех сущностей, а undefined, я оставлю его, разницы ж не будет (надеюсь хех), в какой из двух примитивов скидывать значение этого приватного поля удаляемого элемента >>> the enter
-
-  // this._element = undefined;
-
-  // null является определённым значением отсутствия объекта, тогда как undefined обозначает неопределённость.
-    // теперь я это запомню! Как сказал мой друг: ревью -- эт очень круто, потому что на ревью скажут такие вещи, которые не вычитаешь ^^ >>> the enter
-
   this._element = null;
 
 }
@@ -77,7 +33,6 @@ _setListeners() {
     this._remove();
   });
   this._photo.addEventListener('click', () => {
-    // this._zoomIn();
     this._handleCardClick(this._name, this._link);
   });
 }
@@ -90,14 +45,14 @@ generateCard() {
   this._photo = this._element.querySelector('.element__photo');
 
   this._setListeners();
-  // а вот мб тут надо функцию открытия попапа вставлять
 
   this._photo.src = this._link;
   this._photo.alt = this._name;
+  console.log(this._name);
   this._element.querySelector('.element__title').textContent = this._name;
 
   return this._element;
   }
 }
 
-// здесь все кажется ок >>> the enter
+// >>> the enter

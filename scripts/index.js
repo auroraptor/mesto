@@ -1,5 +1,6 @@
 import { Section } from '../components/Section.js';
 import { FormValidator } from '../components/FormValidator.js';
+import { UserInfo} from '../components/UserInfo.js'
 
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
@@ -31,44 +32,18 @@ addFormValidation.enableValidation();
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль
-const profilePopup = page.querySelector('.profile-popup'); //  секция поп-ап
-const newItemPopup = page.querySelector('.new-item-popup'); // форма добавления карточек
-
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-const elements = page.querySelector('.elements');
-
-const formEditProfile = page.querySelector('.edit-profile-form');
-const formNewItem = page.querySelector('.new-item-form');
-
-const popups = page.querySelectorAll('.popup');
-
-const nameInput = formEditProfile.querySelector('.form__item_input_name');  // поля формы
-const jobInput = formEditProfile.querySelector('.form__item_input_job');
-const newLocationInput = formNewItem.querySelector('.form__item_input_place');
-const newLinkInput = formNewItem.querySelector('.form__item_input_link');
-
-const name = profile.querySelector('.name'); // поле имени в профиле
-const job = profile.querySelector('.job'); // второе поле в профиле
-
-// function openPopup(popup) {
-//   popup.classList.add('popup_opened');
-
-//   document.addEventListener('keydown', escapeFromPopup);
-//   document.addEventListener('mousedown', missClick);
-// }
 
 const handleCardClick = (name, link) => {
   const popupWithImage = new PopupWithImage('.image-zoomed-popup');
-  console.log(popupWithImage);
   popupWithImage.open(name, link);
-} //
-
-// карточки из коробки заработали, и я довольна этим! TODO пока не открывается попап переделать
+  popupWithImage.setEventListeners();
+}
 
 const cardList = new Section({
-  items: initialCards,
+  items: initialCards.reverse(),
   renderer: (item) => { // отвечает за создание и отрисовку данных на странице
     const newCard = new Card(item, '#card', handleCardClick); // создание вот тут менять
     const element = newCard.generateCard();
@@ -79,122 +54,46 @@ const cardList = new Section({
 
 cardList.renderItems();
 
-const popupEditProfile = new PopupWithForm(
-  '.profile-popup',
-   () => {} // вот здесь будет описано как форму закрывать
-);
-
-console.log(popupEditProfile);
+const popupEditProfile = new PopupWithForm('.profile-popup',
+  { handleFormSubmit: (formData) => {
+  const userInfo = new UserInfo({name: '.name', about: '.job'});
+  userInfo.setUserInfo(formData);
+  }
+});
 
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup',
-  () => {} // и вот тут
+  {handleFormSubmit: (formData) => {
+        const card = new Card(formData, '#card', handleCardClick);
+        const element = card.generateCard();
+        cardList.addItem(element);
+        }
+  }
 )
 
-// function openPopup(popup) {
-//   popup.classList.add('popup_opened');
+// function handleProfileFormSubmit(evt) { // вот эта функция бесполезная мб подскажет мне как через UserInfo добавить в инпуты данные
+//     evt.preventDefault();
+//     const nameInputValue = nameInput.value;
+//     const jobInputValue = jobInput.value;
+//     name.textContent = nameInputValue;
+//     job.textContent = jobInputValue;
 
-//   document.addEventListener('keydown', escapeFromPopup);
-//   document.addEventListener('mousedown', missClick);
+//     // closePopup(profilePopup);
 // }
 
-
-// нужен экземпляр класса попапа с картинкой внутри Card
-
-//меняю вот эту функцию создания карточек из коробки на экземпляр секции
-
-// const generateCard = (data) => {
-//   const newCard = new Card(data, '#card', openPopup);
-
-//   return newCard.generateCard();
-// }
-
-  // Создайте функцию, которая будет вставлять карточку в контейнер. Вызывать ее будете в функции-сабмите формы добавления карточки и при рендере базовых 6 карточек
-
-// const addCard = (data) => {
-//   elements.prepend(generateCard(data));
-// }
-
-// initialCards.reverse().forEach( data => {
-//   addCard(data);
-// });
-
-// const escapeFromPopup = (evt) => {
-//     if (evt.key === 'Escape') {
-//       const popup = page.querySelector('.popup_opened'); // TODO вместо page найти ближайшего соседа события evt.target с заданным классом когда-нибудь я с этим разберусь
-//       closePopup(popup);
-//     }
-// };
-
-// const missClick = (evt) => {
-//   if (evt.target.classList.contains('popup')) {
-//     closePopup(evt.target);
-//   }
-// }
-
-// function closePopup(popup) {
-//   popup.classList.remove('popup_opened');
-
-//   document.removeEventListener('keydown', escapeFromPopup);
-//   document.removeEventListener('mousedown', missClick);
-// }
-
-// popups.forEach((popup) => {
-//   popup.addEventListener('click', (evt) => {
-//      if (evt.target.classList.contains('popup__close-icon')) {
-//         closePopup(popup);
-//       }
-//   });
-// });
-
-// function openEditProfilePopup() {
-//   editFormValidation.goToReset();
-
-//   nameInput.value = name.textContent;
-//   jobInput.value = job.textContent;
-
-//   openPopup(profilePopup);
-// }
-
-function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-    const nameInputValue = nameInput.value;
-    const jobInputValue = jobInput.value;
-    name.textContent = nameInputValue;
-    job.textContent = jobInputValue;
-
-    // closePopup(profilePopup);
-}
-
-function addNewItemFormSubmit(evt) {
-  evt.preventDefault();
-
-  const data = {
-    name: newLocationInput.value,
-    link: newLinkInput.value
-  }
-
-  addCard(data);
-  closePopup(newItemPopup);
-}
-
-// editButton.addEventListener('click', openEditProfilePopup);
 editButton.addEventListener('click', () => {
-  // editFormValidation.goToReset()
+  editFormValidation.goToReset();
+  popupEditProfile.setEventListeners();
   popupEditProfile.open();
 });
 
-formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 addButton.addEventListener('click', () => {
   addFormValidation.goToReset();
+  popupAddNewItem.setEventListeners();
   popupAddNewItem.open();
-  // openPopup(newItemPopup);
 });
 
-formNewItem.addEventListener('submit', addNewItemFormSubmit);
-
-
-// ну вроде тут тоже все ок >>> the enter
+// TODO с чем тут еще надо разобраться? поля формы редактирования профиля должны вставляться через userInfo.getInfo() в открытую форму редактирования профиля и Esc пока не работает теряется контекст >>> the enter
 
 
