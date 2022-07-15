@@ -48,7 +48,7 @@ generateCard() {
 
   this._photo.src = this._link;
   this._photo.alt = this._name;
-  console.log(this._name);
+  // console.log(this._name);
   this._element.querySelector('.element__title').textContent = this._name;
 
   return this._element;

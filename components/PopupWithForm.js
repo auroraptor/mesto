@@ -33,7 +33,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close(); // и снова перегрузили
-    this._form.removeEventListener('submit', this._callback); // а вот тут еще кажется должна быть очистка формы по заданию но она у меня пока в валидации форме лежит
+    // this._form.removeEventListener('submit', this._callback); // а вот тут еще кажется должна быть очистка формы по заданию но она у меня пока в валидации форме лежит
     // Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
   }
 }

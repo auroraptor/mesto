@@ -58,8 +58,11 @@ const popupEditProfile = new PopupWithForm('.profile-popup',
   { handleFormSubmit: (formData) => {
   const userInfo = new UserInfo({name: '.name', about: '.job'});
   userInfo.setUserInfo(formData);
+  // popupEditProfile.setEventListeners(); прикол
   }
 });
+
+popupEditProfile.setEventListeners()
 
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup',
@@ -70,6 +73,8 @@ const popupAddNewItem = new PopupWithForm(
         }
   }
 )
+
+popupAddNewItem.setEventListeners();
 
 // function handleProfileFormSubmit(evt) { // вот эта функция бесполезная мб подскажет мне как через UserInfo добавить в инпуты данные
 //     evt.preventDefault();
@@ -83,14 +88,11 @@ const popupAddNewItem = new PopupWithForm(
 
 editButton.addEventListener('click', () => {
   editFormValidation.goToReset();
-  popupEditProfile.setEventListeners();
   popupEditProfile.open();
 });
 
-
 addButton.addEventListener('click', () => {
   addFormValidation.goToReset();
-  popupAddNewItem.setEventListeners();
   popupAddNewItem.open();
 });
 
