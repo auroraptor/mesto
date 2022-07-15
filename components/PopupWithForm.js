@@ -8,6 +8,7 @@ export class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.form');
   }
 
+
   _getInputValues() {
     this._formValues = {}; // у меня это было в конструкторе и я перенесла это в метод как в коде урока показано но не знаю как лучше >>> the enter
     this._inputList.forEach( (input) => {
@@ -16,6 +17,10 @@ export class PopupWithForm extends Popup {
 
     return this._formValues;
   }
+
+
+
+
 
   setEventListeners() {
     super.setEventListeners();

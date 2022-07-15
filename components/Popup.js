@@ -18,13 +18,12 @@ export class Popup {
 
   _handleEscClose() {
     if (event.key === 'Escape') {
-      console.log('escape from popup');
-      this.close.bind(this); // TODO потеря контекста разобраться
+      this.close();
     }
   }
 
   setEventListeners() {
-    document.addEventListener('keydown', this._handle);
+    document.addEventListener('keydown', this._handle.bind(this)); // почему именно здесь, а не внутри самого метода (ну почему не в конструкторе поняла) нужно привязку контекста делать я не понимаю но радуюсь что просто перестала терять этот контекст
 
     this._popup.addEventListener('click', () => {
        if (event.target === this._popup || event.target === this._close) {
@@ -34,4 +33,4 @@ export class Popup {
   }
 }
 
-// TODO пересать терять контекcт у esc >>> the enter
+// >>> the enter

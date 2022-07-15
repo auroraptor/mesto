@@ -58,7 +58,6 @@ const popupEditProfile = new PopupWithForm('.profile-popup',
   { handleFormSubmit: (formData) => {
   const userInfo = new UserInfo({name: '.name', about: '.job'});
   userInfo.setUserInfo(formData);
-  // popupEditProfile.setEventListeners(); прикол
   }
 });
 
