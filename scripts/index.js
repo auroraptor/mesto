@@ -1,32 +1,16 @@
 import { Section } from '../components/Section.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { UserInfo} from '../components/UserInfo.js'
-
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-
-import { initialCards } from './pictures.js';
-
-const data = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
-
-const page = document.querySelector('.page');
-const profile = page.querySelector('.profile'); // профиль
-const editButton = profile.querySelector('.profile__edit-button');
-const addButton = profile.querySelector('.add-button');
+import { initialCards } from '../utils/pictures.js';
+import { data, editButton, addButton } from '../utils/constants.js'
 
 const editFormValidation = new FormValidator(data, '.edit-profile-form');
-
-editFormValidation.enableValidation();
-
 const addFormValidation = new FormValidator(data, '.new-item-form');
 
+editFormValidation.enableValidation();
 addFormValidation.enableValidation();
 
 const handleCardClick = (name, link) => {
@@ -57,8 +41,6 @@ const popupEditProfile = new PopupWithForm('.profile-popup', {
   }
 );
 
-popupEditProfile.setEventListeners()
-
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup', {
   handleFormSubmit: (formData) => {
@@ -69,6 +51,7 @@ const popupAddNewItem = new PopupWithForm(
   }
 );
 
+popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
 editButton.addEventListener('click', () => {
