@@ -1,13 +1,16 @@
 export class UserInfo {
   constructor( { name, about }) {
-    this._name = document.querySelector(name); // в документе искать или есть что-то удобней
+    this._name = document.querySelector(name);
     this._about = document.querySelector(about);
   }
 
-  getUserInfo() { // а что в него попадает в этот метод хммм
+  getUserInfo() {
     this._info = {};
 
-    return this._info; // возвращает объект с данными пользователя чтобы вставить его на страницу TODO реализовать
+    this._info['name'] = this._name.textContent;
+    this._info['job'] = this._about.textContent;
+
+    return this._info;
   }
 
   setUserInfo({ name, job }) {
@@ -16,4 +19,4 @@ export class UserInfo {
   }
 }
 
-// TODO прописать метод getUserInfo >>> the enter
+// >>> the enter

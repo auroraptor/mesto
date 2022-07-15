@@ -1,13 +1,16 @@
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._close = this._popup.querySelector('.popup__close-icon'); // насчет вот такого не уверена с другой стороны как это еще найти
-    this._handle = this._handleEscClose; // непонятно где это вызывать пока непонятно потом будет понятно мб вот здесь начинает быть нужен bind() -- а я была кажется права и вот именно тут bind начинает быть нужен но я еще не поняла как его привязать
+    this._close = this._popup.querySelector('.popup__close-icon');
+    this._handle = this._handleEscClose;
+
+    // непонятно где это вызывать -- пока непонятно потом будет понятно -- мб вот здесь начинает быть нужен bind() -- а я была кажется права и вот именно тут bind начинает быть нужен -- но я еще не поняла как его привязать -- а он оказался нужен неожиданно в setEventListeners >>> the enter
+
     this._set = this.setEventListeners;
   }
 
   open() {
-    this._popup.classList.add('popup_opened'); // TODO исправить index.html popup_opened.css index.css index.js на popup_is-opened >>> i <3 bem >>> the enter
+    this._popup.classList.add('popup_opened'); // TODO на досуге исправить index.html popup_opened.css index.css index.js на popup_is-opened >>> i <3 bem >>> the enter
   }
 
   close() {
@@ -23,9 +26,11 @@ export class Popup {
   }
 
   setEventListeners() {
-    document.addEventListener('keydown', this._handle.bind(this)); // почему именно здесь, а не внутри самого метода (ну почему не в конструкторе поняла) нужно привязку контекста делать я не понимаю но радуюсь что просто перестала терять этот контекст
+    document.addEventListener('keydown', this._handle.bind(this));
 
-    this._popup.addEventListener('click', () => {
+     // почему именно здесь нужен bind(this), а не внутри самого метода нужно привязку контекста делать (почему не в конструкторе я поняла), я не понимаю но радуюсь что просто перестала терять этот контекст >>> the enter
+
+    this._popup.addEventListener('mousedown', () => {
        if (event.target === this._popup || event.target === this._close) {
         this.close();
        }

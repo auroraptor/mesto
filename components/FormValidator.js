@@ -8,18 +8,10 @@ export class FormValidator {
     this._errorVisible = data['errorClass'];
   }
 
-  //  В методе enableValidation вызывайте метод setEventListener, в котором вы пройдетесь по массиву с инпутами и вызовите на каждом элементе массива метод   this._isValid() <- он должен принимать в себя параметром инпут, и метод this._toggleButtonState(). Методы _showInputError и _hideInputError так же должны принимать параметром инпут, с которым им предстоит работать. Это нужно исправить таким способом, что не запутаться, какой конкретно инпут вы помещаете в this._input, так наглядно код будет более читабельнее и понятнее.
-
   enableValidation() {
     this._toggleButtonState();
-
-    // В методе enableValidation вызывайте метод setEventListener
-
     this._setEventListeners();
-
   }
-
-  // в котором вы пройдетесь по массиву с инпутами и вызовите на каждом элементе массива метод   this._isValid() <- он должен принимать в себя параметром инпут, и метод this._toggleButtonState()
 
   _setEventListeners() {
     this._inputList.forEach( (input) => {
@@ -28,15 +20,16 @@ export class FormValidator {
         this._input = input; // вот то что я так пишу это и облегчает чтение или нет надеюсь что да
 
         this._isValid(this._input);
-        this._toggleButtonState(); // или вот эта строчка и есть второй параметр я не знаю но на всякий случай пока оставлю это здесь когда я вставляю это вторым параметром в _isValid(this._input, this._toggleButtonState()) ваще хтонь какая-то творится >>> the enter
+        this._toggleButtonState();
+
+        // или вот эта строчка и есть второй параметр я не знаю но на всякий случай пока оставлю это здесь когда я вставляю это вторым параметром в _isValid(this._input, this._toggleButtonState()) ваще хтонь какая-то творится >>> the enter
       });
     });
   }
 
   goToReset() {
     this._inputList.forEach( (input) => {
-      this._input = input;
-      this._input.value = '';
+      this._input = input; // вот эта строчка повторяется 3 раза уверена есть другой способ >>> the enter
 
       this._hideInputError();
       this._toggleButtonState();
@@ -55,7 +48,10 @@ export class FormValidator {
 
   _hasInvalidInput() {
     return this._inputList.some( input => {
-      this._input = input; // и вот снова она наверн это можно передать через параметр сюда как-то, но очевидно я испытываю трудности с этими передачами через параметр (я вообще до сих пор путаюсь в словах аргумент и параметр, но наставник сказал что это одно и то же, я стараюсь это помнить) >>> the enter
+      this._input = input;
+
+      // и вот снова она наверн это можно передать через параметр сюда как-то, но очевидно я испытываю трудности с этими передачами через параметр -- а мб использовать bind() >>> the enter
+
       return !this._input.validity.valid;
     });
   }
@@ -87,3 +83,4 @@ export class FormValidator {
   }
 }
 
+// >>> the enter
