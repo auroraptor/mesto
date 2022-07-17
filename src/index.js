@@ -5,7 +5,8 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { data, editButton, addButton } from '../utils/constants.js'
+import { data, editButton, addButton, images } from '../utils/constants.js';
+import './index.css';
 
 const editFormValidation = new FormValidator(data, '.edit-profile-form');
 const addFormValidation = new FormValidator(data, '.new-item-form');
