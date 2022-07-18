@@ -11,7 +11,7 @@ import './index.css';
 // Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
   // баааайт >>> the enter
 
-const upInTheValid = (config) => {
+const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
   formList.forEach( (form) => {
@@ -25,7 +25,7 @@ const upInTheValid = (config) => {
   });
 }
 
-upInTheValid(config); // мне нравится!
+enableValidation(config); // мне нравится! вот только уверена что название upInTneValid опять не пройдет эххх ладно поменяю сразу >>> the enter
 
 // вынести этот экземпляр прочь из хендлера, тк его над лишь раз создавать (aaaaa :) >>> the enter
 
