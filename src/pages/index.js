@@ -14,10 +14,13 @@ const addFormValidation = new FormValidator(data, '.new-item-form');
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
 
+// вынести этот экземпляр прочь из хендлера, тк его над лишь раз создавать (aaaaa :) >>> the enter
+
+const popupWithImage = new PopupWithImage('.image-zoomed-popup');
+popupWithImage.setEventListeners();
+
 const handleCardClick = (name, link) => {
-  const popupWithImage = new PopupWithImage('.image-zoomed-popup');
   popupWithImage.open(name, link);
-  popupWithImage.setEventListeners();
 }
 
 const cardList = new Section({
