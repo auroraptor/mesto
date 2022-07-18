@@ -58,7 +58,7 @@ const cardList = new Section({
     cardList.addItem(element);
     }
   },
-'.elements'); // что-то я запуталась в переносе скобок на новые строчки вот здесь >>> the enter
+'.elements');
 
 cardList.renderItems();
 
