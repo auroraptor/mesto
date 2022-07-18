@@ -5,14 +5,27 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { data, editButton, addButton } from '../utils/constants.js';
+import { editButton, addButton, config, formValidators } from '../utils/constants.js';
 import './index.css';
 
-const editFormValidation = new FormValidator(data, '.edit-profile-form');
-const addFormValidation = new FormValidator(data, '.new-item-form');
+// Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
+  // баааайт >>> the enter
 
-editFormValidation.enableValidation();
-addFormValidation.enableValidation();
+const upInTheValid = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+
+  formList.forEach( (form) => {
+    const validator = new FormValidator(config, form);
+
+    // ^ вот здесь ^ приходится менять конструктор класса валидации чтобы это заработало >>> the enter
+
+    const formName = form.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
+
+upInTheValid(config); // мне нравится!
 
 // вынести этот экземпляр прочь из хендлера, тк его над лишь раз создавать (aaaaa :) >>> the enter
 
@@ -71,14 +84,14 @@ popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
 editButton.addEventListener('click', () => {
-  editFormValidation.resetValidation();
+  formValidators['profile-form'].resetValidation();
   popupEditProfile.setInputValues(userInfo.getUserInfo());
   popupEditProfile.open();
   }
 );
 
 addButton.addEventListener('click', () => {
-  addFormValidation.resetValidation();
+  formValidators['new-item'].resetValidation();
   popupAddNewItem.open();
   }
 );

@@ -22,7 +22,10 @@ const images = [
   {name: 'move', image: moveImage},
 ]
 
-const data = {
+// config для создания объекта валидации всех форм
+
+const config = {
+  formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
@@ -30,9 +33,11 @@ const data = {
   errorClass: 'popup__error_visible'
 }
 
+const formValidators = {};
+
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-export { data, editButton, addButton, };
+export { editButton, addButton, config, formValidators};

@@ -1,6 +1,7 @@
 export class FormValidator {
   constructor (data, form) {
-    this._form = document.querySelector(`${form}`);
+    // this._form = document.querySelector(`${form}`);
+    this._form = form;
     this._inputList = Array.from(this._form.querySelectorAll(`${data['inputSelector']}`));
     this._button = this._form.querySelector(`${data['submitButtonSelector']}`);
     this._inactiveButtonClass = data['inactiveButtonClass'];
