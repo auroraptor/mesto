@@ -12,9 +12,8 @@ _getTemplate() {
   return cardElement;
 }
 
-_like() { // <3
-  this._element
-  .querySelector('.like-button')
+_like() { // <3 уже нашла на 43 >>> the enter
+  this._likeButton
   .classList
   .toggle('like-button_active');
 }
@@ -40,6 +39,7 @@ _setListeners() {
 generateCard() {
   this._element = this._getTemplate();
 
+  // Поля классов (так называемые классовые переменные с this) доступны везде по коду класса и внутри любого метода, особенно, если это поле класса было создано в конструкторе. Поэтому не нужно их передавать в вызовы методов этого же класса, так как мы можем внутри метода использовать эту переменную с this.
   this._likeButton = this._element.querySelector('.like-button');
   this._deleteButton = this._element.querySelector('.element__delete-button');
   this._photo = this._element.querySelector('.element__photo');
@@ -48,7 +48,6 @@ generateCard() {
 
   this._photo.src = this._link;
   this._photo.alt = this._name;
-  // console.log(this._name);
   this._element.querySelector('.element__title').textContent = this._name;
 
   return this._element;
