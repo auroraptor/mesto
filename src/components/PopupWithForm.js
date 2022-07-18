@@ -39,10 +39,9 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close();
+    this._form.reset();
 
-    this._inputList.forEach( input => {
-      input.value = '';
-    });
+    // ^ reset ^ восстанавливает стандартные значения всем элементам формы. Данный метод выполняет действие идентичное нажатию кнопки имеющей тип reset.
   }
 }
 
