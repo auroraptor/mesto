@@ -71,14 +71,14 @@ popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
 editButton.addEventListener('click', () => {
-  editFormValidation.goToReset();
+  editFormValidation.resetValidation();
   popupEditProfile.setInputValues(userInfo.getUserInfo());
   popupEditProfile.open();
   }
 );
 
 addButton.addEventListener('click', () => {
-  addFormValidation.goToReset();
+  addFormValidation.resetValidation();
   popupAddNewItem.open();
   }
 );

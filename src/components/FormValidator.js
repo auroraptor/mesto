@@ -27,7 +27,7 @@ export class FormValidator {
     });
   }
 
-  goToReset() {
+  resetValidation() {
     this._inputList.forEach( (input) => {
       this._input = input; // вот эта строчка повторяется 3 раза уверена есть другой способ >>> the enter
 
