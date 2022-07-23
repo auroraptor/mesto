@@ -20,8 +20,6 @@ _like() { // <3 уже нашла на 43 >>> the enter
 
 _remove() {
   this._element.remove();
-  this._element = null;
-
 }
 
 _setListeners() {
