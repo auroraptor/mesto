@@ -57,7 +57,7 @@
         <!-- а не лучше ли назвать эту форму form_name_new-item хммм -->
         <form class="form new-item-form popup__form" name="new-item" novalidate>
           <div class="form__main-container">
-            <label class="form__heading ">Новое место</label>
+            <label class="form__heading">Новое место</label>
             <input type="text" class="form__item form__item_input_place popup__input" placeholder="Название" name="place" minlength="2" maxlength="30" autocomplete="off" id="place" required>
             <span class="popup__error place-error">span</span>
             <input type="url" class="form__item form__item_input_link popup__input" placeholder="Ссылка на картинку" name="link" autocomplete="off" id="link" required>
@@ -78,6 +78,17 @@
     </figure>
     </div>
   </div>
+  <div class="popup confirm-popup">
+    <div class="popup__container">
+    <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
+    <form class="form">
+      <div class="form__main-container">
+        <label for="confirm" class="form__heading" style="color: #000000">Вы уверены?</label>
+        <button type="submit" class="form__submit-button popup__button" id="confirm">Да</button>
+      </div>
+    </form>
+    </div>
+  </div>
 <!-- это заготовка верстки, содержимое не отобразится -->
   <template id="card">
     <article class="element">
@@ -90,8 +101,5 @@
           </div>
     </article>
   </template>
-  <!-- <script type="module" src="src/index.js"></script> -->
-  <!-- <script src="scripts/pictures.js"></script> -->
-  <!-- <script src="scripts/validate.js"></script> -->
 </body>
 </html>

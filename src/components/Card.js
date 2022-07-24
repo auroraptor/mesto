@@ -1,10 +1,10 @@
 export class Card {
-  constructor({place, link}, selector, handleCardClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
+  constructor({place, link}, selector, handleCardClick, handleMoveClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
   this._name = place;
   this._link = link;
   this._template = document.querySelector(selector).content.querySelector('.element');
   this._handleCardClick = handleCardClick;
-
+  this._handleMoveClick = handleMoveClick.bind(this);
 }
 
 _getTemplate() {
@@ -18,7 +18,8 @@ _like() { // <3 уже нашла на 43 >>> the enter
   .toggle('like-button_active');
 }
 
-_remove() {
+// вот этот метод стоит изменить чтобы вместо удаления карточки он открывал попап нужный мне и сделать это надо через связывание слабое
+remove() {
   this._element.remove();
 }
 
@@ -26,9 +27,17 @@ _setListeners() {
   this._likeButton.addEventListener('click', () => {
     this._like();
   });
+
+  // ниже я меняю метод с удаления элемента на открытие попапа который подтвердит удаление
+  // this._deleteButton.addEventListener('click', () => {
+  //   this._remove();
+  // });
+
   this._deleteButton.addEventListener('click', () => {
-    this._remove();
+    // this._remove();
+    this._handleMoveClick(this); // а что ему надо передать?
   });
+
   this._photo.addEventListener('click', () => {
     this._handleCardClick(this._name, this._link);
   });

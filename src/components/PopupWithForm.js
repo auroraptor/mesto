@@ -29,7 +29,7 @@ export class PopupWithForm extends Popup {
 
     this._callback = (evt) => {
       evt.preventDefault();
-      this._values = this._getInputValues();
+      this._values = this._getInputValues(); // вот здесь не подходит
       this._handleFormSubmit(this._values);
       this.close();
     }

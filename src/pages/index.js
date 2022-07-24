@@ -7,6 +7,8 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
 import { editButton, addButton, config, formValidators } from '../utils/constants.js';
 import './index.css';
+import { Popup } from '../components/Popup.js';
+import { PopupConfirm } from '../components/PopupConfirm.js';
 
 // Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
   // баааайт >>> the enter
@@ -36,8 +38,21 @@ const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
 }
 
+// описываю здесь логику удаления карточки через попап
+const handleMoveClick = (element) => {
+
+  popupConfirm.setEventListeners(element);
+  popupConfirm.open(); // вот в него должны попадать данные карточки, которую удаляем, а значит нужен еще один наследник?
+}
+
+const popupConfirm = new PopupConfirm('.confirm-popup', {
+  handleFormSubmit: (card) => {
+    card.remove();
+  }
+ });
+
 const createCard = (item) => {
-  const newCard = new Card(item, '#card', handleCardClick);
+  const newCard = new Card(item, '#card', handleCardClick, handleMoveClick);
 
   return newCard.generateCard();
 }
@@ -77,6 +92,21 @@ const popupAddNewItem = new PopupWithForm(
     }
   }
 );
+
+// / >>> the enter
+// вот здесь я создаю попап удаления карточки
+// кажется, для него нужен новый класс попапа а мб и нет хмммм
+
+// const popupConfirm = new PopupWithForm('.confirm-popup', {
+//   handleFormSubmit: (element) => {
+//     element.remove();
+//   }
+// });
+// // popupConfirm.open();
+// console.log(popupConfirm);
+// console.log(popupConfirm.open);
+
+/// >>> the enter
 
 popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
