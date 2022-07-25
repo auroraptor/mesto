@@ -1,6 +1,6 @@
 import { Popup } from "./Popup.js";
 
-export class PopupConfirm extends Popup {
+export class PopupWithConfirmation extends Popup {
 constructor(selector, {handleFormSubmit}) {
   super(selector);
   this._form = this._popup.querySelector('.form');
@@ -16,7 +16,7 @@ setEventListeners(elem) {
     this.close();
   }
 
-  this._form.addEventListener('submit', this._callback);
+  this._form.addEventListener('submit', this._callback); // а это не стакает слушателей интересно
 }
 
 }

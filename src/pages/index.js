@@ -8,7 +8,7 @@ import { initialCards } from '../utils/pictures.js';
 import { editButton, addButton, config, formValidators } from '../utils/constants.js';
 import './index.css';
 import { Popup } from '../components/Popup.js';
-import { PopupConfirm } from '../components/PopupConfirm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
 // Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
   // баааайт >>> the enter
@@ -45,7 +45,7 @@ const handleMoveClick = (element) => {
   popupConfirm.open(); // вот в него должны попадать данные карточки, которую удаляем, а значит нужен еще один наследник?
 }
 
-const popupConfirm = new PopupConfirm('.confirm-popup', {
+const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
   handleFormSubmit: (card) => {
     card.remove();
   }
