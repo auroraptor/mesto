@@ -40,6 +40,7 @@
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__heading/form__heading.css);
 @import url(../blocks/form/__item/form__item.css);
+@import url(../blocks/form/__item/_input/form__item_input_avatar.css);
 @import url(../blocks/form/__item/_input/form__item_input_name.css);
 @import url(../blocks/form/__item/_input/form__item_input_place.css);
 @import url(../blocks/form/__main-container/form__main-container.css);

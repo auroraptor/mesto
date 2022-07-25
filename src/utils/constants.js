@@ -37,7 +37,8 @@ const formValidators = {};
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль
+const avatar = profile.querySelector('.profile__avatar');
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-export { editButton, addButton, config, formValidators};
+export { avatar, editButton, addButton, config, formValidators};

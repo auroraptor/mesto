@@ -5,7 +5,7 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { editButton, addButton, config, formValidators } from '../utils/constants.js';
+import { avatar, editButton, addButton, config, formValidators } from '../utils/constants.js';
 import './index.css';
 import { Popup } from '../components/Popup.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
@@ -87,29 +87,27 @@ const popupEditProfile = new PopupWithForm('.profile-popup', {
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup', {
   handleFormSubmit: (formData) => {
-    const element = createCard(formData);
-    cardList.addItem(element);
+    cardList.addItem(createCard(formData));
     }
   }
 );
 
-// / >>> the enter
-// вот здесь я создаю попап удаления карточки
-// кажется, для него нужен новый класс попапа а мб и нет хмммм
-
-// const popupConfirm = new PopupWithForm('.confirm-popup', {
-//   handleFormSubmit: (element) => {
-//     element.remove();
-//   }
-// });
-// // popupConfirm.open();
-// console.log(popupConfirm);
-// console.log(popupConfirm.open);
-
-/// >>> the enter
+const popupEditAvatar = new PopupWithForm(
+  '.avatar-popup', {
+    handleFormSubmit: (formData) => {
+      avatar.src = formData['avatar'];
+    }
+  }
+);
+popupEditAvatar.setEventListeners();
 
 popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
+
+avatar.addEventListener('click', () => {
+  formValidators['avatar-form'].resetValidation();
+  popupEditAvatar.open();
+})
 
 editButton.addEventListener('click', () => {
   formValidators['profile-form'].resetValidation();
