@@ -3,17 +3,17 @@
   width: 120px;
   height: 120px;
   position: relative;
-  background: url(../../../images/__avatar.jpg) no-repeat center/cover;
+  /* background: url(../../../images/__avatar.jpg) no-repeat center/cover; */
   align-self: center;
 }
 
-.profile__avatar:hover  {
+/* .profile__avatar:hover  {
   cursor: pointer;
   opacity: .8;
   transition: opacity .5s linear;
-}
+} */
 
-.profile__avatar::after {
+/* .profile__avatar::after {
   content: url(../../../images/__edit-avatar.svg);
   width: 26px;
   height: 26px;
@@ -21,10 +21,43 @@
   top: 47px;
   left: 47px;
   opacity: 0;
-}
+} */
 
 .profile__avatar:hover::after {
   opacity: 1;
+}
+
+.avatar {
+  /* background: #119466; */
+  /* width: 120px; */
+  /* height: 120px; */
+  position: relative;
+}
+
+.edit-button__avatar {
+  background-image: url(../../../images/__edit-avatar.svg);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: absolute;
+  /* top: 47px;
+  left: 47px;
+  width: 26px;
+  height: 26px; */
+  top: 0px;
+  left: 0px;
+  width: 120px;
+  height: 120px;
+  padding: 0;
+  border: none;
+  background-color: rgba(0, 0, 0, .8);
+  opacity: 0;
+}
+
+.edit-button__avatar:hover {
+  cursor: pointer;
+  opacity: 1;
+  /* transform: scale(1.1); */
+  transition: all .5s linear;
 }
 
 

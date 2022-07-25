@@ -5,7 +5,7 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { avatar, editButton, addButton, config, formValidators } from '../utils/constants.js';
+import { avatarButton, editButton, addButton, config, formValidators } from '../utils/constants.js';
 import './index.css';
 import { Popup } from '../components/Popup.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
@@ -39,9 +39,9 @@ const handleCardClick = (name, link) => {
 }
 
 // описываю здесь логику удаления карточки через попап
-const handleMoveClick = (element) => {
+const handleMoveClick = (card) => {
 
-  popupConfirm.setEventListeners(element);
+  popupConfirm.setEventListeners(card);
   popupConfirm.open(); // вот в него должны попадать данные карточки, которую удаляем, а значит нужен еще один наследник?
 }
 
@@ -75,7 +75,7 @@ const cardList = new Section({
 
 cardList.renderItems();
 
-const userInfo = new UserInfo({ name: '.name', about: '.job' });
+const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.job' });
 
 const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
@@ -95,16 +95,16 @@ const popupAddNewItem = new PopupWithForm(
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {
     handleFormSubmit: (formData) => {
-      avatar.src = formData['avatar'];
+      userInfo.setAvatar(formData['avatar'])
     }
   }
 );
-popupEditAvatar.setEventListeners();
 
+popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
-avatar.addEventListener('click', () => {
+avatarButton.addEventListener('click', () => { // вот это надо заменить на кнопку другую
   formValidators['avatar-form'].resetValidation();
   popupEditAvatar.open();
 })
