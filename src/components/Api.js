@@ -52,10 +52,28 @@ export class Api {
         'content-type': 'application/json'
       },
       body: JSON.stringify(callback)
-    });
+    })
+    .then((res) => { // кажется это не нужно я запуталась
+      if(res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`err ${res.status}`);
+    })
   }
 
-  // Промисы - это решение, которое дополняет колбэки надежной семантикой, делая их поведение более разумным и надежным. Нейтрализуя инверсию контроля колбэков, мы получаем надежную систему, которая была разработана специально для внесения здравого смысла в асинхронные программы.
+  editUserAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(avatar)
+    })
+    .then((res) => {
+      return (res.ok) ? res.json() : Promise.reject(`err ${res.status}`)
+    })
+  }
 }
 
 

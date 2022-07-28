@@ -5,16 +5,12 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { avatarButton, editButton, addButton, config, profile, formValidators } from '../utils/constants.js';
+import { editAvatarButton, editProfileButton, addButton, config,  formValidators } from '../utils/constants.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { Api } from '../components/Api.js';
 import './index.css';
 
 // данные в профиле должны рендерится по данным с сервера
-
-
-
-// renderProfile(profile);
 
 // Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
   // баааайт >>> the enter
@@ -24,18 +20,13 @@ const enableValidation = (config) => {
 
   formList.forEach( (form) => {
     const validator = new FormValidator(config, form);
-
-    // ^ вот здесь ^ приходится менять конструктор класса валидации чтобы это заработало >>> the enter
-
     const formName = form.getAttribute('name');
     formValidators[formName] = validator;
     validator.enableValidation();
   });
 }
 
-enableValidation(config); // мне нравится! вот только уверена что название upInTneValid опять не пройдет эххх ладно поменяю сразу >>> the enter
-
-// вынести этот экземпляр прочь из хендлера, тк его над лишь раз создавать (aaaaa :) >>> the enter
+enableValidation(config);
 
 const popupWithImage = new PopupWithImage('.image-zoomed-popup');
 popupWithImage.setEventListeners();
@@ -46,9 +37,8 @@ const handleCardClick = (name, link) => {
 
 // описываю здесь логику удаления карточки через попап
 const handleMoveClick = (card) => {
-
   popupConfirm.setEventListeners(card);
-  popupConfirm.open(); // вот в него должны попадать данные карточки, которую удаляем, а значит нужен еще один наследник?
+  popupConfirm.open();
 }
 
 const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
@@ -63,39 +53,59 @@ const createCard = (item) => {
   return newCard.generateCard();
 }
 
-// Можно же вставлять карточку в начало с prepend, в конец с append, вообще не вставлять, а сделать массив готовых карточек, а потом уже вставить всё разом в DOM.
-  // я это пойму, но не сразу >>> the enter
-  // ааааа "можно" значит можно реализовать какие-то методы в слое Section которые и будут делать append вставку или создавать массив готовых карточек! >>> the enter
-// И такой пункт есть в чек-листе. Скрин из него http://joxi.ru/xAeobK0cb8D1Gm -- 404 -- но наверн речь про это >> Функция выполняет только одну задачу, например, возвращает разметку карточки. -- каждый раз, когда я сама в одиночку прохожу сквозь чек-лист, мне кажется, будто все правильно и вот как надо, но, очевидно, моё стремление отправить работу на ревью мешает здесь, и я забываю про то что необходимо Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
+// Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
+
+// api.getInitialCards()
+// .then((res) => {
+//   const cardList = new Section({
+//     // вот здесь в айтемы должен приходить ответ с сервера в виде массива карточек
+//     // items: initialCards.reverse(),
+//     items: res,
+
+//     renderer: (item) => {
+//       cardList.addItem(createCard(item));
+//       }
+//     },
+//   '.elements');
+//   cardList.renderItems()
+// })
+// .catch((err) => {console.log(err)});
+
+// При каждом запросе нужно передавать токен и идентификатор группы
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
+  authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
+});
 
 const cardList = new Section({
-  items: initialCards.reverse(),
-  renderer: (item) => { // отвечает за создание и отрисовку данных на странице
+  // вот здесь в айтемы должен приходить ответ с сервера в виде массива карточек
+  // items: initialCards.reverse(),
+  // items: [],
 
-    // ххх ну вот даже что у меня ^ тут ^ стоит СОЗДАНИЕ&ОТРИСОВКА должно было б подвести меня к мысли что это значит 2 действия, а после вспомнить о том что круто, когда у функции одна ответственность одного действия -- я ещё научусь читать и понимать что пишу в своих же комментариях >>> the enter
-
+  renderer: (item) => {
     cardList.addItem(createCard(item));
     }
   },
 '.elements');
 
-cardList.renderItems();
+console.log(cardList._renderer);
+
+// api.getInitialCards()
+// .then((res) => { return cardList.renderItems(res) })
+// .catch((err) => {console.log('err', err)});
 
 const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
 
 const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData); // вставляет на страницу то что пришло с формы
+    // вот тут точн что-то не так
+    // userInfo.setUserInfo(formData); // вставляет на страницу то что пришло с формы
     // и вот возможно тут надо сделать так чтобы данные с сервера отображались
-    console.log(userInfo.getUserInfo());
-    // const info = userInfo.getUserInfo()
-    // console.log(info);
-    // вот здесь должен происходить наш запрос PATCH
-    // api.editUserInfo(info);
-    api.editUserInfo(userInfo.getUserInfo())
-    .then((result) => {console.log('91', result)})
+    // console.log(userInfo.getUserInfo());
+    // оооо кажется я поняла что тут надо делать -- передавать formData сначала в editUserInfo а уже потом все остальное
+    api.editUserInfo(formData)
+    .then((result) => {userInfo.setUserInfo(result)})
     .catch((err) => {console.log(err)}); // обновляет инфу
-
     }
   }
 );
@@ -111,17 +121,16 @@ const popupAddNewItem = new PopupWithForm(
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {
     handleFormSubmit: (formData) => {
-      // вот тут еще образение к серверу понадобится
-      userInfo.setAvatar(formData['avatar'])
+      // пришла инфа с формы -> кинули ее на сервер -> отобразили ответ сервера на странице
+        // TODO добавить процесс ожидания и вот это все
+      api.editUserAvatar(formData)
+      .then((res) => {userInfo.setAvatar(res)})
+      .catch((err) => {console.log(err)});
     }
   }
 );
 
-// При каждом запросе нужно передавать токен и идентификатор группы
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
-  authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
-});
+
 
 api.getInitialCards()
 .then((result) => console.log(result))
@@ -131,44 +140,30 @@ api.getUserInfo()
 .then((result) => {console.log(result)})
 .catch((err) => console.log(err));
 
-// вот это ниже надо переделать и через экземпляр UserInfo а здесь я прост пробую это руками /// >>> the enter
-
-const profileName = profile.querySelector('.name');
-const profileAbout = profile.querySelector('.about');
-
+// установка всех данных профиля которые приходят с сервера
 api.getUserInfo()
-.then((res) => { return profileName.textContent = res['name'] })
+.then((res) => {
+  return userInfo.setUserInfo(res)})
+    // почему я передала в скобках res и это само собой превратилось в {name, about, avatar} я не поняла (ну то есть поняла, что это деструктуризация и "давай размотай меня по объектам") но то как оно работает для меня все еще похоже на магию а значит TODO почитать про деструктуризацию больше
 .catch((err) => console.log(err));
-
-api.getUserInfo()
-.then((res) => { return profileAbout.textContent = res['about']})
-.catch((err) => console.log(err));
-
 
 popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
-avatarButton.addEventListener('click', () => { // вот это надо заменить на кнопку другую
+editAvatarButton.addEventListener('click', () => { // вот это надо заменить на кнопку другую
   formValidators['avatar-form'].resetValidation();
   popupEditAvatar.open();
 })
 
-editButton.addEventListener('click', () => {
+editProfileButton.addEventListener('click', () => {
   formValidators['profile-form'].resetValidation();
-  // или вот эту строчку поменять
-  // popupEditProfile.setInputValues(userInfo.getUserInfo());
 
-  // console.log(api.getUserInfo().then((result) => {console.log('146', result)}).catch((err) => {console.log('146', err)}));
   api.getUserInfo()
   .then((res) => {
-     return popupEditProfile.setInputValues({name: res['name'], about: res['about']});
+     return popupEditProfile.setInputValues(res);
     })
   .catch((err) => {console.log(' err', err)});
-
-  // console.log('obj', obj);
-
-  // popupEditProfile.setInputValues(info);
 
   popupEditProfile.open();
   }

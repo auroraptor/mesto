@@ -1,6 +1,6 @@
 export class Section {
-  constructor({ items, renderer }, containerSelector) {
-    this._itemList = items;
+  constructor({ renderer }, containerSelector) {
+    // this._itemList = items;
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
   }
@@ -20,8 +20,8 @@ export class Section {
 
     // я попробовала и что-то запуталась TODO посомтри на это свежим взглядом >>> the enter
 
-  renderItems() {
-    this._itemList.forEach( (item) => {
+  renderItems(itemList) {
+    itemList.forEach( (item) => {
       this._renderer(item);
     });
   }

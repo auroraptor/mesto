@@ -1,6 +1,6 @@
 export class Card {
-  constructor({place, link}, selector, handleCardClick, handleMoveClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
-  this._name = place;
+  constructor({name, link}, selector, handleCardClick, handleMoveClick) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
+  this._name = name;
   this._link = link;
   this._template = document.querySelector(selector).content.querySelector('.element');
   this._handleCardClick = handleCardClick;

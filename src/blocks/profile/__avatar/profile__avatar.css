@@ -3,8 +3,9 @@
   width: 120px;
   height: 120px;
   position: relative;
-  /* background: url(../../../images/__avatar.jpg) no-repeat center/cover; */
   align-self: center;
+  object-fit: cover;
+  /* спасибо дока <3 за то что ты есть */
 }
 
 /* .profile__avatar:hover  {
