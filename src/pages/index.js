@@ -5,10 +5,16 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { initialCards } from '../utils/pictures.js';
-import { avatarButton, editButton, addButton, config, formValidators } from '../utils/constants.js';
-import './index.css';
-import { Popup } from '../components/Popup.js';
+import { avatarButton, editButton, addButton, config, profile, formValidators } from '../utils/constants.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
+import { Api } from '../components/Api.js';
+import './index.css';
+
+// данные в профиле должны рендерится по данным с сервера
+
+
+
+// renderProfile(profile);
 
 // Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
   // баааайт >>> the enter
@@ -75,11 +81,21 @@ const cardList = new Section({
 
 cardList.renderItems();
 
-const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.job' });
+const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
 
 const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData);
+    userInfo.setUserInfo(formData); // вставляет на страницу то что пришло с формы
+    // и вот возможно тут надо сделать так чтобы данные с сервера отображались
+    console.log(userInfo.getUserInfo());
+    // const info = userInfo.getUserInfo()
+    // console.log(info);
+    // вот здесь должен происходить наш запрос PATCH
+    // api.editUserInfo(info);
+    api.editUserInfo(userInfo.getUserInfo())
+    .then((result) => {console.log('91', result)})
+    .catch((err) => {console.log(err)}); // обновляет инфу
+
     }
   }
 );
@@ -95,10 +111,39 @@ const popupAddNewItem = new PopupWithForm(
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {
     handleFormSubmit: (formData) => {
+      // вот тут еще образение к серверу понадобится
       userInfo.setAvatar(formData['avatar'])
     }
   }
 );
+
+// При каждом запросе нужно передавать токен и идентификатор группы
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
+  authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
+});
+
+api.getInitialCards()
+.then((result) => console.log(result))
+.catch((err) => console.log(err));
+
+api.getUserInfo()
+.then((result) => {console.log(result)})
+.catch((err) => console.log(err));
+
+// вот это ниже надо переделать и через экземпляр UserInfo а здесь я прост пробую это руками /// >>> the enter
+
+const profileName = profile.querySelector('.name');
+const profileAbout = profile.querySelector('.about');
+
+api.getUserInfo()
+.then((res) => { return profileName.textContent = res['name'] })
+.catch((err) => console.log(err));
+
+api.getUserInfo()
+.then((res) => { return profileAbout.textContent = res['about']})
+.catch((err) => console.log(err));
+
 
 popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners()
@@ -111,7 +156,20 @@ avatarButton.addEventListener('click', () => { // вот это надо зам�
 
 editButton.addEventListener('click', () => {
   formValidators['profile-form'].resetValidation();
-  popupEditProfile.setInputValues(userInfo.getUserInfo());
+  // или вот эту строчку поменять
+  // popupEditProfile.setInputValues(userInfo.getUserInfo());
+
+  // console.log(api.getUserInfo().then((result) => {console.log('146', result)}).catch((err) => {console.log('146', err)}));
+  api.getUserInfo()
+  .then((res) => {
+     return popupEditProfile.setInputValues({name: res['name'], about: res['about']});
+    })
+  .catch((err) => {console.log(' err', err)});
+
+  // console.log('obj', obj);
+
+  // popupEditProfile.setInputValues(info);
+
   popupEditProfile.open();
   }
 );

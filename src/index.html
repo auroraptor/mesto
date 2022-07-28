@@ -18,14 +18,14 @@
        <section class="profile section content__section content__profile">
         <div class="profile__container">
           <div class="avatar">
-          <img src="<%=require('./images/__avatar.jpg')%>" alt="Аватар" class="profile__avatar">
+          <img src="<%=require('./images/__avatar.jpg')%>" alt="Аватар" class="avatar profile__avatar">
           <button class="edit-button__avatar" aria-label="Нажми чтобы обновить"></button>
           <!-- <img src="#" alt="Аватар" class="profile__avatar"> -->
           <!-- <div class="profile__avatar"></div> --></div>
           <div class="profile__description">
             <h1 class="name profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
-            <p class="job profile__subtitle">Исследователь океана</p>
+            <p class="about profile__subtitle">Исследователь океана</p>
           </div>
         </div>
         <button class="profile__add-button add-button" type="button" aria-label="Добавить"></button>
@@ -48,8 +48,8 @@
             <!-- Для полей формы редактирования профиля также необходимо добавить атрибуты placeholder -->
             <input type="text" class="form__item form__item_input_name popup__input" name="name" placeholder="Имя" minlength="2" maxlength="40" required autocomplete="off" id="name">
             <span class="popup__error name-error"></span>
-            <input type="text" class="form__item form__item_input_job popup__input" name="job" placeholder="О себе" minlength="2" maxlength="200" required autocomplete="off" id="job">
-            <span class="popup__error job-error"></span>
+            <input type="text" class="form__item form__item_input_about popup__input" name="about" placeholder="О себе" minlength="2" maxlength="200" required autocomplete="off" id="about">
+            <span class="popup__error about-error"></span>
             <button type="submit" class="form__submit-button edit-profile-form__button popup__button" value="disable" disabled>Сохранить</button>
           </div>
         </form>

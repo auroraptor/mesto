@@ -41,4 +41,4 @@ const avatarButton = profile.querySelector('.edit-button__avatar');
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-export { avatarButton, editButton, addButton, config, formValidators};
+export { avatarButton, editButton, addButton, config, profile, formValidators };
