@@ -12,9 +12,6 @@ import './index.css';
 
 // данные в профиле должны рендерится по данным с сервера
 
-// Если будет интересно, можно универсально создать экземпляры валидаторов всех форм, поместив их все в один объект, а потом брать из него валидатор по атрибуту name, который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
-  // баааайт >>> the enter
-
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
@@ -47,29 +44,8 @@ const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
   }
  });
 
-const createCard = (item) => {
-  const newCard = new Card(item, '#card', handleCardClick, handleMoveClick);
-
-  return newCard.generateCard();
-}
-
 // Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
 
-// api.getInitialCards()
-// .then((res) => {
-//   const cardList = new Section({
-//     // вот здесь в айтемы должен приходить ответ с сервера в виде массива карточек
-//     // items: initialCards.reverse(),
-//     items: res,
-
-//     renderer: (item) => {
-//       cardList.addItem(createCard(item));
-//       }
-//     },
-//   '.elements');
-//   cardList.renderItems()
-// })
-// .catch((err) => {console.log(err)});
 
 // При каждом запросе нужно передавать токен и идентификатор группы
 const api = new Api({
@@ -78,31 +54,30 @@ const api = new Api({
 });
 
 const cardList = new Section({
-  // вот здесь в айтемы должен приходить ответ с сервера в виде массива карточек
-  // items: initialCards.reverse(),
-  // items: [],
-
   renderer: (item) => {
-    cardList.addItem(createCard(item));
+    const newCard = new Card(item, '#card', handleCardClick, handleMoveClick);
+    return newCard.generateCard();
     }
   },
 '.elements');
 
-console.log(cardList._renderer);
+cardList.addItem({name: 'myLover', link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'});
+cardList.addItem({name: 'Under the Water', link: 'https://openmoji.org/data/color/svg/2B50.svg'});
 
-// api.getInitialCards()
-// .then((res) => { return cardList.renderItems(res) })
-// .catch((err) => {console.log('err', err)});
+api.getInitialCards()
+.then((res) => { return res.reverse().forEach((_) => cardList.addItem(_)) })
+.catch((err) => {console.log('err', err)});
+
+// api.postNewCard({name: 'My queendom come', link: 'https://openmoji.org/data/color/svg/2B50.svg'})
+// .then((res) => {console.log(res)})
+// .catch((err) => {console.log(err)});
+
 
 const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
 
 const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
-    // вот тут точн что-то не так
-    // userInfo.setUserInfo(formData); // вставляет на страницу то что пришло с формы
-    // и вот возможно тут надо сделать так чтобы данные с сервера отображались
-    // console.log(userInfo.getUserInfo());
-    // оооо кажется я поняла что тут надо делать -- передавать formData сначала в editUserInfo а уже потом все остальное
+    // TODO во время загрузки всего этого показывать другую кнопку
     api.editUserInfo(formData)
     .then((result) => {userInfo.setUserInfo(result)})
     .catch((err) => {console.log(err)}); // обновляет инфу
@@ -113,7 +88,10 @@ const popupEditProfile = new PopupWithForm('.profile-popup', {
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup', {
   handleFormSubmit: (formData) => {
-    cardList.addItem(createCard(formData));
+    console.log(formData);
+    api.postNewCard(formData)
+    .then((res) => {cardList.addItem(res)})
+    .catch((err) => {console.log(err)});
     }
   }
 );
@@ -121,7 +99,6 @@ const popupAddNewItem = new PopupWithForm(
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {
     handleFormSubmit: (formData) => {
-      // пришла инфа с формы -> кинули ее на сервер -> отобразили ответ сервера на странице
         // TODO добавить процесс ожидания и вот это все
       api.editUserAvatar(formData)
       .then((res) => {userInfo.setAvatar(res)})
@@ -129,8 +106,6 @@ const popupEditAvatar = new PopupWithForm(
     }
   }
 );
-
-
 
 api.getInitialCards()
 .then((result) => console.log(result))
@@ -151,7 +126,7 @@ popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners()
 popupAddNewItem.setEventListeners();
 
-editAvatarButton.addEventListener('click', () => { // вот это надо заменить на кнопку другую
+editAvatarButton.addEventListener('click', () => { // TODO вот это надо заменить на кнопку другую и вообще миллион путей верстки есть
   formValidators['avatar-form'].resetValidation();
   popupEditAvatar.open();
 })

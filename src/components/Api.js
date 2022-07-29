@@ -30,6 +30,19 @@ export class Api {
     })
   }
 
+  postNewCard(data) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: { authorization: this._authorization,
+      'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`err ${res.status}`)
+    })
+  }
+
   // и прочие методы >>> the enter
 
   getUserInfo() {
@@ -44,14 +57,14 @@ export class Api {
     })
   }
 
-  editUserInfo(callback) {
+  editUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._authorization,
         'content-type': 'application/json'
       },
-      body: JSON.stringify(callback)
+      body: JSON.stringify(data)
     })
     .then((res) => { // кажется это не нужно я запуталась
       if(res.ok) {
@@ -74,6 +87,8 @@ export class Api {
       return (res.ok) ? res.json() : Promise.reject(`err ${res.status}`)
     })
   }
+
+
 }
 
 
