@@ -4,11 +4,29 @@ import { UserInfo} from '../components/UserInfo.js'
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { initialCards } from '../utils/pictures.js';
+// import { initialCards } from '../utils/pictures.js';
 import { editAvatarButton, editProfileButton, addButton, config,  formValidators } from '../utils/constants.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { Api } from '../components/Api.js';
 import './index.css';
+// При каждом запросе нужно передавать токен и идентификатор группы
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
+  authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // данные в профиле должны рендерится по данным с сервера
 
@@ -38,6 +56,15 @@ const handleMoveClick = (card) => {
   popupConfirm.open();
 }
 
+// {likes: Array(3), _id: '62e3a0a837166c0a932ba184', name: 'My queendom come', link: 'https://openmoji.org/data/color/svg/2B50.svg', owner: {…}, …}
+// createdAt: "2022-07-29T08:56:08.024Z"
+// likes: (3) [{…}, {…}, {…}]
+// link: "https://openmoji.org/data/color/svg/2B50.svg"
+// name: "My queendom come"
+// owner: {name: '103.5 Dawn FM', about: "You're almost there, but don't panic", avatar: 'https://pictures.s3.yandex.net/resources/JS___1__11_1587198298.png', _id: '2b4017af1b5aeebeeb7939f8', cohort: 'cohort-46'}
+// _id: "62e3a0a837166c0a932ba184"
+// [[Prototype]]: Object
+
 const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
   handleFormSubmit: (card) => {
     card.remove();
@@ -46,31 +73,49 @@ const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
 
 // Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
 
-
-// При каждом запросе нужно передавать токен и идентификатор группы
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
-  authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
-});
-
 const cardList = new Section({
   renderer: (item) => {
-    const newCard = new Card(item, '#card', handleCardClick, handleMoveClick);
+    const newCard = new Card(item, '#card', {
+      handleCardClick: handleCardClick,
+      handleMoveClick: handleMoveClick,
+      handleLikeClick: (card) => {
+        card.isLiked // undef
+        // пока тут сложно поэтому оставлю на потом а сейчас перейду к рендеру урны
+        ? api.unlike(card)
+        .then((res) => {
+        console.log('answer', res, 'dislike **', newCard.isliked);
+        // newCard.iLikeToScore();
+        newCard.likeButton.classList.remove('like-button_active');
+        newCard.iLikeToScore.textContent = res[`likes`].length;
+        console.log(res[`likes`].find((self) => { return self[`_id`] === res[`owner`][`_id`]}));
+        return newCard.like()}) // вот тут будет логика счетчика лайков и смены цвета сердечка
+        .catch((err) => { console.log(err)})
+        : api.like(card)
+        .then((res) => {
+        console.log('likelikelike', res, 'like *** true', newCard.isliked);
+        console.log(res[`likes`].find((self) => { return self[`_id`] === res[`owner`][`_id`]}));
+        // newCard.iLikeToScore();
+        newCard.iLikeToScore.textContent = res[`likes`].length;
+        newCard.likeButton.classList.add('like-button_active');
+        return newCard.like() }) // и здесб она же, а это значит что ее можно вынести в отдельную функцию
+        .catch((err) => { console.log(err)});
+      }});
     return newCard.generateCard();
     }
   },
 '.elements');
 
-cardList.addItem({name: 'myLover', link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'});
-cardList.addItem({name: 'Under the Water', link: 'https://openmoji.org/data/color/svg/2B50.svg'});
+const isLiked = (card) => {
+
+}
+
+// cardList.addItem({name: 'myLover', link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg', likes: [...Array(1016)], _id: 9891 });
+// cardList.addItem({name: 'Under the Water', link: 'https://openmoji.org/data/color/svg/2B50.svg', likes: [...Array(1217)], _id: 8402});
 
 api.getInitialCards()
 .then((res) => { return res.reverse().forEach((_) => cardList.addItem(_)) })
 .catch((err) => {console.log('err', err)});
 
-// api.postNewCard({name: 'My queendom come', link: 'https://openmoji.org/data/color/svg/2B50.svg'})
-// .then((res) => {console.log(res)})
-// .catch((err) => {console.log(err)});
 
 
 const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });

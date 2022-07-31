@@ -19,7 +19,7 @@ export class Api {
   getInitialCards() {
     // тут будет какой-то код. Без домино. 🂽 >>> the enter
 
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       headers: {authorization: this._authorization}
     })
     .then((res) => {
@@ -31,7 +31,7 @@ export class Api {
   }
 
   postNewCard(data) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
       headers: { authorization: this._authorization,
       'content-type': 'application/json'
@@ -43,10 +43,11 @@ export class Api {
     })
   }
 
+
   // и прочие методы >>> the enter
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       headers: {authorization: this._authorization}
     })
     .then((res) => {
@@ -58,7 +59,7 @@ export class Api {
   }
 
   editUserInfo(data) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._authorization,
@@ -75,7 +76,7 @@ export class Api {
   }
 
   editUserAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this._authorization,
@@ -88,6 +89,29 @@ export class Api {
     })
   }
 
+  like(card) {
+    return fetch(`${this._baseUrl}cards/${card.id}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then((res) => {
+      return (res.ok) ? res.json() : Promise.reject(`err ♡ ${res.status}`)
+    })
+  }
+
+  unlike(card) {
+    return fetch(`${this._baseUrl}cards/${card.id}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then((res) => {
+      return (res.ok) ? res.json() : Promise.reject(`err :( ${res.status}`)
+    })
+  }
 
 }
 
