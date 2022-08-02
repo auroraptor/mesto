@@ -15,21 +15,6 @@ const api = new Api({
   authorization: 'b5225d24-020a-49f6-8bcd-ca1813713eea'
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// данные в профиле должны рендерится по данным с сервера
-
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
@@ -40,6 +25,16 @@ const enableValidation = (config) => {
     validator.enableValidation();
   });
 }
+
+
+
+const move = () => {
+  api.getUserInfo()
+  .then((res) => console.log('ID', res._id))
+  .catch((err) => console.log(err));
+}
+
+move();
 
 enableValidation(config);
 
@@ -55,23 +50,26 @@ const handleMoveClick = (card) => {
   popupConfirm.setEventListeners(card);
   popupConfirm.open();
 }
-
-// {likes: Array(3), _id: '62e3a0a837166c0a932ba184', name: 'My queendom come', link: 'https://openmoji.org/data/color/svg/2B50.svg', owner: {…}, …}
-// createdAt: "2022-07-29T08:56:08.024Z"
-// likes: (3) [{…}, {…}, {…}]
-// link: "https://openmoji.org/data/color/svg/2B50.svg"
-// name: "My queendom come"
-// owner: {name: '103.5 Dawn FM', about: "You're almost there, but don't panic", avatar: 'https://pictures.s3.yandex.net/resources/JS___1__11_1587198298.png', _id: '2b4017af1b5aeebeeb7939f8', cohort: 'cohort-46'}
-// _id: "62e3a0a837166c0a932ba184"
-// [[Prototype]]: Object
-
-const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
-  handleFormSubmit: (card) => {
-    card.remove();
-  }
- });
+// api.deleteCard('62e6a0d41aedd50a87b38b8a');
 
 // Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
+
+// добавим сюда немного логики 👾 -- что мне нужно знать у карточки? поле isOwner пригодится чтобы определить среди всех лайков есть ли лайк автора и в зависимости от этого красить сердечко
+
+// давай подумаем над логикой рендера корзины удаления
+// 1. сравнить user.id с card.owner.id
+// 2. если они совпадают, рисовать урну
+
+// создать что-то про юзера
+
+const user = (value) => { console.log('value', value); return value };
+
+ api.getUserInfo()
+  .then((res) => {
+    console.log(res)
+    return user(res) })
+  .catch((err) => {return err})
+
 
 const cardList = new Section({
   renderer: (item) => {
@@ -79,41 +77,66 @@ const cardList = new Section({
       handleCardClick: handleCardClick,
       handleMoveClick: handleMoveClick,
       handleLikeClick: (card) => {
-        card.isLiked // undef
-        // пока тут сложно поэтому оставлю на потом а сейчас перейду к рендеру урны
-        ? api.unlike(card)
+
+        newCard._isLiked // undefined костыль
+
+        // api.getUserInfo()
+        // .then((res) => {
+        //   console.log('method isLiked', newCard.isLiked(res['_id']));
+        //   return newCard.isLiked(res['_id'])})
+        // .catch((err) => {console.log(err)}) // хочу чтобы это условие возвращало мне булевое значение по поторому я буду отправлять реквест
+
+        ? api.unlikePluto(card)
         .then((res) => {
-        console.log('answer', res, 'dislike **', newCard.isliked);
-        // newCard.iLikeToScore();
-        newCard.likeButton.classList.remove('like-button_active');
-        newCard.iLikeToScore.textContent = res[`likes`].length;
-        console.log(res[`likes`].find((self) => { return self[`_id`] === res[`owner`][`_id`]}));
-        return newCard.like()}) // вот тут будет логика счетчика лайков и смены цвета сердечка
+          console.log('dont u want to get better', res);
+        // newCard.likeButton.classList.remove('like-button_active');
+        // newCard.iLikeToScore.textContent = res[`likes`].length;
+        // newCard.like()
+        newCard.dislike()
+      })
         .catch((err) => { console.log(err)})
+
         : api.like(card)
         .then((res) => {
-        console.log('likelikelike', res, 'like *** true', newCard.isliked);
-        console.log(res[`likes`].find((self) => { return self[`_id`] === res[`owner`][`_id`]}));
-        // newCard.iLikeToScore();
         newCard.iLikeToScore.textContent = res[`likes`].length;
         newCard.likeButton.classList.add('like-button_active');
-        return newCard.like() }) // и здесб она же, а это значит что ее можно вынести в отдельную функцию
+        newCard.like()
+        console.log('lets face the facts', res)
+        // newCard.pluslike()
+      })
         .catch((err) => { console.log(err)});
-      }});
+      },
+      // rendererHeart: () => {
+      //   api.getUserInfo()
+      //   .then((res) => {
+      //     newCard.isLiked(res[`_id`])
+      //   })
+      //   .catch((err) => {console.log(err)})
+      // }
+      });
+
+      // console.log('88 getUserInfo', Promise.result(api.getUserInf>o()
+      // .then((res) => { return newCard.isLiked(res['_id'])})
+      // .catch((err) => {console.log(err)}))); // а как вытащить результат Promise.result из промиса 🤔
+
+
+      // console.log('api', api.getUserInfo()
+      // .then((res) => {newCard.isLiked(res[`id`])})
+      // .catch((err) => { console.log(err)});
+// )
+
     return newCard.generateCard();
     }
   },
 '.elements');
 
-const isLiked = (card) => {
-
-}
-
-// cardList.addItem({name: 'myLover', link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg', likes: [...Array(1016)], _id: 9891 });
-// cardList.addItem({name: 'Under the Water', link: 'https://openmoji.org/data/color/svg/2B50.svg', likes: [...Array(1217)], _id: 8402});
+api.getUserInfo()
+.then((res) => {console.log('99', res['_id'])})
+.catch((err) => {console.log(err)});
 
 api.getInitialCards()
-.then((res) => { return res.reverse().forEach((_) => cardList.addItem(_)) })
+.then((res) => {
+  return res.reverse().forEach((_) => cardList.addItem(_)) })
 .catch((err) => {console.log('err', err)});
 
 
@@ -140,6 +163,13 @@ const popupAddNewItem = new PopupWithForm(
     }
   }
 );
+
+const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
+  handleFormSubmit: (card) => {
+    api.deleteCard(card);
+    card.remove();
+  }
+ });
 
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {

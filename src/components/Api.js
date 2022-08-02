@@ -43,6 +43,14 @@ export class Api {
     })
   }
 
+  // getCard() {
+  //   return fetch(`${this._baseUrl}cards/${card._id}`, {
+  //     headers: {authorization: this._authorization}
+  //   })
+  //   .then((res) => {
+  //     res.ok ?
+  //   })
+  // }
 
   // и прочие методы >>> the enter
 
@@ -55,6 +63,18 @@ export class Api {
         return res.json();
       }
       return Promise.reject(`err ${res.status}`);
+    })
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      }
+    })
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`err pls dnt mv m ${res.status}`)
     })
   }
 
@@ -101,7 +121,7 @@ export class Api {
     })
   }
 
-  unlike(card) {
+  unlikePluto(card) {
     return fetch(`${this._baseUrl}cards/${card.id}/likes`, {
       method: 'DELETE',
       headers: {
@@ -112,7 +132,6 @@ export class Api {
       return (res.ok) ? res.json() : Promise.reject(`err :( ${res.status}`)
     })
   }
-
 }
 
 
