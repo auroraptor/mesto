@@ -26,16 +26,6 @@ const enableValidation = (config) => {
   });
 }
 
-
-
-const move = () => {
-  api.getUserInfo()
-  .then((res) => console.log('ID', res._id))
-  .catch((err) => console.log(err));
-}
-
-move();
-
 enableValidation(config);
 
 const popupWithImage = new PopupWithImage('.image-zoomed-popup');
@@ -45,101 +35,62 @@ const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
 }
 
-// описываю здесь логику удаления карточки через попап
 const handleMoveClick = (card) => {
   popupConfirm.setEventListeners(card);
   popupConfirm.open();
 }
-// api.deleteCard('62e6a0d41aedd50a87b38b8a');
 
-// Проверять себя. Во всем. Постоянно. Помнить про то, что проверка занимает гораздо меньше времени, чем сама работа, зато избавляет от чувсва досады, которое всегда приходит следом за невнимательностью. >>> the enter
+const handleLikeClick = (card) => {
+    card._isLiked // undefined костыль
 
-// добавим сюда немного логики 👾 -- что мне нужно знать у карточки? поле isOwner пригодится чтобы определить среди всех лайков есть ли лайк автора и в зависимости от этого красить сердечко
+    ? api.unlikePluto(card)
+    .then((res) => {
+      console.log('dont u want to get better', res);
+      card.like(res);
+  })
+    .catch((err) => { console.log(err)})
 
-// давай подумаем над логикой рендера корзины удаления
-// 1. сравнить user.id с card.owner.id
-// 2. если они совпадают, рисовать урну
-
-// создать что-то про юзера
-
-const user = (value) => { console.log('value', value); return value };
-
- api.getUserInfo()
-  .then((res) => {
-    console.log(res)
-    return user(res) })
-  .catch((err) => {return err})
-
+    : api.like(card)
+    .then((res) => {
+    card.like(res)
+    console.log('lets face the facts', res)
+  })
+    .catch((err) => { console.log(err)});
+}
 
 const cardList = new Section({
   renderer: (item) => {
     const newCard = new Card(item, '#card', {
       handleCardClick: handleCardClick,
       handleMoveClick: handleMoveClick,
-      handleLikeClick: (card) => {
-
-        newCard._isLiked // undefined костыль
-
-        // api.getUserInfo()
-        // .then((res) => {
-        //   console.log('method isLiked', newCard.isLiked(res['_id']));
-        //   return newCard.isLiked(res['_id'])})
-        // .catch((err) => {console.log(err)}) // хочу чтобы это условие возвращало мне булевое значение по поторому я буду отправлять реквест
-
-        ? api.unlikePluto(card)
-        .then((res) => {
-          console.log('dont u want to get better', res);
-        // newCard.likeButton.classList.remove('like-button_active');
-        // newCard.iLikeToScore.textContent = res[`likes`].length;
-        // newCard.like()
-        newCard.dislike()
-      })
-        .catch((err) => { console.log(err)})
-
-        : api.like(card)
-        .then((res) => {
-        newCard.iLikeToScore.textContent = res[`likes`].length;
-        newCard.likeButton.classList.add('like-button_active');
-        newCard.like()
-        console.log('lets face the facts', res)
-        // newCard.pluslike()
-      })
-        .catch((err) => { console.log(err)});
-      },
-      // rendererHeart: () => {
-      //   api.getUserInfo()
-      //   .then((res) => {
-      //     newCard.isLiked(res[`_id`])
-      //   })
-      //   .catch((err) => {console.log(err)})
-      // }
+      handleLikeClick: handleLikeClick
       });
 
-      // console.log('88 getUserInfo', Promise.result(api.getUserInf>o()
-      // .then((res) => { return newCard.isLiked(res['_id'])})
-      // .catch((err) => {console.log(err)}))); // а как вытащить результат Promise.result из промиса 🤔
-
-
-      // console.log('api', api.getUserInfo()
-      // .then((res) => {newCard.isLiked(res[`id`])})
-      // .catch((err) => { console.log(err)});
-// )
+      api.getUserInfo()
+      .then((res) => {
+        console.log('Denial of Service', newCard.isOwner(res['_id']));
+        if (!newCard.isOwner(res['_id'])) {
+          newCard._deleteButton.remove()
+        } else if (item.likes.some((like) => { return like['_id'] === res['_id']})) {
+          newCard._isLiked = true;
+          newCard.likeButton.classList.add('like-button_active');
+        }
+      })
+      .catch((err) => { console.log('418', err)});
 
     return newCard.generateCard();
     }
   },
 '.elements');
 
-api.getUserInfo()
-.then((res) => {console.log('99', res['_id'])})
-.catch((err) => {console.log(err)});
-
-api.getInitialCards()
-.then((res) => {
+const getInitialCards = () => {
+  api.getInitialCards()
+  .then((res) => {
   return res.reverse().forEach((_) => cardList.addItem(_)) })
-.catch((err) => {console.log('err', err)});
+  .catch((err) => {console.log('human after all', err)})
+}
 
-
+getInitialCards(); // а вот здесь происходит рендер карточек прямо у меня на глазах 👁 👄 👁
 
 const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
 

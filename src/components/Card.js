@@ -9,9 +9,9 @@ export class Card {
   // this._rendererHeart = rendererHeart;
   // this.isLiked = this._likes.some((self) => { return self[`_id`] === this[`owner`][`_id`] });
   this._isLiked = false;
-  this.like = () => {
-    this._isLiked = !this._isLiked;
-  }
+  // this.like = () => {
+  //   this._isLiked = !this._isLiked;
+  // }
   this._template = document.querySelector(selector).content.querySelector('.element');
   this._handleCardClick = handleCardClick;
   this._handleMoveClick = handleMoveClick.bind(this);
@@ -23,20 +23,14 @@ _getTemplate() {
   return cardElement;
 }
 
+like(res) {
+  this.likeButton.classList.toggle('like-button_active');
+  this.iLikeToScore.textContent = res['likes'].length;
+  this._isLiked = !this._isLiked;
+}
+
 remove() {
   this._element.remove();
-}
-
-dislike() {
-  this.likeButton.classList.remove('like-button_active');
-  this.iLikeToScore.textContent = this._likes.length;
-  this.like()
-}
-
-pluslike() {
-  this.iLikeToScore.textContent = this._likes.length;
-  this.likeButton.classList.add('like-button_active');
-  this.like()
 }
 
 _setListeners() {
@@ -56,11 +50,11 @@ _setListeners() {
 
 // для того чтобы раскрассить лайк надо узнать айди юзера и в массиве лайков его искать
 // class Card >>> this._isLiked = false;
-
-isOwner() {
-  return this._likes.some((elem) => {
-    return elem['_id'] === this._ownerId;
-  })
+// вот этот метод мне надо на каждой карточке вызвать с юзером?
+isOwner(userId) {
+  // console.log('user', userId);
+  // console.log(this._ownerId);
+  return this._ownerId === userId;
 }
 
 isLiked(userId) {
@@ -86,11 +80,17 @@ generateCard() {
   this._element.querySelector('.element__title').textContent = this._name;
   this.iLikeToScore.textContent = this._likes.length;
 
+  // if (!this.isOwner()) {
+  //   this._deleteButton.remove();
+  // }
+
   // TODO -><- сейчас цвет сердечка черный если создатель карточки ее лайкнул
-    this.isOwner()
-    // this.rendererHeart()
-    ? this.likeButton.classList.add('like-button_active')
-    : this.likeButton.classList.remove('like-button_active');
+  console.log('thisIsOwner', this.isOwner());
+
+    // this.isOwner()
+    // // this.rendererHeart()
+    // ? this.likeButton.classList.add('like-button_active')
+    // : this.likeButton.classList.remove('like-button_active');
 
   return this._element;
   }
