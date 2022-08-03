@@ -91,7 +91,7 @@ const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
     api.editUserInfo(formData)
     .then((result) => {userInfo.setUserInfo(result)})
-    .catch((err) => {console.log(err)}); // обновляет инфу
+    .catch((err) => {console.log(err)});
     }
   }, {
     buttonTextContent: 'Сохранить',
