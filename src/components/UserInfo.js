@@ -15,10 +15,11 @@ export class UserInfo {
   }
 
   // вот это устанавливает то что пришло с инпутов -- не с инпутов теперь а с сервера
-  setUserInfo({ name, about, avatar }) {
+  setUserInfo({ name, about, avatar, _id }) {
     this._name.textContent = name;
     this._about.textContent = about;
-    this._avatar.src = avatar; // вот это лишнее но как передать метод setAvatar в цепочке 🚃 🚃 🚃 api.getUserInfo я пока не поняла
+    this._avatar.src = avatar;
+    this._id = _id; // вот это лишнее но как передать метод setAvatar в цепочке 🚃 🚃 🚃 api.getUserInfo я пока не поняла
   }
 
   setAvatar({ avatar }) {

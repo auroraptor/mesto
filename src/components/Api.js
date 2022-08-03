@@ -43,17 +43,6 @@ export class Api {
     })
   }
 
-  // getCard() {
-  //   return fetch(`${this._baseUrl}cards/${card._id}`, {
-  //     headers: {authorization: this._authorization}
-  //   })
-  //   .then((res) => {
-  //     res.ok ?
-  //   })
-  // }
-
-  // и прочие методы >>> the enter
-
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
       headers: {authorization: this._authorization}
@@ -66,8 +55,8 @@ export class Api {
     })
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}cards/${cardId}`, {
+  deleteCard(card) {
+    return fetch(`${this._baseUrl}cards/${card['id']}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
@@ -109,27 +98,15 @@ export class Api {
     })
   }
 
-  like(card) {
+  like(card, isLiked) {
     return fetch(`${this._baseUrl}cards/${card.id}/likes`, {
-      method: 'PUT',
+      method: isLiked ? 'DELETE' : 'PUT',
       headers: {
         authorization: this._authorization
       }
     })
     .then((res) => {
       return (res.ok) ? res.json() : Promise.reject(`err ♡ ${res.status}`)
-    })
-  }
-
-  unlikePluto(card) {
-    return fetch(`${this._baseUrl}cards/${card.id}/likes`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this._authorization
-      }
-    })
-    .then((res) => {
-      return (res.ok) ? res.json() : Promise.reject(`err :( ${res.status}`)
     })
   }
 }

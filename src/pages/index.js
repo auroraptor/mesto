@@ -41,86 +41,90 @@ const handleMoveClick = (card) => {
 }
 
 const handleLikeClick = (card) => {
-    card._isLiked // undefined костыль
-
-    ? api.unlikePluto(card)
-    .then((res) => {
-      console.log('dont u want to get better', res);
-      card.like(res);
-  })
-    .catch((err) => { console.log(err)})
-
-    : api.like(card)
-    .then((res) => {
-    card.like(res)
-    console.log('lets face the facts', res)
-  })
-    .catch((err) => { console.log(err)});
+  api.like(card, card.isLiked)
+  .then((res) => {
+    // console.log('dont u want to get better', res);
+    card.like(res)})
+  .catch((err) => { console.log(err)});
 }
+
+const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
+
+api.getUserInfo()
+.then((res) => {
+  userInfo.setUserInfo(res);
+  // console.log('who is ', userInfo);
+})
+.catch((err) => { console.log(err) });
+
+// console.log('id XO', userInfo); // undefined
 
 const cardList = new Section({
   renderer: (item) => {
     const newCard = new Card(item, '#card', {
-      handleCardClick: handleCardClick,
-      handleMoveClick: handleMoveClick,
-      handleLikeClick: handleLikeClick
-      });
-
-      api.getUserInfo()
-      .then((res) => {
-        console.log('Denial of Service', newCard.isOwner(res['_id']));
-        if (!newCard.isOwner(res['_id'])) {
-          newCard._deleteButton.remove()
-        } else if (item.likes.some((like) => { return like['_id'] === res['_id']})) {
-          newCard._isLiked = true;
-          newCard.likeButton.classList.add('like-button_active');
-        }
-      })
-      .catch((err) => { console.log('418', err)});
+      handleCardClick,
+      handleMoveClick,
+      handleLikeClick,
+      handlePlanet: (param) => {return userInfo._id === param},
+      blackHearts: (param) => { return param.some((_)=> { return userInfo._id === _['_id']})},
+      }); // изменить
 
     return newCard.generateCard();
     }
   },
 '.elements');
 
-const getInitialCards = () => {
-  api.getInitialCards()
-  .then((res) => {
-  return res.reverse().forEach((_) => cardList.addItem(_)) })
-  .catch((err) => {console.log('human after all', err)})
+const renderAuro = () => {
+  Promise.all([
+    api.getUserInfo(),
+    api.getInitialCards()
+  ])
+  .then(([userRes, cardsRes]) => {
+    userInfo.setUserInfo(userRes)
+    cardsRes.reverse().forEach((_) => cardList.addItem(_))
+  })
 }
 
-getInitialCards(); // а вот здесь происходит рендер карточек прямо у меня на глазах 👁 👄 👁
-
-const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
+renderAuro()
 
 const popupEditProfile = new PopupWithForm('.profile-popup', {
   handleFormSubmit: (formData) => {
-    // TODO во время загрузки всего этого показывать другую кнопку
     api.editUserInfo(formData)
     .then((result) => {userInfo.setUserInfo(result)})
     .catch((err) => {console.log(err)}); // обновляет инфу
     }
-  }
+  }, {
+    buttonTextContent: 'Сохранить',
+    buttonLoadingTextContent: 'Сохранение...'}
 );
 
 const popupAddNewItem = new PopupWithForm(
   '.new-item-popup', {
-  handleFormSubmit: (formData) => {
-    console.log(formData);
+  handleFormSubmit: (formData, button) => {
+    button.disabled = true;
+
     api.postNewCard(formData)
-    .then((res) => {cardList.addItem(res)})
+    .then((res) => {
+      cardList.addItem(res);
+    })
     .catch((err) => {console.log(err)});
     }
-  }
+  }, {
+    buttonTextContent: 'Создать',
+    buttonLoadingTextContent: 'Сохранение...'}
 );
 
 const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
-  handleFormSubmit: (card) => {
-    api.deleteCard(card);
-    card.remove();
+  handleConfirmation: (card) => {
+    api.deleteCard(card)
+    .then((res) => {console.log('уродство этого кода неоспоримо'); card.remove()})
+    .catch((err) => { console.log('err', err)});
   }
- });
+  }, {
+  buttonTextContent: 'Да',
+  buttonLoadingTextContent: 'Удаление...',
+  }
+);
 
 const popupEditAvatar = new PopupWithForm(
   '.avatar-popup', {
@@ -130,7 +134,9 @@ const popupEditAvatar = new PopupWithForm(
       .then((res) => {userInfo.setAvatar(res)})
       .catch((err) => {console.log(err)});
     }
-  }
+  }, {
+    buttonTextContent: 'Сохранить',
+    buttonLoadingTextContent: 'Сохранение...'}
 );
 
 api.getInitialCards()
@@ -138,14 +144,7 @@ api.getInitialCards()
 .catch((err) => console.log(err));
 
 api.getUserInfo()
-.then((result) => {console.log(result)})
-.catch((err) => console.log(err));
-
-// установка всех данных профиля которые приходят с сервера
-api.getUserInfo()
-.then((res) => {
-  return userInfo.setUserInfo(res)})
-    // почему я передала в скобках res и это само собой превратилось в {name, about, avatar} я не поняла (ну то есть поняла, что это деструктуризация и "давай размотай меня по объектам") но то как оно работает для меня все еще похоже на магию а значит TODO почитать про деструктуризацию больше
+.then((result) => {console.log('and now', result)})
 .catch((err) => console.log(err));
 
 popupEditAvatar.setEventListeners();

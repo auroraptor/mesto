@@ -51,7 +51,7 @@
             <span class="popup__error name-error"></span>
             <input type="text" class="form__item form__item_input_about popup__input" name="about" placeholder="О себе" minlength="2" maxlength="200" required autocomplete="off" id="about">
             <span class="popup__error about-error"></span>
-            <button type="submit" class="form__submit-button edit-profile-form__button popup__button" value="disable" disabled>Сохранить</button>
+            <button type="submit" class="form__submit-button edit-profile-form__button popup__button" value="disable" disabled></button>
           </div>
         </form>
       </div>
@@ -67,7 +67,7 @@
             <span class="popup__error place-error">span</span>
             <input type="url" class="form__item form__item_input_link popup__input" placeholder="Ссылка на картинку" name="link" autocomplete="off" id="link" required>
             <span class="popup__error link-error">span</span>
-            <button type="submit" class="form__submit-button new-item-form__button popup__button" value="disable" disabled>Создать</button>
+            <button type="submit" class="form__submit-button new-item-form__button popup__button" value="disable" disabled></button>
           </div>
         </form>
       </div>
@@ -83,15 +83,14 @@
     </figure>
     </div>
   </div>
+<!-- попап подтверждения удаления карточки -- css стили в нем из формы -- исторически так сложилось -->
   <div class="popup confirm-popup">
     <div class="popup__container">
     <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-    <form class="form">
       <div class="form__main-container">
-        <label for="confirm" class="form__heading" style="color: #000000">Вы уверены?</label>
-        <button type="submit" class="form__submit-button popup__button" id="confirm">Да</button>
+        <p class="form__heading" style="color: #000000">Вы уверены?</p>
+        <button type="button" class="popup__button form__submit-button" id="confirm"></button>
       </div>
-    </form>
     </div>
   </div>
 <!-- попап редактирования профиля -->
@@ -105,7 +104,7 @@
           <label for="avatar" class="form__heading">Обновить аватар</label>
           <input type="url" class="form__item form__item_input_avatar popup__input" placeholder="Ссылка на картинку" name="avatar" autocomplete="off" id="avatar" required>
           <span class="popup__error avatar-error">span</span>
-          <button type="submit" class="form__submit-button avatar__button popup__button" value="disable" disabled>Сохранить</button>
+          <button type="submit" class="form__submit-button avatar__button popup__button" value="disable" disabled></button>
         </div>
       </form>
     </div>
