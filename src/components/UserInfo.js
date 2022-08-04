@@ -1,29 +1,31 @@
 export class UserInfo {
-  constructor( { avatar, name, about }) {
+  constructor({ avatar, name, about }) {
     this._avatar = document.querySelector(avatar);
     this._name = document.querySelector(name);
     this._about = document.querySelector(about);
   }
 
-  getUserInfo() {
-    this._info = {};
-
-    // вот это надо поменять с textContent инпутов на то что приходит с сервера или хммммм
-    this._info['name'] = this._name.textContent;
-    this._info['about'] = this._about.textContent;
-    return this._info;
-  }
-
-  // вот это устанавливает то что пришло с инпутов -- не с инпутов теперь а с сервера
   setUserInfo({ name, about, avatar, _id }) {
     this._name.textContent = name;
     this._about.textContent = about;
-    this._avatar.src = avatar;
-    this._id = _id; // вот это лишнее но как передать метод setAvatar в цепочке 🚃 🚃 🚃 api.getUserInfo я пока не поняла
+    this._id = _id;
+
+    this.setAvatar(avatar);
   }
 
-  setAvatar({ avatar }) {
+  setAvatar(avatar) {
     this._avatar.src = avatar;
+  }
+
+  getUserInfo() {
+    this._info = {};
+
+    this._info['name'] = this._name.textContent;
+    this._info['about'] = this._about.textContent;
+    this._info['avatar'] = this._avatar.src;
+    this._info['id'] = this._id;
+
+    return this._info;
   }
 }
 

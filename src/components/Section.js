@@ -7,8 +7,6 @@ export class Section {
   addItem(item) {
     this._container.prepend(this._renderer(item));
   }
-
-  // render
 }
 
 // >>> the enter

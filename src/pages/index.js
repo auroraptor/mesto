@@ -5,10 +5,11 @@ import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 // import { initialCards } from '../utils/pictures.js';
-import { editAvatarButton, editProfileButton, addButton, config,  formValidators } from '../utils/constants.js';
+import { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, formValidators, theEnterListener } from '../utils/constants.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { Api } from '../components/Api.js';
 import './index.css';
+
 // При каждом запросе нужно передавать токен и идентификатор группы
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46/',
@@ -26,10 +27,7 @@ const enableValidation = (config) => {
   });
 }
 
-enableValidation(config);
-
-const popupWithImage = new PopupWithImage('.image-zoomed-popup');
-popupWithImage.setEventListeners();
+enableValidation(configValid);
 
 const handleCardClick = (name, link) => {
   popupWithImage.open(name, link);
@@ -42,22 +40,19 @@ const handleMoveClick = (card) => {
 
 const handleLikeClick = (card) => {
   api.like(card, card.isLiked)
-  .then((res) => {
-    // console.log('dont u want to get better', res);
-    card.like(res)})
-  .catch((err) => { console.log(err)});
+  .then((res) => { card.like(res) })
+  .catch((err) => { console.log(err) });
 }
 
-const userInfo = new UserInfo({ avatar: '.profile__avatar', name: '.name', about: '.about' });
+const userInfo = new UserInfo(configUserInfo);
 
-api.getUserInfo()
-.then((res) => {
-  userInfo.setUserInfo(res);
-  // console.log('who is ', userInfo);
-})
-.catch((err) => { console.log(err) });
+const getUserInfo = () => {
+  api.getUserInfo()
+  .then((res) => { userInfo.setUserInfo(res); console.log('userInfo', userInfo.getUserInfo()) })
+  .catch((err) => { console.log(err) });
+}
 
-// console.log('id XO', userInfo); // undefined
+getUserInfo();
 
 const cardList = new Section({
   renderer: (item) => {
@@ -65,16 +60,16 @@ const cardList = new Section({
       handleCardClick,
       handleMoveClick,
       handleLikeClick,
-      handlePlanet: (param) => {return userInfo._id === param},
-      blackHearts: (param) => { return param.some((_)=> { return userInfo._id === _['_id']})},
-      }); // изменить
+      checkOwner: (id) => { return userInfo['_id'] === id },
+      isLikedCard: (likes) => { return likes.some((like) => { return userInfo['_id'] === like['_id']})},
+      }); // изменить TODO
 
     return newCard.generateCard();
     }
   },
 '.elements');
 
-const renderAuro = () => {
+const renderItems = () => {
   Promise.all([
     api.getUserInfo(),
     api.getInitialCards()
@@ -85,86 +80,74 @@ const renderAuro = () => {
   })
 }
 
-renderAuro()
+renderItems();
 
-const popupEditProfile = new PopupWithForm('.profile-popup', {
+const popupEditProfile = new PopupWithForm(
+  configPopupEditProfile, {
   handleFormSubmit: (formData) => {
+
     api.editUserInfo(formData)
     .then((result) => {userInfo.setUserInfo(result)})
     .catch((err) => {console.log(err)});
     }
-  }, {
-    buttonTextContent: 'Сохранить',
-    buttonLoadingTextContent: 'Сохранение...'}
+  }
 );
 
 const popupAddNewItem = new PopupWithForm(
-  '.new-item-popup', {
-  handleFormSubmit: (formData, button) => {
-    button.disabled = true;
+  configPopupAddNewItem, {
+  handleFormSubmit: (formData) => {
+
+    document.addEventListener('keydown', theEnterListener);
 
     api.postNewCard(formData)
     .then((res) => {
       cardList.addItem(res);
+      document.removeEventListener('keydown', theEnterListener);
     })
-    .catch((err) => {console.log(err)});
+    .catch((err) => { console.log(err) });
     }
-  }, {
-    buttonTextContent: 'Создать',
-    buttonLoadingTextContent: 'Сохранение...'}
+  },
 );
 
-const popupConfirm = new PopupWithConfirmation('.confirm-popup', {
+const popupWithImage = new PopupWithImage('.image-zoomed-popup');
+
+const popupConfirm = new PopupWithConfirmation(
+  configPopupWithConfirm, {
   handleConfirmation: (card) => {
     api.deleteCard(card)
-    .then((res) => {console.log('уродство этого кода неоспоримо'); card.remove()})
+    .then(() => {
+      card.remove();
+      document.removeEventListener('keydown', theEnterListener);
+    })
     .catch((err) => { console.log('err', err)});
-  }
-  }, {
-  buttonTextContent: 'Да',
-  buttonLoadingTextContent: 'Удаление...',
+  },
+  theEnterListener, // >>> the enter
   }
 );
 
 const popupEditAvatar = new PopupWithForm(
-  '.avatar-popup', {
+  configPopupEditAvatar, {
     handleFormSubmit: (formData) => {
-        // TODO добавить процесс ожидания и вот это все
       api.editUserAvatar(formData)
-      .then((res) => {userInfo.setAvatar(res)})
+      .then((res) => {userInfo.setAvatar(res['avatar'])})
       .catch((err) => {console.log(err)});
     }
-  }, {
-    buttonTextContent: 'Сохранить',
-    buttonLoadingTextContent: 'Сохранение...'}
+  }
 );
 
-api.getInitialCards()
-.then((result) => console.log(result))
-.catch((err) => console.log(err));
-
-api.getUserInfo()
-.then((result) => {console.log('and now', result)})
-.catch((err) => console.log(err));
-
+popupWithImage.setEventListeners();
 popupEditAvatar.setEventListeners();
-popupEditProfile.setEventListeners()
+popupEditProfile.setEventListeners();
 popupAddNewItem.setEventListeners();
 
-editAvatarButton.addEventListener('click', () => { // TODO вот это надо заменить на кнопку другую и вообще миллион путей верстки есть
+editAvatarButton.addEventListener('click', () => {
   formValidators['avatar-form'].resetValidation();
   popupEditAvatar.open();
-})
+});
 
 editProfileButton.addEventListener('click', () => {
   formValidators['profile-form'].resetValidation();
-
-  api.getUserInfo()
-  .then((res) => {
-     return popupEditProfile.setInputValues(res);
-    })
-  .catch((err) => {console.log(' err', err)});
-
+  popupEditProfile.setInputValues(userInfo.getUserInfo());
   popupEditProfile.open();
   }
 );

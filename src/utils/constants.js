@@ -24,16 +24,47 @@ const images = [
 
 // config для создания объекта валидации всех форм
 
-const config = {
+const configValid = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
-}
+};
 
 const formValidators = {};
+
+const configUserInfo = {
+  avatar: '.profile__avatar',
+  name: '.name',
+  about: '.about',
+};
+
+const configPopupWithConfirm = {
+  selector: '.confirm-popup',
+  buttonSelector: '.popup__button',
+  buttonTextContent: 'Да',
+  buttonLoadingTextContent: 'Удаление...',
+};
+
+const configPopupEditAvatar = {
+  selector: '.avatar-popup',
+  buttonTextContent: 'Сохранить',
+  buttonLoadingTextContent: 'Сохранение...',
+};
+
+const configPopupEditProfile = {
+  selector: '.profile-popup',
+  buttonTextContent: 'Сохранить',
+  buttonLoadingTextContent: 'Сохранение...',
+}
+
+const configPopupAddNewItem = {
+  selector: '.new-item-popup',
+  buttonTextContent: 'Сохранить',
+  buttonLoadingTextContent: 'Сохранение...',
+}
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль
@@ -41,4 +72,11 @@ const editAvatarButton = profile.querySelector('.edit-button__avatar');
 const editProfileButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-export { editAvatarButton, editProfileButton, addButton, config, profile, formValidators };
+const theEnterListener = (event) => {if (event.key === 'Enter') {
+  event.preventDefault();
+  }
+};
+
+export { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, profile, formValidators, theEnterListener }
+
+

@@ -76,7 +76,7 @@ export class Api {
       },
       body: JSON.stringify(data)
     })
-    .then((res) => { // кажется это не нужно я запуталась
+    .then((res) => {
       if(res.ok) {
         return res.json();
       }

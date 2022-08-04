@@ -1,14 +1,13 @@
 export class Card {
-  constructor({name, link, likes, _id, owner}, selector, {handleCardClick, handleMoveClick, handleLikeClick, handlePlanet, blackHearts}) { // а вот это будет что-то про колбэк да? // переделать на объект надо data+handleCardClick
+  constructor({name, link, likes, _id, owner}, selector, {handleCardClick, handleMoveClick, handleLikeClick, checkOwner, isLikedCard}) {
   this._name = name;
   this._link = link;
   this._likes = likes;
   this.id = _id;
   this._ownerId = owner[`_id`];
-  this._isOwner = handlePlanet(this._ownerId);
-  this.isLiked = blackHearts(this._likes);
+  this._isOwner = checkOwner(this._ownerId);
+  this.isLiked = isLikedCard(this._likes);
   this._template = document.querySelector(selector).content.querySelector('.element');
-  // this._blackHearts
   this._handleCardClick = handleCardClick;
   this._handleMoveClick = handleMoveClick.bind(this);
   this._handleLikeClick = handleLikeClick.bind(this);
@@ -43,6 +42,7 @@ _setListeners() {
 
   this._photo.addEventListener('click', () => {
     this._handleCardClick(this._name, this._link);
+    // this._handleCardClick(this);
   });
 }
 
