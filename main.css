@@ -13,18 +13,19 @@
 .profile{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between}@media screen and (max-width:880px){.profile{gap:36px;justify-content:space-around}}
 .profile__container{display:flex;flex-wrap:wrap;gap:30px;justify-content:center}@media screen and (max-width:425px){.profile__container{gap:26px;margin:0 19px}}
 .profile__description{align-items:baseline;-moz-column-gap:18px;column-gap:18px;display:grid;grid-template-areas:"⭐️ 🖊" "📝 .";grid-template-columns:repeat(2,-webkit-max-content);grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(2,60px)}@media screen and (max-width:425px){.profile__description{-moz-column-gap:10px;column-gap:10px;grid-template-columns:1fr 18px;grid-template-rows:26px 14px;margin-left:28px;row-gap:14px}}
-.profile__avatar{border-radius:50%;height:120px;width:120px}
+.profile__avatar{align-self:center;border-radius:50%;height:120px;-o-object-fit:cover;object-fit:cover;position:relative;width:120px}.profile__avatar:hover:after{opacity:1}.avatar{position:relative}.edit-button__avatar{background-color:rgba(0,0,0,.8);background-image:url(a086f758840ae814ecde.svg);background-position:50%;background-repeat:no-repeat;border:none;height:120px;left:0;opacity:0;padding:0;position:absolute;top:0;width:120px}.edit-button__avatar:hover{cursor:pointer;opacity:1;transition:all .5s linear}
 .profile__add-button{align-self:center;background:transparent;background-image:url(d86bb2edc2f6eadb96b7.svg);background-position:50%;background-repeat:no-repeat;background-size:22px;border:2px solid #fff;border-radius:2px;cursor:pointer;height:50px;min-width:150px}.profile__add-button:hover{opacity:.6;transition:opacity .5s linear}@media screen and (max-width:1280px){.profile__add-button{background-size:calc(14px + .625vw);width:calc(326px - 13.75vw)}}
 .profile__edit-button{align-self:flex-end;background:transparent;background-image:url(8667ac4a523e8fc42e59.svg);background-position:50%;background-repeat:no-repeat;background-size:10px;border:1px solid #fff;cursor:pointer;height:24px;width:24px}.profile__edit-button:hover{opacity:.6;transition:opacity .5s linear}@media screen and (max-width:425px){.profile__edit-button{background-size:7.5px;height:18px;width:18px}}
 .profile__title{font-size:42px;font-weight:500;grid-area:⭐️;line-height:48px;margin:0;max-width:294px;overflow:hidden;padding-top:21px;text-overflow:ellipsis;white-space:nowrap}@media (max-width:425px){.profile__title{padding-top:0}}@media (max-width:1280px){.profile__title{font-size:calc(22px + 1.5625vw);line-height:calc(28px + 1.5625vw)}}
 .profile__subtitle{font-size:18px;font-weight:400;grid-area:📝;line-height:22px;margin:0;max-width:294px;overflow:hidden;padding-top:16px;text-overflow:ellipsis;white-space:nowrap}@media screen and (max-width:425px){.profile__subtitle{padding-top:0;text-align:center}}@media screen and (max-width:1280px){.profile__subtitle{font-size:calc(12.66667px + .41667vw);line-height:calc(16.66667px + .10417vw)}}
 .elements{align-items:center;-moz-column-gap:17px;column-gap:17px;display:grid;grid-template-columns:repeat(auto-fill,282px);justify-content:center;justify-items:center;row-gap:20px}
 .element{align-items:center;background:#fff;border-radius:10px;display:flex;flex-direction:column;position:relative;width:282px}
-.element__container{display:flex;justify-content:space-between;margin-bottom:31px;margin-top:25px;width:246px}
-.element__photo{border-top-left-radius:10px;border-top-right-radius:10px;height:282px;width:282px}.element__photo:hover{cursor:pointer}
-.element__title{color:#000;font-size:24px;font-weight:900;line-height:29px;margin:0;max-width:218px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.element__container{display:grid;grid-template-areas:"👾 ♥" "👾 ⑰";justify-content:space-between;margin-bottom:31px;margin-top:25px;row-gap:3px;width:246px}
+.element__photo{border-top-left-radius:10px;border-top-right-radius:10px;height:282px;-o-object-fit:cover;object-fit:cover;width:282px}.element__photo:hover{cursor:pointer}
+.element__title{color:#000;font-size:24px;font-weight:900;grid-area:👾;line-height:29px;margin:0;max-width:218px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.element__likes{color:#000;font-size:13px;font-weight:400;line-height:16px;margin:0;text-align:center}
 .element__delete-button{background:transparent;background-image:url(c88ab8f92547ff53d3c4.svg);border:none;cursor:pointer;display:flex;height:20px;padding:0;position:absolute;right:20px;top:20px;width:18px}.element__delete-button:hover{opacity:.8;transition:opacity .5 linear}
-.like-button{align-self:center;background-color:#fff;background-image:url(7913ddfd147a48616b09.svg);background-repeat:no-repeat;border:none;cursor:pointer;height:19px;margin-right:5px;width:22px}.like-button:hover{opacity:.5;transition:opacity .5s linear}
+.like-button{align-self:center;background-color:#fff;background-image:url(7913ddfd147a48616b09.svg);background-repeat:no-repeat;border:none;cursor:pointer;grid-area:♥;height:19px;width:22px}.like-button:hover{opacity:.5;transition:opacity .5s linear}
 .like-button_active{background-image:url(fe17a515669479b1e649.svg)}.like-button_active:hover{opacity:1}
 .footer{display:flex}
 .footer__copyright{color:#545454;font-size:18px;font-weight:400;line-height:22px;margin-bottom:60px;margin-top:67px;min-width:282px}@media (max-width:880px){.footer__copyright{font-size:calc(11.71429px + .71429vw);line-height:calc(14.14286px + .89286vw);margin-bottom:calc(22.28571px + 4.28571vw);margin-left:19px;margin-top:calc(37.14286px + 3.39286vw)}}
@@ -39,6 +40,7 @@
 .form{color:#000;display:flex;flex-direction:column}
 .form__heading{font-size:24px;font-weight:900;line-height:29px;margin-bottom:41px;margin-top:0}@media (max-width:1280px){.form__heading{font-size:calc(16px + .625vw);line-height:calc(19.66667px + .72917vw);margin-bottom:calc(46.33333px - .41667vw)}}
 .form__item{border:none;border-bottom:1px solid rgba(0,0,0,.2);font-size:14px;font-weight:400;line-height:17px;padding:9px 0 10px;width:358px}@media (max-width:425px){.form__item{padding:9px 0 13px}}@media (max-width:1280px){.form__item{width:calc(198px + 12.5vw)}}::-moz-placeholder{color:#c4c4c4}::placeholder{color:#c4c4c4}
+.form__item_input_avatar{margin-top:41px}
 .form__item_input_name{margin-top:45px}
 .form__item_input_place{margin-top:45px}
 .form__main-container{padding:34px 36px 37px}@media screen and (max-width:1280px){.form__main-container{padding:calc(22px + .9375vw) calc(17.33333px + 1.45833vw) calc(21px + 1.25vw)}}
