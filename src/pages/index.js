@@ -95,7 +95,6 @@ const popupEditProfile = new PopupWithForm(
 const popupAddNewItem = new PopupWithForm(
   configPopupAddNewItem, {
   handleFormSubmit: (formData) => {
-
     document.addEventListener('keydown', theEnterListener);
 
     api.postNewCard(formData)

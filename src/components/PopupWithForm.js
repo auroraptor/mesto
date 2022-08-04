@@ -33,12 +33,14 @@ export class PopupWithForm extends Popup {
     super.setEventListeners();
 
     this._callback = (evt) => {
-
       evt.preventDefault();
+
+      this._button.setAttribute('disabled', 'disabled');
+
       this._button.textContent = this._buttonLoadingTextContent;
       this._values = this._getInputValues();
 
-      this._handleFormSubmit(this._values, this._button);
+      this._handleFormSubmit(this._values);
 
       this.close();
     }
@@ -49,12 +51,8 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
 
-    this._button.disabled = false;
     this._button.textContent = this._buttonTextContent;
     this._form.reset();
-
-
-    // ^ reset ^ восстанавливает стандартные значения всем элементам формы. Данный метод выполняет действие идентичное нажатию кнопки имеющей тип reset.
   }
 }
 
