@@ -45,7 +45,7 @@
         <form class="form edit-profile-form popup__form" name="profile-form" novalidate>
           <div class="main-container">
             <!-- а вот что нужно атрибуту формы я пока не поняла  -->
-            <label class="form__heading">Редактировать профиль</label>
+            <label class="heading">Редактировать профиль</label>
             <!-- Для полей формы редактирования профиля также необходимо добавить атрибуты placeholder -->
             <input type="text" class="form__item form__item_input_name popup__input" name="name" placeholder="Имя" minlength="2" maxlength="40" required autocomplete="off" id="name">
             <span class="popup__error name-error"></span>
@@ -62,7 +62,7 @@
         <!-- а не лучше ли назвать эту форму form_name_new-item хммм -->
         <form class="form new-item-form popup__form" name="new-item" novalidate>
           <div class="main-container">
-            <label class="form__heading">Новое место</label>
+            <label class="heading">Новое место</label>
             <input type="text" class="form__item form__item_input_place popup__input" placeholder="Название" name="name" minlength="2" maxlength="30" autocomplete="off" id="place" required>
             <span class="popup__error place-error">span</span>
             <input type="url" class="form__item form__item_input_link popup__input" placeholder="Ссылка на картинку" name="link" autocomplete="off" id="link" required>
@@ -88,8 +88,8 @@
     <div class="popup__container">
     <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
       <div class="main-container">
-        <p class="form__heading" style="color: #000000">Вы уверены?</p>
-        <button type="button" class="popup__button form__submit-button" id="confirm"></button>
+        <p class="heading" style="color: #000000">Вы уверены?</p>
+        <button type="button" class="popup__button" id="confirm"></button>
       </div>
     </div>
   </div>
@@ -101,10 +101,10 @@
       <form class="form edit-avatar-form popup__form" name="avatar-form" novalidate>
         <div class="main-container">
           <!-- а вот что нужно атрибуту формы я пока не поняла  -->
-          <label for="avatar" class="form__heading">Обновить аватар</label>
+          <label for="avatar" class="heading">Обновить аватар</label>
           <input type="url" class="form__item form__item_input_avatar popup__input" placeholder="Ссылка на картинку" name="avatar" autocomplete="off" id="avatar" required>
           <span class="popup__error avatar-error">span</span>
-          <button type="submit" class="form__submit-button avatar__button popup__button" value="disable" disabled></button>
+          <button type="submit" class="form__submit-button popup__button" value="disable" disabled></button>
         </div>
       </form>
     </div>
