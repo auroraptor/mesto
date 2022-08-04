@@ -45,14 +45,6 @@ const handleLikeClick = (card) => {
 
 const userInfo = new UserInfo(configUserInfo);
 
-const getUserInfo = () => {
-  api.getUserInfo()
-  .then((res) => { userInfo.setUserInfo(res)})
-  .catch((err) => { console.log(err) });
-}
-
-getUserInfo();
-
 const cardList = new Section({
   renderer: (item) => {
     const newCard = new Card(item, '#card', {
@@ -61,7 +53,7 @@ const cardList = new Section({
       handleLikeClick,
       checkOwner: (id) => { return userInfo['_id'] === id },
       isLikedCard: (likes) => { return likes.some((like) => { return userInfo['_id'] === like['_id']})},
-      }); // изменить TODO
+      });
 
     return newCard.generateCard();
     }
@@ -75,7 +67,7 @@ const renderItems = () => {
   ])
   .then(([userRes, cardsRes]) => {
     userInfo.setUserInfo(userRes)
-    cardsRes.reverse().forEach((_) => cardList.addItem(_))
+    cardsRes.reverse().forEach((card) => cardList.addItem(card))
   })
 }
 
