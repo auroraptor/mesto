@@ -47,7 +47,7 @@ const userInfo = new UserInfo(configUserInfo);
 
 const getUserInfo = () => {
   api.getUserInfo()
-  .then((res) => { userInfo.setUserInfo(res); console.log('userInfo', userInfo.getUserInfo()) })
+  .then((res) => { userInfo.setUserInfo(res)})
   .catch((err) => { console.log(err) });
 }
 
