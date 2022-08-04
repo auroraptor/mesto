@@ -72,11 +72,6 @@ const editAvatarButton = profile.querySelector('.profile__button');
 const editProfileButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 
-const theEnterListener = (event) => {if (event.key === 'Enter') {
-  event.preventDefault();
-  }
-};
-
-export { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, profile, formValidators, theEnterListener }
+export { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, profile, formValidators }
 
 

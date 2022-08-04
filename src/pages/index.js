@@ -4,7 +4,7 @@ import { UserInfo} from '../components/UserInfo.js'
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, formValidators, theEnterListener } from '../utils/constants.js';
+import { editAvatarButton, editProfileButton, addButton, configValid, configUserInfo, configPopupAddNewItem, configPopupWithConfirm, configPopupEditAvatar, configPopupEditProfile, formValidators } from '../utils/constants.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { Api } from '../components/Api.js';
 import './index.css';
@@ -95,12 +95,10 @@ const popupEditProfile = new PopupWithForm(
 const popupAddNewItem = new PopupWithForm(
   configPopupAddNewItem, {
   handleFormSubmit: (formData) => {
-    document.addEventListener('keydown', theEnterListener);
 
     api.postNewCard(formData)
     .then((res) => {
       cardList.addItem(res);
-      document.removeEventListener('keydown', theEnterListener);
     })
     .catch((err) => { console.log(err) });
     }
@@ -115,11 +113,9 @@ const popupConfirm = new PopupWithConfirmation(
     api.deleteCard(card)
     .then(() => {
       card.remove();
-      document.removeEventListener('keydown', theEnterListener);
     })
     .catch((err) => { console.log('err', err)});
   },
-  theEnterListener, // >>> the enter
   }
 );
 

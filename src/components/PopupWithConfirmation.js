@@ -34,7 +34,9 @@ constructor(config, { handleConfirmation, theEnterListener }) {
       evt.preventDefault();
       this._button.textContent = this._buttonLoadingTextContent;
       this._handleConfirmation(elem);
+      elem = null;
       this.close();
     }
+
   }
 }

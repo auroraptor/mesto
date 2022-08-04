@@ -2,7 +2,7 @@
   border-radius: 50%;
   width: 120px;
   height: 120px;
-  position: relative;
+  /* position: relative; */
   align-self: center;
   object-fit: cover;
   /* спасибо дока <3 за то что ты есть */
@@ -19,6 +19,9 @@
   position: relative;
 }
 
+.profile__container_size_m {
+  position: relative;
+}
 .profile__button {
   background-image: url(../../../images/__edit-avatar.svg);
   background-repeat: no-repeat;
