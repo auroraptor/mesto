@@ -26,7 +26,7 @@ export class Api {
       if (res.ok) {
       return res.json();
       }
-      return Promise.reject(`err ${res.status}`)
+      return Promise.reject(`Ошибка: ${res.status}`)
     })
   }
 
@@ -39,7 +39,7 @@ export class Api {
       body: JSON.stringify(data)
     })
     .then((res) => {
-      return res.ok ? res.json() : Promise.reject(`err ${res.status}`)
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
     })
   }
 
@@ -63,7 +63,7 @@ export class Api {
       }
     })
     .then((res) => {
-      return res.ok ? res.json() : Promise.reject(`err pls dnt mv m ${res.status}`)
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
     })
   }
 
@@ -80,7 +80,7 @@ export class Api {
       if(res.ok) {
         return res.json();
       }
-      return Promise.reject(`err ${res.status}`);
+      return Promise.reject(`Ошибка: ${res.status}`);
     })
   }
 
@@ -94,7 +94,7 @@ export class Api {
       body: JSON.stringify(avatar)
     })
     .then((res) => {
-      return (res.ok) ? res.json() : Promise.reject(`err ${res.status}`)
+      return (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
     })
   }
 
