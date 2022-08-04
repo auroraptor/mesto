@@ -68,7 +68,7 @@ const configPopupAddNewItem = {
 
 const page = document.querySelector('.page');
 const profile = page.querySelector('.profile'); // профиль
-const editAvatarButton = profile.querySelector('.edit-button__avatar');
+const editAvatarButton = profile.querySelector('.profile__button');
 const editProfileButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.add-button');
 

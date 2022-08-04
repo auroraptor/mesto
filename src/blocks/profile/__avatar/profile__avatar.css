@@ -35,7 +35,7 @@
   position: relative;
 }
 
-.edit-button__avatar {
+.profile__button {
   background-image: url(../../../images/__edit-avatar.svg);
   background-repeat: no-repeat;
   background-position: 50%;

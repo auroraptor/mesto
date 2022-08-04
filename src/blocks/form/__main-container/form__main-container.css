@@ -1,9 +1,9 @@
-.form__main-container {
+.main-container {
   padding: 34px 36px 37px;
 }
 
 @media screen and (max-width: 1280px) {
-  .form__main-container {
+  .main-container {
     padding-top: calc(25px + ((100vw - 320px) / (1280 - 320)) * (34 - 25));
     padding-right: calc(22px + ((100vw - 320px) / (1280 - 320)) * (36 - 22));
     padding-bottom: calc(25px + ((100vw - 320px) / (1280 - 320)) * (37 - 25));
