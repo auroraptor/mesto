@@ -26,6 +26,7 @@ like(res) {
 
 remove() {
   this._element.remove();
+  this._element = null;
 }
 
 _setListeners() {
