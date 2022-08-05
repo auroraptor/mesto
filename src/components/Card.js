@@ -43,7 +43,6 @@ _setListeners() {
 
   this._photo.addEventListener('click', () => {
     this._handleCardClick(this._name, this._link);
-    // this._handleCardClick(this);
   });
 }
 

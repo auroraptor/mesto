@@ -90,7 +90,6 @@ const popupEditProfile = new PopupWithForm(
 const popupAddNewItem = new PopupWithForm(
   configPopupAddNewItem, {
   handleFormSubmit: (formData) => {
-
     api.postNewCard(formData)
     .then((res) => {
       cardList.addItem(res);
