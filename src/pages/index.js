@@ -78,7 +78,10 @@ const popupEditProfile = new PopupWithForm(
   handleFormSubmit: (formData) => {
 
     api.editUserInfo(formData)
-    .then((result) => {userInfo.setUserInfo(result)})
+    .then((result) => {
+      userInfo.setUserInfo(result);
+      popupEditProfile.close();
+    })
     .catch((err) => {console.log(err)});
     }
   }
@@ -91,6 +94,7 @@ const popupAddNewItem = new PopupWithForm(
     api.postNewCard(formData)
     .then((res) => {
       cardList.addItem(res);
+      popupAddNewItem.close();
     })
     .catch((err) => { console.log(err) });
     }
@@ -116,7 +120,10 @@ const popupEditAvatar = new PopupWithForm(
   configPopupEditAvatar, {
     handleFormSubmit: (formData) => {
       api.editUserAvatar(formData)
-      .then((res) => {userInfo.setAvatar(res['avatar'])})
+      .then((res) => {
+        userInfo.setAvatar(res['avatar'])
+        popupEditAvatar.close();
+      })
       .catch((err) => {console.log(err)});
     }
   }

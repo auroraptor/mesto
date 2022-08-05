@@ -1,13 +1,13 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor({ selector, buttonTextContent, buttonLoadingTextContent}, {handleFormSubmit}) {
+  constructor({ selector, formSelector, inputSelector, buttonSelector, buttonTextContent, buttonLoadingTextContent}, {handleFormSubmit}) {
     super(selector);
     this._handleFormSubmit = handleFormSubmit;
-    this._inputList = Array.from(this._popup.querySelectorAll('.popup__input'));
-    this._form = this._popup.querySelector('.form');
+    this._inputList = Array.from(this._popup.querySelectorAll(inputSelector));
+    this._form = this._popup.querySelector(formSelector);
 
-    this._button = this._popup.querySelector('.popup__button');
+    this._button = this._popup.querySelector(buttonSelector);
     this._buttonTextContent = buttonTextContent;
     this._buttonLoadingTextContent = buttonLoadingTextContent;
     this._button.textContent = this._buttonTextContent;
@@ -42,7 +42,8 @@ export class PopupWithForm extends Popup {
 
       this._handleFormSubmit(this._values);
 
-      this.close();
+      // в классе PopupCongirm вынесен в отдельный метод, а здесь this._callback остался внутри setEventLiseners
+
     }
 
     this._form.addEventListener('submit', this._callback);
@@ -55,7 +56,5 @@ export class PopupWithForm extends Popup {
     this._form.reset();
   }
 }
-
-// TODO избавиться от селекторов внутри класса
 
 // >>> the enter

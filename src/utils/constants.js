@@ -50,18 +50,27 @@ const configPopupWithConfirm = {
 
 const configPopupEditAvatar = {
   selector: '.avatar-popup',
+  formSelector: '.form',
+  inputSelector: '.popup__input',
+  buttonSelector: '.popup__button',
   buttonTextContent: 'Сохранить',
   buttonLoadingTextContent: 'Сохранение...',
 };
 
 const configPopupEditProfile = {
   selector: '.profile-popup',
+  formSelector: '.form',
+  inputSelector: '.popup__input',
+  buttonSelector: '.popup__button',
   buttonTextContent: 'Сохранить',
   buttonLoadingTextContent: 'Сохранение...',
 }
 
 const configPopupAddNewItem = {
   selector: '.new-item-popup',
+  formSelector: '.form',
+  inputSelector: '.popup__input',
+  buttonSelector: '.popup__button',
   buttonTextContent: 'Сохранить',
   buttonLoadingTextContent: 'Сохранение...',
 }
