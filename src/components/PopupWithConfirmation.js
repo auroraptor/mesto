@@ -1,7 +1,7 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithConfirmation extends Popup {
-constructor(config, { handleConfirmation, theEnterListener }) {
+constructor(config, { handleConfirmation }) {
   super(config.selector);
 
   this._button = this._popup.querySelector(config.buttonSelector);
@@ -10,7 +10,6 @@ constructor(config, { handleConfirmation, theEnterListener }) {
   this._buttonLoadingTextContent = config.buttonLoadingTextContent;
 
   this._handleConfirmation = handleConfirmation;
-  this._theEnterListener = theEnterListener;
   }
 
   close() {
@@ -23,20 +22,14 @@ constructor(config, { handleConfirmation, theEnterListener }) {
   open() {
     super.open()
 
-    document.addEventListener('keydown', this._theEnterListener);
     this._button.addEventListener('click', this._callback);
   }
 
-  setEventListeners(elem) {
-    super.setEventListeners();
-
+  callback(elem) {
     this._callback = (evt) => {
       evt.preventDefault();
       this._button.textContent = this._buttonLoadingTextContent;
       this._handleConfirmation(elem);
-      elem = null;
-      this.close();
     }
-
   }
 }

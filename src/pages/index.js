@@ -33,7 +33,7 @@ const handleCardClick = (name, link) => {
 }
 
 const handleMoveClick = (card) => {
-  popupConfirm.setEventListeners(card);
+  popupConfirm.callback(card);
   popupConfirm.open();
 }
 
@@ -105,6 +105,7 @@ const popupConfirm = new PopupWithConfirmation(
     api.deleteCard(card)
     .then(() => {
       card.remove();
+      popupConfirm.close();
     })
     .catch((err) => { console.log('err', err)});
   },
@@ -125,6 +126,7 @@ popupWithImage.setEventListeners();
 popupEditAvatar.setEventListeners();
 popupEditProfile.setEventListeners();
 popupAddNewItem.setEventListeners();
+popupConfirm.setEventListeners();
 
 editAvatarButton.addEventListener('click', () => {
   formValidators['avatar-form'].resetValidation();
