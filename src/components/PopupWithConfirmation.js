@@ -25,7 +25,7 @@ constructor(config, { handleConfirmation }) {
     this._button.addEventListener('click', this._callback);
   }
 
-  callback(elem) {
+  setOpenCallback(elem) {
     this._callback = (evt) => {
       evt.preventDefault();
       this._button.textContent = this._buttonLoadingTextContent;

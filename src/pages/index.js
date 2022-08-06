@@ -33,7 +33,7 @@ const handleCardClick = (name, link) => {
 }
 
 const handleMoveClick = (card) => {
-  popupConfirm.callback(card);
+  popupConfirm.setOpenCallback(card);
   popupConfirm.open();
 }
 
