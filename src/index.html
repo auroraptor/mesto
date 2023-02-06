@@ -4,17 +4,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="pages/index.css"> -->
   <title>Место</title>
 </head>
 <body class="page">
   <div class="page__container">
-    <!-- header -->
     <header class="header page__header section">
         <a href="#" class="logo header__logo"></a>
     </header>
     <main class="content">
-      <!-- profile -->
        <section class="profile section content__section content__profile">
         <div class="profile__container">
           <div class="profile__another-container">
@@ -31,20 +28,15 @@
       </section>
       <section class="elements section content__section"></section>
     </main>
-    <!-- footer -->
     <footer class="footer section">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <!-- В каждом попапе должен быть класс popup,  а рядом с ним через пробел можно указать еще один класс для точного поиска его в DOM: popup profile-popup Вся идея того, что у похожих элементов должны быть одинаковые css-классы, заключается в том, что можно задавать одинаковые css-стили, создавать универсальные функции, осуществлять поиск похожих элементов и тд. Так же у попапов одинаковые селекторы должны быть для крестика, формы, инпутов, кнопки сабмита. -->
     <div class="popup profile-popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-        <!-- Сперва сообщите браузеру о том, что стандартные сообщения об ошибке не нужны. Для этого укажите атрибут novalidate у формы: -->
         <form class="form edit-profile-form popup__form" name="profile-form" novalidate>
           <div class="container">
-            <!-- а вот что нужно атрибуту формы я пока не поняла  -->
             <label class="heading">Редактировать профиль</label>
-            <!-- Для полей формы редактирования профиля также необходимо добавить атрибуты placeholder -->
             <input type="text" class="form__item form__item_input_name popup__input" name="name" placeholder="Имя" minlength="2" maxlength="40" required autocomplete="off" id="name">
             <span class="popup__error name-error"></span>
             <input type="text" class="form__item form__item_input_about popup__input" name="about" placeholder="О себе" minlength="2" maxlength="200" required autocomplete="off" id="about">
@@ -57,7 +49,6 @@
     <div class="popup new-item-popup">
       <div class="popup__container">
         <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-        <!-- а не лучше ли назвать эту форму form_name_new-item хммм -->
         <form class="form new-item-form popup__form" name="new-item" novalidate>
           <div class="container">
             <label class="heading">Новое место</label>
@@ -71,7 +62,6 @@
       </div>
     </div>
   </div>
-  <!-- а вот здесь будет 3 окно которое открытие картинки и в нем лучше использовать тег figure -->
   <div class="popup image-zoomed-popup">
     <div class="popup__yet-another-container">
     <button class="popup__close-icon popup__close-button"></button>
@@ -81,7 +71,6 @@
     </figure>
     </div>
   </div>
-<!-- попап подтверждения удаления карточки -- css стили в нем из формы -- исторически так сложилось -->
   <div class="popup confirm-popup">
     <div class="popup__container">
     <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
@@ -91,14 +80,11 @@
       </div>
     </div>
   </div>
-<!-- попап редактирования профиля -->
   <div class="popup avatar-popup">
     <div class="popup__container">
       <button type="button" class="popup__close-icon" aria-label="Закрыть"></button>
-      <!-- Сперва сообщите браузеру о том, что стандартные сообщения об ошибке не нужны. Для этого укажите атрибут novalidate у формы: -->
       <form class="form edit-avatar-form popup__form" name="avatar-form" novalidate>
         <div class="container">
-          <!-- а вот что нужно атрибуту формы я пока не поняла  -->
           <label for="avatar" class="heading">Обновить аватар</label>
           <input type="url" class="form__item form__item_input_avatar popup__input" placeholder="Ссылка на картинку" name="avatar" autocomplete="off" id="avatar" required>
           <span class="popup__error avatar-error">span</span>
@@ -107,8 +93,6 @@
       </form>
     </div>
   </div>
-
-<!-- это заготовка верстки, содержимое не отобразится -->
   <template id="card">
     <article class="element">
       <button class="element__delete-button"></button>
