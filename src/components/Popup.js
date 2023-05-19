@@ -23,6 +23,11 @@ export class Popup {
   close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose);
+
+    const expandedElements = document.querySelectorAll('[aria-expanded="true"]');
+    expandedElements.forEach((element) => {
+        element.setAttribute('aria-expanded', 'false');
+    });
   }
 
   _handleEscClose(event) {

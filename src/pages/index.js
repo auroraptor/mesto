@@ -1,6 +1,6 @@
 import { Section } from '../components/Section.js';
 import { FormValidator } from '../components/FormValidator.js';
-import { UserInfo} from '../components/UserInfo.js'
+import { UserInfo } from '../components/UserInfo.js'
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -120,7 +120,7 @@ const popupEditAvatar = new PopupWithForm(
     handleFormSubmit: (formData) => {
       api.editUserAvatar(formData)
       .then((res) => {
-        userInfo.setAvatar(res['avatar'])
+        userInfo.setAvatar(res['avatar']);
         popupEditAvatar.close();
       })
       .catch((err) => {console.log(err)});
@@ -134,19 +134,25 @@ popupEditProfile.setEventListeners();
 popupAddNewItem.setEventListeners();
 popupConfirm.setEventListeners();
 
-editAvatarButton.addEventListener('click', () => {
+editAvatarButton.addEventListener('click', (e) => {
+  e.target.setAttribute('aria-expanded', true);
+
   formValidators['avatar-form'].resetValidation();
   popupEditAvatar.open();
 });
 
-editProfileButton.addEventListener('click', () => {
+editProfileButton.addEventListener('click', (e) => {
+  e.target.setAttribute('aria-expanded', true);
+
   formValidators['profile-form'].resetValidation();
   popupEditProfile.setInputValues(userInfo.getUserInfo());
   popupEditProfile.open();
   }
 );
 
-addButton.addEventListener('click', () => {
+addButton.addEventListener('click', (e) => {
+  e.target.setAttribute('aria-expanded', true);
+
   formValidators['new-item'].resetValidation();
   popupAddNewItem.open();
   }
